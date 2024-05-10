@@ -1,2 +1,13 @@
-<h1>Public::Posts#index</h1>
-<p>Find me in app/views/public/posts/index.html.erb</p>
+<h1>投稿一覧</h1>
+
+<% @posts.each do |post| %>
+  <p>タイトル</p>
+  <%= link_to post.title, post_path(post.id) %>
+  
+  <p>所在地</p>
+  <span><%= post.address %></span>
+  
+  <p>投稿者</p>
+  <span><%= post.user.name %></span>
+  
+<% end %>

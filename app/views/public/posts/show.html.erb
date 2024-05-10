@@ -1,2 +1,13 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<h2>タイトル</h2>
+<p><%= @post.title %></p>
+
+<h2>所在地</h2>
+<p><%= @post.address %></p>
+
+<h2>投稿者</h2>
+<p><%= @post.user.name %></p>
+
+<% if @post.user == current_user %>
+  <%= link_to "編集", edit_post_path(@post) %>
+  <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+<% end %>
