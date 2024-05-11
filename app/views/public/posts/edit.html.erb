@@ -3,12 +3,16 @@
 <%= form_with model: @post, url: post_path(@post), method: :patch do |f| %>
   <%= render 'public/shared/error_messages', resource: f.object %>
 
-  <h4>タイトル</h4>
-  <%= f.text_field :title %>
+  <div>
+    <h4>タイトル</h4>
+    <%= f.text_field :title %>
+  </div>
   
-  <h4>所在地</h4>
-  <%= f.text_area :address %>
+  <div>
+    <h4>所在地</h4>
+    <%= f.text_area :address %>
+  </div>
   
-  <%= f.submit '更新' %>
+  <div><%= f.submit '更新' %></div>
   
 <% end %>

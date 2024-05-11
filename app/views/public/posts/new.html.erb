@@ -2,13 +2,17 @@
   <%= render 'public/shared/error_messages', resource: f.object %>
 
 
-  <h1>新規投稿</h1>
+  <div><h1>新規投稿</h1></div>
+  
+  <div>
+    <h4>タイトル</h4>
+    <%= f.text_field :title %>
+  </div>
 
-  <h4>タイトル</h4>
-  <%= f.text_field :title %>
+  <div>
+    <h4>所在地</h4>
+    <%= f.text_area :address %>
+  </div>
 
-  <h4>所在地</h4>
-  <%= f.text_area :address %>
-
-  <%= f.submit '投稿' %>
+  <div><%= f.submit '投稿' %></div>
 <% end %>

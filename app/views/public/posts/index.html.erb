@@ -1,13 +1,19 @@
 <h1>投稿一覧</h1>
 
 <% @posts.each do |post| %>
-  <p>タイトル</p>
-  <%= link_to post.title, post_path(post.id) %>
+  <div>
+    <p>タイトル</p>
+    <%= link_to post.title, post_path(post.id) %>
+  </div>
   
-  <p>所在地</p>
-  <span><%= post.address %></span>
+  <div>
+    <p>所在地</p>
+    <span><%= post.address %></span>
+  </div>
   
-  <p>投稿者</p>
-  <span><%= post.user.name %></span>
+  <div>
+    <p>投稿者</p>
+    <span><%= post.user.name %></span>
+  </div>
   
 <% end %>
