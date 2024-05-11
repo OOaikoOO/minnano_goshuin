@@ -1,0 +1,5 @@
+<h1>本当に退会しますか？</h1>
+<p>退会するとこれまでの情報がすべて削除されます</p>
+
+<%= link_to "退会しない", user_path(@user) %>
+<%= link_to "退会する", withdraw_user_path(@user.id), method: :patch, data: { confirm: "本当に退会しますか？" } %>

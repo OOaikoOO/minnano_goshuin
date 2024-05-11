@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
 
+  # ユーザー退会関連
+  get '/users/check' => 'public/users#check', as: :check_user
+  patch '/users/withdraw' => 'public/users#withdraw', as: :withdraw_user
+
   devise_for :users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -13,7 +17,7 @@ Rails.application.routes.draw do
     resources :posts
     resources :users
   end
-  
+
   # 管理者用
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
