@@ -1,10 +1,12 @@
 <h1>プロフィール編集</h1>
 <%= form_with model: @user, url: user_path(@user), method: :patch do |f| %>
+  <%= render 'public/shared/error_messages', resource: f.object %>
   <h4>名前</h4>
   <%= f.text_field :name %>
-  
+
   <h4>Email</h4>
   <%= f.email_field :email %>
-  
+
   <%= f.submit "変更を保存" %>
+  <div><%= link_to "退会する", check_user_path %></div>
 <% end %>

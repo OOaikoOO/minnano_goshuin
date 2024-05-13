@@ -1,16 +1,16 @@
-<h1>自分が投稿した一覧</h1>
+<h1>マイページ</h1>
+
+<h4>投稿一覧</h4>
 <% @posts.each do |post| %>
-  <p>タイトル</p>
-  <%= link_to post.title, post_path(post.id) %>
+  <div><span>タイトル</span>：<span><%= link_to post.title, post_path(post.id) %></span></div>
+  <div><span>所在地</span>：<span><%= post.address %></span></div>
 
-  <div>
-    <p>所在地</p>
-    <span><%= post.address %></span>
-  </div>
-
-  <div><%= link_to "編集", edit_post_path(post) %></div>
-  <div><%= link_to "削除", post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" } %></div>
+  <% if post.user == current_user %>
+    <%= link_to "編集", edit_post_path(post) %>
+    <%= link_to "削除", post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+  <% end %>
 <% end %>
 
-<div><%= link_to "プロフィール編集", edit_user_path(current_user) %></div>
-<div><%= link_to "退会する", check_user_path %></div>
+<% if @user == current_user %>
+  <div><%= link_to "プロフィール編集", edit_user_path(current_user) %></div>
+<% end %>

@@ -12,11 +12,16 @@
 
   <body>
     <header>
-      動作確認
       <li>
         <%= link_to "みんなのご朱印", root_path %>
       </li>
+      <li>
+        <%= link_to "このサイトについて", about_path %>
+      </li>
       <% if user_signed_in? %>
+        <li>
+          <%= link_to '投稿一覧', posts_path %>
+        </li>
         <li>
           <%= link_to '投稿フォーム', new_post_path %>
         </li>
@@ -32,9 +37,6 @@
         </li>
         <li>
           <%= link_to "ログイン", new_user_session_path %>
-        </li>
-        <li>
-          <%= link_to "このサイトについて", about_path %>
         </li>
       <% end %>
     </header>
