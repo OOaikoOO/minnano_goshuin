@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-  namespace :public do
-    get 'searches/search'
-  end
-  namespace :admin do
-    get 'searches/search'
-  end
+  
   # ユーザー用
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
