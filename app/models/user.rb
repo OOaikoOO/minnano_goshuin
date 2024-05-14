@@ -24,7 +24,7 @@ class User < ApplicationRecord
     end
   end
   
-  has_many :post, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 end

@@ -1,1 +1,18 @@
-<h1>検索</h1>
+<h1>検索結果</h1>
+
+<% if @search_type == "user" %>
+  <% @users.each do |user| %>
+    <!--反復処理をするためpartialを使用-->
+    <%= render partial: 'user', collection: @users %>
+  <% end %>
+<% elsif @search_type == "post" %>
+  <% @posts.each do |post| %>
+    <%= render partial: 'post', collection: @posts %>
+  <% end %>
+<% elsif @search_type == "address" %>
+  <% @addresses.each do |address| %>
+    <%= render partial: 'address', collection: @addresses %>
+  <% end %>
+<% else %>
+  <p>検索結果がありませんでした。</p>
+<% end %>

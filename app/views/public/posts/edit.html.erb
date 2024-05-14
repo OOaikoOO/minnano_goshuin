@@ -4,7 +4,7 @@
   <%= render 'public/shared/error_messages', resource: f.object %>
 
   <div>
-    <h4>タイトル</h4>
+    <h4>神社仏閣の名前</h4>
     <%= f.text_field :title %>
   </div>
   
@@ -14,7 +14,7 @@
   </div>
   
   <% if @post.user == current_user %>
-    <%= link_to "編集", edit_post_path(@post) %>
+    <%= f.submit "更新" %>
     <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
   <% end %>
 

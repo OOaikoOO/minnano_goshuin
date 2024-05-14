@@ -20,8 +20,8 @@ class Public::PostsController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @post = Post.find(params[:id])
+    @user = @post.user
   end
 
   def edit
