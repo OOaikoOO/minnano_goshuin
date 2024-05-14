@@ -2,13 +2,15 @@ class Post < ApplicationRecord
   def self.looks(search, word)
     case search
     when "partial"
-      where("title LIKE ?", "%#{word}%")
+      # 異なる2つのカラムに対して同じ検索パターンを適用するため"%#{word}%"などを2回繰り返し記述する
+      # 検索条件が複数あるためORメソッドを使用する
+      where("title LIKE ? OR address LIKE ?", "%#{word}%", "%#{word}%")
     when "prefix"
-      where("title LIKE ?", "#{word}%")
+      where("title LIKE ? OR address LIKE ?", "#{word}%", "#{word}%")
     when "suffix"
-      where("title LIKE ?", "%#{word}")
+      where("title LIKE ? OR address LIKE ?", "%#{word}", "%#{word}")
     when "exact"
-      where(title: word)
+      where("title = ? OR address = ?", word, word)
     else
       none # 条件に合致する投稿が無い場合に空のクエリを返す
     end

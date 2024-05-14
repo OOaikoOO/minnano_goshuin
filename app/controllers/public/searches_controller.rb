@@ -3,8 +3,15 @@ class Public::SearchesController < ApplicationController
     @word = params[:word]
     @search = params[:search]
     @range = params[:range]
-    search_users if @range == "ユーザー"
-    search_posts if @range == "投稿"
+    
+    case @range # 条件分岐が複数あるためcase文を使用
+    when "ユーザー名"
+      search_users
+    when "神社仏閣の名前"
+      search_posts
+    when "所在地"
+      search_addresses
+    end
   end
   
   private
@@ -14,6 +21,10 @@ class Public::SearchesController < ApplicationController
   end
   
   def search_posts
-    @users = Post.looks(@search, @word)
+    @posts = Post.looks(@search, @word)
+  end
+  
+  def search_addresses
+    @posts = Post.where(address: @word)
   end
 end
