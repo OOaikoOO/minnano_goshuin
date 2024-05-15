@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   # resourcesを使用する際にURLにnamespaceを含めずにルーティングを設定する
   scope module: :public do
     get "search" => "searches#search"
-    resources :posts
+    resources :posts do
+      resources :post_comments
+    end
     resources :users
   end
 

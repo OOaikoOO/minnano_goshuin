@@ -29,6 +29,7 @@ class Post < ApplicationRecord
   end
 
   belongs_to :user
+  has_many :post_comments, dependent: :destroy
 
   validates :title, presence: true
   validates :address, presence: true
