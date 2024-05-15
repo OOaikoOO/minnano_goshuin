@@ -9,18 +9,15 @@ class User < ApplicationRecord
     super && (is_deleted == false)
   end
   
-  def self.looks(search, word)
-    case search
-    when "partial"
-      where("name LIKE ?", "%#{word}%")
-    when "prefix"
-      where("name LIKE ?", "#{word}%")
-    when "suffix"
-      where("name LIKE ?", "%#{word}")
-    when "exact"
-      where(name: word)
+  def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      User.where('name LIKE ?', '%' + content)
     else
-      none # 条件に合致するユーザーがない場合に空のクエリを返す
+      User.where('name LIKE ?', '%' + content + '%')
     end
   end
   

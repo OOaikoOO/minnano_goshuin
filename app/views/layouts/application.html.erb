@@ -40,7 +40,9 @@
         </li>
       <% end %>
     </header>
-    <%= render 'layouts/search' %>
+    <% if user_signed_in? %>
+      <%= render 'layouts/search' %>
+    <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>

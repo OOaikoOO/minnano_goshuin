@@ -1,18 +1,16 @@
 <h1>検索結果</h1>
 
-<% if @search_type == "user" %>
-  <% @users.each do |user| %>
-    <!--反復処理をするためpartialを使用-->
-    <%= render partial: 'user', collection: @users %>
+<% if @model == "user" %>
+  <h2>ユーザー名検索結果"<%= @content %>"</h2>
+  <% @records.each do |user| %>
+    <%= user.name %>
   <% end %>
-<% elsif @search_type == "post" %>
-  <% @posts.each do |post| %>
-    <%= render partial: 'post', collection: @posts %>
-  <% end %>
-<% elsif @search_type == "address" %>
-  <% @addresses.each do |address| %>
-    <%= render partial: 'address', collection: @addresses %>
+<% elsif @model == "post" %>
+  <h2>Posts search for '<%= @content %>'</h2>
+  <% @records.each do |post| %>
+    <%= post.title %>
+    <%= post.address %>
   <% end %>
 <% else %>
-  <p>検索結果がありませんでした。</p>
+    <p>"<%= @content %>" は見つかりませんでした</p>
 <% end %>
