@@ -1,0 +1,22 @@
+<h1>検索結果</h1>
+
+<% if @model == "user" %>
+  <h4>ユーザー名[<%= @content %>]の検索結果</h4>
+  <% @records.each do |user| %>
+    <%= user.name %>
+  <% end %>
+<% elsif @model == "post" %>
+  <h4>神社仏閣の名前[<%= @content %>]の検索結果</h4>
+  <% @records.each do |post| %>
+    <%= post.title %>
+    <%= post.address %>
+  <% end %>
+<% elsif @model == "address" %>
+  <h4>[<%= @content %>]の検索結果</h4>
+  <% @records.each do |post| %>
+    <%= post.title %>
+    <%= post.address %>
+  <% end %>
+<% else %>
+    <h4>[<%= @content %>]は見つかりませんでした</h4>
+<% end %>
