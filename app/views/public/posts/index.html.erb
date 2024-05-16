@@ -1,19 +1,20 @@
 <h1>投稿一覧</h1>
 
 <% @posts.each do |post| %>
+  <p><%= link_to "#{post. comments. count} コメント", post_path(post.id) %></p>
   <div>
     <p>タイトル</p>
     <%= link_to post.title, post_path(post.id) %>
   </div>
-  
+
   <div>
     <p>所在地</p>
     <span><%= post.address %></span>
   </div>
-  
+
   <div>
     <p>投稿者</p>
     <span><%= post.user.name %></span>
   </div>
-  
+
 <% end %>

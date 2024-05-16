@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   # ユーザー用
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
@@ -13,11 +13,13 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
-  
-  # resourcesを使用する際にURLにnamespaceを含めずにルーティングを設定する
+
+  # resourcesを使用する際、URLにnamespaceを含めずにルーティングを設定する
   scope module: :public do
     get "search" => "searches#search"
-    resources :posts
+    resources :posts do
+      resources :comments, only: [:create, :destroy]
+    end
     resources :users
   end
 
@@ -25,7 +27,7 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
-  
+
   namespace :admin do
     get "search" => "searches#search"
   end
