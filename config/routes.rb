@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     sessions: 'public/sessions'
   }
 
-  # resourcesを使用する際にURLにnamespaceを含めずにルーティングを設定する
+  # resourcesを使用する際、URLにnamespaceを含めずにルーティングを設定する
   scope module: :public do
     get "search" => "searches#search"
     resources :posts do

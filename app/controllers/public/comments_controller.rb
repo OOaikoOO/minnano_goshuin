@@ -7,9 +7,8 @@ class Public::CommentsController < ApplicationController
     else
       redirect_to @post, notice: "コメントの投稿に失敗しました"
     end
-    byebug
   end
-  
+
   def destroy
     @comment = Comment.find(params[:id])
     @post = @comment.post
@@ -20,10 +19,10 @@ class Public::CommentsController < ApplicationController
       redirect_to @post, notice: "コメントの削除に失敗しました"
     end
   end
-  
+
   private
-  
+
   def comment_params
-    params.require(:comment).permit(:comment)
+    params.require(:comment).permit(:comment, :post_id)
   end
 end
