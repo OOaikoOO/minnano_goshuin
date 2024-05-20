@@ -1,0 +1,5 @@
+<h4>ユーザー一覧</h4>
+
+<% @users.each do |user| %>
+  <%= link_to user.name, admin_user_path(user) %>
+<% end %>

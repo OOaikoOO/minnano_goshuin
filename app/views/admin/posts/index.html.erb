@@ -1,0 +1,15 @@
+<h1>投稿一覧</h1>
+<% if @posts.present? %>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <%= post.title %>
+        <%= link_to "削除", admin_user_post_path(post.user_id, post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>投稿がありません</p>
+<% end %>
+
+<%= link_to "ユーザー情報詳細に戻る", admin_user_path(@user), class: "btn btn-primary" %>

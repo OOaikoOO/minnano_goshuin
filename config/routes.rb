@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    get 'comments/index'
+  end
+  namespace :admin do
+    get 'posts/index'
+  end
   # ユーザー用
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
@@ -7,6 +13,11 @@ Rails.application.routes.draw do
   # ユーザー退会関連
   get '/users/check' => 'public/users#check', as: :check_user
   patch '/users/withdraw' => 'public/users#withdraw', as: :withdraw_user
+
+  # 管理者用ログイン関連
+    devise_for :admin, skip: [:registrations, :passwords], controllers: {
+    sessions: "admin/sessions"
+  }
 
   # ユーザー用ログイン関連
   devise_for :users, skip: [:passwords], controllers: {
@@ -23,13 +34,21 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  # 管理者用ログイン関連
-  devise_for :admin, skip: [:registrations, :passwords], controllers: {
-    sessions: "admin/sessions"
-  }
-
+  # 管理者
   namespace :admin do
     get "search" => "searches#search"
+    root 'dashboards#index'
+    get 'dashboard', to: 'dashboards#index', as: :dashboard
+    # ユーザー退会処理関連
+    resources :users, only: [:show] do
+      # 特定（個々）のユーザーに対して退会処理を行うためmemberを使用
+      member do
+        get "withdraw", to: "users#withdraw"
+        patch "withdraw", to: "users#withdraw"
+      end
+      resources :posts, only: [:index, :destroy]
+      resources :comments, only: [:index, :destroy]
+    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
