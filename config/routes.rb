@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   get '/users/check' => 'public/users#check', as: :check_user
   patch '/users/withdraw' => 'public/users#withdraw', as: :withdraw_user
 
+  # 管理者用ログイン関連
+    devise_for :admin, skip: [:registrations, :passwords], controllers: {
+    sessions: "admin/sessions"
+  }
+
   # ユーザー用ログイン関連
   devise_for :users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
@@ -23,13 +28,10 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  # 管理者用ログイン関連
-  devise_for :admin, skip: [:registrations, :passwords], controllers: {
-    sessions: "admin/sessions"
-  }
-
+  # 管理者
   namespace :admin do
     get "search" => "searches#search"
+    get 'dashboard', to: 'dashboards#index', as: :dashboard
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
