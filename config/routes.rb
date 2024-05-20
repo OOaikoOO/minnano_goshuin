@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  namespace :admin do
+    get 'comments/index'
+  end
+  namespace :admin do
+    get 'posts/index'
+  end
   # ユーザー用
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
@@ -40,6 +46,8 @@ Rails.application.routes.draw do
         get "withdraw", to: "users#withdraw"
         patch "withdraw", to: "users#withdraw"
       end
+      resources :posts, only: [:index, :destroy]
+      resources :comments, only: [:index, :destroy]
     end
   end
 

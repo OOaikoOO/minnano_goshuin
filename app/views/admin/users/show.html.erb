@@ -3,9 +3,8 @@
 <p>ユーザー名: <%= @user.name %></p>
 <p>メールアドレス: <%= @user.email %></p>
 <p>会員ステータス: <%= @user.is_deleted ? "退会済み" : "有効" %></p>
-
-<p>投稿一覧: <%= @user.posts %></p>
-
+<%= link_to "投稿一覧", admin_user_posts_path(@user), class: "btn btn-primary" %>
+<%= link_to "コメント一覧", admin_user_comments_path(@user), class: "btn btn-info" %>
 
 <td>
   <% if @user.is_deleted %>

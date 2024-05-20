@@ -2,6 +2,7 @@ class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
 
   def show
+    # ユーザー情報詳細
     @user = User.find(params[:id])
   end
 
