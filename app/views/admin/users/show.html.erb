@@ -1,0 +1,16 @@
+<h4>ユーザー情報詳細</h4>
+
+<p>ユーザー名: <%= @user.name %></p>
+<p>メールアドレス: <%= @user.email %></p>
+<p>会員ステータス: <%= @user.is_deleted ? "退会済み" : "有効" %></p>
+
+<p>投稿一覧: <%= @user.posts %></p>
+
+
+<td>
+  <% if @user.is_deleted %>
+    <%= link_to "有効にする", withdraw_admin_user_path(@user.id), method: :patch, data: { confirm: "本当に有効にしますか？" }, class: "btn btn-success" %>
+  <% else %>
+    <%= link_to "退会させる", withdraw_admin_user_path(@user.id), method: :patch, data: { confirm: "本当に退会させますか？" }, class: "btn btn-danger" %>
+  <% end %>
+</td>

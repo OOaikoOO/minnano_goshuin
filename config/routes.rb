@@ -31,7 +31,16 @@ Rails.application.routes.draw do
   # 管理者
   namespace :admin do
     get "search" => "searches#search"
+    root 'dashboards#index'
     get 'dashboard', to: 'dashboards#index', as: :dashboard
+    # ユーザー退会処理関連
+    resources :users, only: [:show] do
+      # 特定（個々）のユーザーに対して退会処理を行うためmemberを使用
+      member do
+        get "withdraw", to: "users#withdraw"
+        patch "withdraw", to: "users#withdraw"
+      end
+    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
