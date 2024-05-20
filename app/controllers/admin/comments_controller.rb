@@ -2,7 +2,8 @@ class Admin::CommentsController < ApplicationController
   before_action :authenticate_admin!
   
   def index
-    @comments = Comment.all
+    @user = User.find(params[:user_id])
+    @comments = @user.comments
   end
   
   def destroy
