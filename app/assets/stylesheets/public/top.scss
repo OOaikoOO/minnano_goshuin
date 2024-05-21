@@ -1,0 +1,31 @@
+body.top-page {
+  background-image: image-url("top.png");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  
+  .container {
+    text-align: left;/* テキストを中央に配置 */
+  }
+  
+  .heading-container {
+    margin-top: 50px;
+    margin-bottom: 80px; /* 左上に配置するための余白 */
+  }
+  
+  .heading-text {
+    color: white; /* 見出しのテキスト色 */
+    font-size: 35px; /* 見出しのテキストサイズ */
+    font-weight: bold; /* 見出しのフォントウェイト */
+    letter-spacing: 27px; /* 文字ごとの隙間を広く */
+  }
+  
+  .text-container {
+    padding: 10px; /* テキストと背景の間に余白を設定 */
+    border-radius: 5px; /* 角丸 */
+    color: white; /* テキストの色 */
+    font-size: 15px; /* テキストのサイズ */
+    letter-spacing: 10px; /* 文字ごとの隙間を広く */
+  }
+}
