@@ -11,35 +11,26 @@
   </head>
 
   <body>
-    <header>
-      <li>
-        <%= link_to "みんなのご朱印", root_path %>
-      </li>
-      <li>
-        <%= link_to "このサイトについて", about_path %>
-      </li>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to '投稿一覧', posts_path %>
-        </li>
-        <li>
-          <%= link_to '投稿フォーム', new_post_path %>
-        </li>
-        <li>
-          <%= link_to 'マイページ', user_path(current_user.id) %>
-        </li>
-        <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "新規会員登録", new_user_registration_path %>
-        </li>
-        <li>
-          <%= link_to "ログイン", new_user_session_path %>
-        </li>
-      <% end %>
+    <header class="header">
+      <div class="navtext-container">
+        <img src="<%= asset_path 'logo.png' %>" alt="logo" style="max-width: 400px; height: auto;">
+      </div>
+      <input type="checkbox" class="menu-btn" id="menu-btn">
+      <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
+      <ul class="menu">
+        <li class="top"><a href="/">home</a></li>
+        <li><a href="#"><%= link_to "このサイトについて", about_path %></a></li>
+        <% if user_signed_in? %>
+          <li><a href="#"><%= link_to '投稿一覧', posts_path %></a></li>
+          <li><a href="#"><%= link_to 'マイページ', user_path(current_user.id) %></a></li>
+          <li><a href="#"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></a></li>
+        <% else %>
+          <li><a href="#"><%= link_to "新規会員登録", new_user_registration_path %></a></li>
+          <li><a href="#"><%= link_to "ログイン", new_user_session_path %></a></li>
+        <% end %>
+      </ul>
     </header>
+
     </div>
     <% if user_signed_in? %>
       <%= render 'layouts/search' %>
