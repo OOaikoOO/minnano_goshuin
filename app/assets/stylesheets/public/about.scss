@@ -1,17 +1,17 @@
-body.top-page {
-  background-image: image-url("top.jpg");
+body.about-page {
+  background-image: image-url("about.jpg");
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-
+  
   .container {
     text-align: left;
   }
 
   .heading-container {
-    margin-top: 40px;
-    margin-bottom: 80px; /* 左上に配置するための余白 */
+    margin-top: 20px;
+    margin-bottom: 40px; /* 左上に配置するための余白 */
   }
 
   .heading-text {
@@ -26,6 +26,6 @@ body.top-page {
     border-radius: 5px; /* 角丸 */
     color: white;
     font-size: 15px;
-    letter-spacing: 10px; /* 文字ごとの隙間を広く */
+    letter-spacing: 7px; /* 文字ごとの隙間を広く */
   }
 }

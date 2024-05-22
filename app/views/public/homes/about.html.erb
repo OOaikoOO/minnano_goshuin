@@ -1,72 +1,25 @@
-<div class="mx-auto" style="width: 200px;">ご朱印とは</div>
-    <span class="bg-wrap"><span class="inn small">神社やお寺を参拝した証としていただく、神仏とのご縁の記録です。</span></span>
-    
-    <span class="bg-wrap"><span class="inn large">このサイトについて</span></span>
-  </div>
-
-  
-<p>ご朱印とは：神社やお寺を参拝した証としていただく、神仏とのご縁の記録です。
-
-力強い墨色の筆遣いと朱色の印のコントラストや、季節によっては色鮮やかなご朱印や直書きの絵入りご朱印が存在したりなど、アート性の高さやご朱印帳自体のデザイン性の高さも人気のひとつとしてあげられます。</br>
-また、ご朱印をいただくまでの旅の楽しさや、神社仏閣それぞれの個性や歴史に触れることができるのも魅力です。</br>
-
-しかし、いざご朱印をいただこうと思っても、すべての神社仏閣でご朱印がいただけるとは限りません。</br>
-事前に調べようと思っても、有名な観光地以外では情報が少なかったり、とりあえずご朱印がいただけるからと実際に行ってみたら、階段がとても多かったり険しい山道が続いたりと準備不足で大変な思いをすることも・・・</br>
-実際に私自身も、情報不足からの準備不足で大変な思いをした経験が幾度となくありました。</br>
-
-かといって、情報が少ないからと行くのを諦めてしまうのは非常にもったいないと考えています。</br>
-
-今まで行ったことのある情報をレビューとして残しておくことで、行ったことのある人にとっては思い出の記録として残り、これから行く人にとっては情報の源になればと思い、</p>
-
-<style>
-.matrix {
-  position: relative; /* アニメーション要素に相対的な位置を指定 */
-  z-index: -1; /* メニューよりも下に配置する */
-}
-  .matrix .bg-wrap,
-  .matrix .bg-wrap .inn {
-    display: block;
-  }
-   
-  .matrix .bg-wrap {
-    overflow: hidden;
-    opacity: 0;
-  }
-   
-  .matrix .bg-wrap + .bg-wrap {
-    margin-top: 10px;
-  }
-   
-  .matrix .bg-wrap .inn.large {
-    font-size: 36px;
-    font-weight: bold;
-  }
-  .matrix .bg-wrap .inn.small {
-    font-size: 15px;
-  }
-   
-  .matrix .bg-wrap .inn {
-    opacity: 0;
-    transform: matrix(1, 0, 0, 1, 0, 100);
-    transition: 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-   
-  .matrix.is-animated .bg-wrap {
-    opacity: 1;
-  }
-   
-  .matrix.is-animated .bg-wrap .inn {
-    opacity: 1;
-    transform: matrix(1, 0, 0, 1, 0, 0);
-  }
-</style>
-
-<script>
-  // ページの読み込みが完了した後に実行する
-  document.addEventListener("DOMContentLoaded", function() {
-    // アニメーションをトリガーする要素を取得
-    var matrixElement = document.querySelector(".matrix");
-    // アニメーションを開始するために要素に特定のクラスを追加
-    matrixElement.classList.add("is-animated");
-  });
-</script>
+<body class="about-page">
+  <div class="container">
+    <div class="heading-container">
+      <h1 class="heading-text">このサイトについて</h1>
+    </div>
+    <div class="text-container">
+      <span class="background-text">
+        <h3>ご朱印とは・・・</h3></br>
+        <p>神社やお寺を参拝した証としていただく、</br>神仏とのご縁の記録です。</p>
+        力強い墨色の筆遣いと朱色の印のコントラストや、</br>
+        季節によっては色鮮やかなご朱印や直書きの絵入りご朱印が存在したりなど、</br>
+        アート性の高さやご朱印帳自体のデザイン性の高さも人気のひとつとしてあげられます。</br>
+        ご朱印をいただくまでの旅の楽しさや、神社仏閣それぞれの個性や歴史に触れることができるのも魅力です。</br></br>
+        しかし、いざご朱印をいただこうと思っても、すべての神社仏閣でご朱印がいただけるとは限りません。</br>
+        事前に調べようと思っても、有名な観光地以外では情報が少なかったり、</br>
+        とりあえずご朱印がいただけるからと実際に行ってみたら、</br>
+        階段がとても多かったり険しい山道が続いたりと準備不足で大変な思いをすることも・・・</br>
+        実際に私自身も、情報不足からの準備不足で大変な思いをした経験が幾度となくありました。</br></br>
+        
+        かといって、情報が少ないからと行くのを諦めてしまうのは非常にもったいないです。</br></br>
+        
+        今まで行ったことのある情報をレビューとして残しておくことで、</br>
+        行ったことのある人にとっては思い出の記録として残り、</br>
+        これから行く人にとっては情報の源になればと思い、このサイトを作りました。
+      </span>
