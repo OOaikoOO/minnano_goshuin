@@ -1,21 +1,57 @@
-<h1>編集画面</h1>
+<!-- 新規投稿のCSSを流用 -->
+<%= stylesheet_link_tag 'post_new' %>
+<%= render 'layouts/search' %>
+<div class="container">
+  <div class="row center-form">
+    <div class="col-lg-6">
+      <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
+        <%= render 'public/shared/error_messages', resource: f.object %>
+        <div class="border p-4 shadow border-rounded fade-in-from-bottom">
+          <div class="text-center">
+            <h1 class="mb-4">編集画面</h1>
+          </div>
 
-<%= form_with model: @post, url: post_path(@post), method: :patch do |f| %>
-  <%= render 'public/shared/error_messages', resource: f.object %>
+          <div class="form-group">
+            <h4>神社仏閣の名前</h4>
+            <%= f.text_field :title, class: "form-control", placeholder: "例）○○神社", required: true %>
+            <div class="invalid-feedback">
+              神社仏閣の名前を入力してください。
+            </div>
+          </div>
 
-  <div>
-    <h4>神社仏閣の名前</h4>
-    <%= f.text_field :title %>
+          <div class="form-group">
+            <h4>所在地</h4>
+            <%= f.text_area :address, class: "form-control", placeholder: "例）○○県 ○○市 ○○-○", required: true %>
+            <div class="invalid-feedback">
+              所在地を入力してください。
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.submit '更新', class: "btn btn-primary" %>
+            <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", style: "margin-left: 10px;" %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="mt-4">
+        <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-secondary" %>
+      </div>
+    </div>
   </div>
-  
-  <div>
-    <h4>所在地</h4>
-    <%= f.text_area :address %>
-  </div>
-  
-  <% if @post.user == current_user %>
-    <%= f.submit "更新" %>
-    <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-  <% end %>
+</div>
 
-<% end %>
+<script>
+  // JavaScriptでバリデーションを設定
+  (function () {
+    'use strict';
+    var form = document.getElementById('post-form');
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  })();
+</script>
