@@ -14,7 +14,7 @@
   <body>
     <header class="header">
       <div class="navtext-container">
-        <img src="<%= asset_path 'logo.png' %>" alt="logo" style="max-width: 400px; height: auto;">
+        <img src="<%= asset_path 'logo.png' %>" alt="logo" style="max-width: 320px; height: auto;">
       </div>
       <input type="checkbox" class="menu-btn" id="menu-btn">
       <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
@@ -22,8 +22,8 @@
         <li class="top"><a href="/">home</a></li>
         <li><a href="#"><%= link_to "このサイトについて", about_path %></a></li>
         <% if user_signed_in? %>
-          <li><a href="#"><%= link_to '投稿一覧', posts_path %></a></li>
           <li><a href="#"><%= link_to 'マイページ', user_path(current_user.id) %></a></li>
+          <li><a href="#"><%= link_to "新しく投稿する", new_post_path %></a></li>
           <li><a href="#"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></a></li>
         <% else %>
           <li><a href="#"><%= link_to "新規会員登録", new_user_registration_path %></a></li>
@@ -32,14 +32,6 @@
       </ul>
     </header>
     </div>
-    <% if user_signed_in? %>
-      <%= render 'layouts/search' %>
-    <% end %>
-    <%- if admin_signed_in? %>
-      <%= render 'layouts/admin_search' %>
-    <% end %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <%= yield %>
     <div class="fixed-bottom mx-0 bg-black bg-opacity-75 text-center text-white">
       <h5>@urushido aiko</h5>

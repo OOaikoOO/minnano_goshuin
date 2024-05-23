@@ -35,8 +35,8 @@ body {
 .header {
   top: 0;
   width: 100%;
-  z-index: 1000; /* ヘッダーを一番上に固定 */
-  position: fixed;
+  z-index: 999; /* ヘッダーを一番上に固定 */
+  position: sticky;
   background: var(--background-navbar);
   width: 100%;
   height: 52px;

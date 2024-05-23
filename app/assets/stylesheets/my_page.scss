@@ -1,0 +1,16 @@
+.page-header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.post-card {
+  margin-bottom: 20px;
+  opacity: 0; /* 初期状態で透明 */
+  transform: translateY(20px); /* 初期状態で下にオフセット */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* フェードインと移動のアニメーションを設定 */
+}
+
+.post-card.show {
+  opacity: 1; /* フェードイン時に不透明に */
+  transform: translateY(0); /* 元の位置に移動 */
+}
