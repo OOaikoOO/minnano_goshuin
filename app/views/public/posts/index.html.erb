@@ -1,20 +1,33 @@
-<h1>投稿一覧</h1>
-
-<% @posts.each do |post| %>
-  <p><%= link_to "#{post. comments. count} コメント", post_path(post.id) %></p>
-  <div>
-    <p>タイトル</p>
-    <%= link_to post.title, post_path(post.id) %>
+<%= stylesheet_link_tag 'post_index' %>
+<%= render 'layouts/search' %>
+<div class="container mt-5">
+  <h1 class="mb-4 text-center">投稿一覧</h1>
+  
+  <div class="row" id="postContainer">
+    <% @posts.each do |post| %>
+      <div class="col-md-4">
+        <div class="card post-card border-rounded shadowed">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to post.title, post_path(post.id) %></h5>
+            <p class="card-text">所在地：<%= post.address %></p>
+            <p class="card-text">投稿者：<%= link_to post.user.name, user_path(post.user) %></p>
+            <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y年%m月%d日") %></small></p>
+            <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
+</div>
 
-  <div>
-    <p>所在地</p>
-    <span><%= post.address %></span>
-  </div>
-
-  <div>
-    <p>投稿者</p>
-    <span><%= post.user.name %></span>
-  </div>
-
-<% end %>
+<script>
+  document.addEventListener('turbolinks:load', function() {
+    // カードのフェードインを適用
+    var cards = document.querySelectorAll('.post-card');
+    cards.forEach(function(card, index) {
+      setTimeout(function() {
+        card.style.opacity = '1';
+      }, index * 100); // 0.1秒ごとにずらして表示
+    });
+  });
+</script>
