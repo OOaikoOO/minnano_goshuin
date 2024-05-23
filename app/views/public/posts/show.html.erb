@@ -1,30 +1,77 @@
-<h1>投稿詳細</h1>
+<%= stylesheet_link_tag 'post_show' %>
+<div class="container mt-5">
+  <h1>投稿詳細</h1>
+  <div class="row">
 
-<div><span>神社仏閣の名前</span>：<span><%= @post.title %></span></div>
-<div><span>所在地</span>：<span><%= @post.address %></span></div>
-<div><span>投稿者</span>：<span><%= link_to @post.user.name, user_path(@post.user) %></span></div>
+    <div class="col-md-6">
+      <div class="card card-custom p-3 mb-3">
+        <div><strong>寺社名</strong>：<span><%= @post.title %></span></div>
+        <div><strong>所在地</strong>：<span><%= @post.address %></span></div>
+        <div><strong>投稿者</strong>：<span><%= link_to @post.user.name, user_path(@post.user) %></span></div>
 
-<% if @post.user == current_user %>
-  <%= link_to "編集", edit_post_path(@post) %>
-  <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-<% end %>
+        <% if @post.user == current_user %>
+          <div class="mt-3">
+            <%= link_to "編集", edit_post_path(@post), class: "btn btn-primary btn-sm" %>
+            <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        <% end %>
+      </div>
 
-<%= form_with(model: [@post, @comment], method: :post) do |f| %>
-  <div>
-    <%= f.text_area :comment, placeholder: "コメントをここに" %>
-    <%= f.hidden_field :post_id, value: @post.id %>
+      <div class="card card-custom p-3">
+        <%= form_with(model: [@post, @comment], method: :post, local: true, html: { id: 'commentForm' }) do |f| %>
+          <div class="mb-3">
+            <%= f.text_area :comment, placeholder: "コメントをここに", class: "form-control", id: "commentField" %>
+            <%= f.hidden_field :post_id, value: @post.id %>
+            <div class="invalid-feedback">コメントを入力してください。</div>
+          </div>
+          <div>
+            <%= f.submit "コメントする", class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h5>コメント一覧</h5>
+      <% if @comments.empty? %>
+        <div class="card card-custom p-3">
+          <p>コメントがありません</p>
+        </div>
+      <% else %>
+        <% @comments.each do |comment| %>
+          <div class="card card-custom comment-card p-3">
+            <div><strong>投稿者：<%= link_to comment.user.name, user_path(comment.user) %></strong></div>
+            <div><%= comment.comment %></div>
+            <div class="text-muted"><%= comment.created_at.strftime('%Y/%m/%d') %></div>
+            <% if current_user == comment.user %>
+              <div class="mt-2">
+                <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <%= f.submit "コメントする" %>
-  </div>
-<% end %>
+</div>
 
-<p>コメント一覧</p>
-<% @comments.each do |comment| %>
-  <%= comment.user.name %>
-  <%= comment.comment %>
-  <%= comment.created_at.strftime('%Y/%m/%d') %>
-  <% if current_user == comment.user %>
-    <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-  <% end %>
-<% end %>
+<script>
+  document.addEventListener('turbolinks:load', function() {
+    var allCards = document.querySelectorAll('.card-custom');
+    allCards.forEach(function(card, index) {
+      setTimeout(function() {
+        card.classList.add('show');
+      }, index * 100);
+    });
+
+    document.getElementById('commentForm').addEventListener('submit', function(event) {
+      var commentField = document.getElementById('commentField');
+      if (commentField.value.trim() === "") {
+        commentField.classList.add('is-invalid');
+        event.preventDefault();
+      } else {
+        commentField.classList.remove('is-invalid');
+      }
+    });
+  });
+</script>

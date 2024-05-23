@@ -1,0 +1,15 @@
+.card-custom {
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.card-custom.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.comment-card {
+  margin-bottom: 15px;
+}
