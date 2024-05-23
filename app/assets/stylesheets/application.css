@@ -14,11 +14,15 @@
  *= require_self
  */
 .fixed-bottom {
+  text-align: center;
   background-color: rgba(0, 0, 0, 0.75); /* フッターの背景色と透明度 */
   color: white;
   z-index: 1000; /* 他の要素の上に表示するためのz-index */
   padding: 10px 0; /* フッター内の余白 */
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
  
 body {

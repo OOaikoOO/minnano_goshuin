@@ -31,9 +31,8 @@
         <% end %>
       </ul>
     </header>
-    </div>
     <%= yield %>
-    <div class="fixed-bottom mx-0 bg-black bg-opacity-75 text-center text-white">
+    <div class="fixed-bottom">
       <h5>@urushido aiko</h5>
       <% unless admin_signed_in? %>
         <%= link_to "管理者ログイン", new_admin_session_path %>
