@@ -1,18 +1,48 @@
-<%= form_with model: @post do |f| %>
-  <%= render 'public/shared/error_messages', resource: f.object %>
+<%= stylesheet_link_tag 'new_post' %>
+  <div class="container">
+    <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
+      <%= render 'public/shared/error_messages', resource: f.object %>
+      <div class="border p-4 shadow border-rounded fade-in-from-bottom">
+        <h1 class="mb-4">新規投稿</h1>
+        
+        <div class="form-group">
+          <h4>寺社名</h4>
+          <%= f.text_field :title, class: "form-control", placeholder: "", required: true %>
+          <div class="invalid-feedback">
+            寺社名を入力してください。
+          </div>
+        </div>
 
+        <div class="form-group">
+          <h4>所在地</h4>
+          <%= f.text_area :address, class: "form-control", placeholder: "所在地を入力してください", required: true %>
+          <div class="invalid-feedback">
+            所在地を入力してください。
+          </div>
+        </div>
 
-  <div><h1>新規投稿</h1></div>
-  
-  <div>
-    <h4>タイトル</h4>
-    <%= f.text_field :title %>
+        <div class="form-group">
+          <%= f.submit '投稿する', class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="mt-4">
+      <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-secondary" %>
+    </div>
   </div>
 
-  <div>
-    <h4>所在地</h4>
-    <%= f.text_area :address %>
-  </div>
-
-  <div><%= f.submit '投稿' %></div>
-<% end %>
+  <script>
+    // JavaScriptでバリデーションを設定
+    (function () {
+      'use strict';
+      var form = document.getElementById('post-form');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    })();
+  </script>

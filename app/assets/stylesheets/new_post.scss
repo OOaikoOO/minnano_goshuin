@@ -1,0 +1,27 @@
+.container {
+  margin-top: 50px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.border-rounded {
+  border-radius: 10px;
+}
+
+.fade-in-from-bottom {
+  opacity: 0; /* 最初は非表示 */
+  transform: translateY(20px);
+  animation: fadeInFromBottom 0.5s ease forwards; /* アニメーション適用 */
+}
+@keyframes fadeInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* 元の位置に戻る */
+  }
+}
