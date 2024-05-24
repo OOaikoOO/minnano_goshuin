@@ -20,15 +20,20 @@
       <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
       <ul class="menu">
         <li class="top"><a href="/">home</a></li>
-        <li><%= link_to "このサイトについて", about_path %></li>
-        <% if user_signed_in? %>
-          <li><%= link_to 'マイページ', user_path(current_user.id) %></li>
-          <li><%= link_to "新しく投稿する", new_post_path %></li>
-          <li><%= link_to "投稿一覧を見る", posts_path %></li>
-          <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+        <% if admin_signed_in? %>
+          <li><%= link_to "会員一覧を見る", admin_dashboard_path %></li>
+          <li><%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete %></li>
         <% else %>
-          <li><%= link_to "新規会員登録", new_user_registration_path %></li>
-          <li><%= link_to "ログイン", new_user_session_path %></li>
+          <li><%= link_to "このサイトについて", about_path %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to 'マイページ', user_path(current_user.id) %></li>
+            <li><%= link_to "新しく投稿する", new_post_path %></li>
+            <li><%= link_to "投稿一覧を見る", posts_path %></li>
+            <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+          <% else %>
+            <li><%= link_to "新規会員登録", new_user_registration_path %></li>
+            <li><%= link_to "ログイン", new_user_session_path %></li>
+          <% end %>
         <% end %>
       </ul>
     </header>
@@ -38,7 +43,7 @@
       <% unless admin_signed_in? %>
         <%= link_to "管理者ログイン", new_admin_session_path %>
       <% end %>
-      <%- if admin_signed_in? %>
+      <% if admin_signed_in? %>
         <%= link_to "管理者ログアウト", destroy_admin_session_path, method: :delete %>
       <% end %>
     </div>
