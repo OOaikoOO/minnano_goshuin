@@ -1,5 +1,18 @@
-<h1>本当に退会しますか？</h1>
-<p>退会するとこれまでの情報がすべて削除されます</p>
+<%= stylesheet_link_tag 'check' %>
+<div class="container">
+  <div class="row center-form">
+    <div class="col-lg-6">
+      <div class="border p-4 shadow border-rounded">
+        <div class="text-center">
+          <h1 class="mb-4">本当に退会しますか？</h1>
+          <p>退会するとこれまでの情報がすべて削除されます。</p>
+        </div>
 
-<%= link_to "退会しない", user_path(@user) %>
-<%= link_to "退会する", withdraw_user_path(@user.id), method: :patch, data: { confirm: "本当に退会しますか？？" } %>
+        <div class="text-center">
+          <%= link_to "退会しない", user_path(@user), class: "btn btn-secondary mx-2" %>
+          <%= link_to "退会する", withdraw_user_path(@user.id), method: :patch, class: "btn btn-danger mx-2", data: { confirm: "本当に退会しますか？" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+.admin-login-form {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 50px auto;
+  max-width: 500px;
+  background-color: #fffacd;
+}
+
+.submit-btn {
+  background-color: #ffd700;
+  border-color: #ffd700;
+}
+
+/* バリデーションエラー時のスタイル */
+.was-validated .form-control:invalid {
+  border-color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.was-validated .form-control:invalid ~ .invalid-feedback {
+  display: block;
+}
+
+.invalid-feedback {
+  display: none;
+  color: #dc3545;
+}

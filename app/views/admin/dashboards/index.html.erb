@@ -1,5 +1,44 @@
-<h4>ユーザー一覧</h4>
+<%= render 'layouts/admin_search' %>
 
-<% @users.each do |user| %>
-  <%= link_to user.name, admin_user_path(user) %>
-<% end %>
+<div class="container mt-5">
+  <h4 class="mb-4 text-center">ユーザー一覧</h4>
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-md-4 mb-3">
+        <div class="card user-card border-rounded shadowed h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to user.name, admin_user_path(user) %></h5>
+            <p class="card-text">登録日時：<%= user.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+            <p class="card-text">ステータス：<%= user.is_deleted ? "退会済み" : "有効" %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .user-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  .card-title a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  .card-title a:hover {
+    text-decoration: underline;
+  }
+
+  .border-rounded {
+    border-radius: 10px;
+  }
+
+  .shadowed {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+</style>

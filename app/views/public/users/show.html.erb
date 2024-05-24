@@ -1,17 +1,60 @@
-<h1>マイページ</h1>
+<%= stylesheet_link_tag 'my_page' %>
+<%= render 'layouts/search' %>
 
-<h4>投稿一覧</h4>
-<% @posts.each do |post| %>
-  <p><%= link_to "#{post. comments. count} コメント", post_path(post.id) %></p>
-  <div><span>タイトル</span>：<span><%= link_to post.title, post_path(post.id) %></span></div>
-  <div><span>所在地</span>：<span><%= post.address %></span></div>
+<div class="page-header">
+  <div class="text-center mb-4">
+    <h1>マイページ</h1>
+    <% if @user == current_user %>
+      <h4>ようこそ！　<strong><%= current_user.name %></strong>　さん</h4>
+      <div class="d-flex justify-content-center mt-3">
+        <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-secondary me-2" %>
+        <%= link_to "投稿する", new_post_path, class: "btn btn-primary" %>
+      </div>
+    <% else %>
+      <h4><%= @user.name %>さんのマイページです</h4>
+    <% end %>
+  </div>
+</div>
 
-  <% if post.user == current_user %>
-    <%= link_to "編集", edit_post_path(post) %>
-    <%= link_to "削除", post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-  <% end %>
-<% end %>
+<div class="container">
+  <h4 class="mb-3">投稿一覧</h4>
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-md-4 post-card">
+        <div class="card h-100">
+          <div class="card-body">
+            <p><%= link_to "#{post.comments.count} コメント", post_path(post.id), class: "text-decoration-none" %></p>
+            <div><span class="fw-bold">寺社名</span>：<span><%= link_to post.title, post_path(post.id), class: "text-decoration-none" %></span></div>
+            <div><span class="fw-bold">所在地</span>：<span><%= post.address %></span></div>
+          </div>
+          <% if user_signed_in? && post.user == current_user %>
+            <div class="card-footer">
+              <%= link_to "編集", edit_post_path(post), class: "btn btn-primary btn-sm me-2" %>
+              <%= link_to "削除", post_path(post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<% if @user == current_user %>
-  <div><%= link_to "プロフィール編集", edit_user_path(current_user) %></div>
-<% end %>
+<script>
+  function fadeInCards() {
+    const cards = document.querySelectorAll('.post-card');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    });
+
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+  }
+
+  document.addEventListener("turbolinks:load", fadeInCards);
+</script>
