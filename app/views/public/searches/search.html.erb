@@ -6,7 +6,7 @@
 
   <% if @model == "user" %>
     <% if @records.any? %>
-      <h4>【<%= @content %>】の検索結果</h4>
+      <h4>【<%= @content %>】さんの検索結果</h4>
       <% @records.each_slice(3) do |users| %>
         <div class="row">
           <% users.each do |user| %>
@@ -30,7 +30,7 @@
         <div class="col">
           <h4>
             <% if @model == "post" %>
-              寺社名【<%= @content %>】
+              寺社名：【<%= @content %>】
             <% elsif @model == "address" %>
               【<%= @content %>】
             <% end %>
