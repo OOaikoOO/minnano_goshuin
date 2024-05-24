@@ -1,0 +1,53 @@
+body.about-page {
+  background-image: url("about.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.about-page .container {
+  text-align: left;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  color: white;
+}
+
+.fade-in-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fade-in-item p, h1 {
+  letter-spacing: 0.5em;
+}
+
+.fade-in-item p {
+  font-size: 1.2em;
+}
+
+.fade-in-item {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/* メディアクエリを使用してスマホ対応 */
+@media (max-width: 768px) {
+  .about-page .container {
+    padding: 10px;
+  }
+
+  .fade-in-item h3, .fade-in-item h1, .fade-in-item p {
+    font-size: 0.8em;
+  }
+}

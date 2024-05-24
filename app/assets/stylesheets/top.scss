@@ -1,0 +1,60 @@
+body.top-page {
+  background-image: url("top.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.container {
+  text-align: left;
+}
+
+.heading-container {
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+
+.heading-text {
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+  letter-spacing: 27px;
+  opacity: 0;
+  animation: blurToClear 1s forwards;
+}
+
+.text-container {
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 15px;
+  letter-spacing: 10px;
+  opacity: 0;
+  animation: blurToClear 1s forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes blurToClear {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* メディアクエリを使用して画面サイズに応じてテキストサイズを調整 */
+@media (max-width: 768px) {
+  .heading-text {
+    font-size: 19px; /* テキストサイズを小さく調整 */
+    letter-spacing: 13px; /* 文字間隔も調整 */
+  }
+
+  .text-container {
+    font-size: 11px; /* テキストサイズを小さく調整 */
+    letter-spacing: 2px; /* 文字間隔も調整 */
+  }
+}

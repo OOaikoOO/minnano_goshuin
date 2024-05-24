@@ -1,26 +1,59 @@
-<h1>検索結果</h1>
+<%= stylesheet_link_tag 'post_index' %>
+<%= render 'layouts/admin_search' %>
 
-<% if @model == "user" %>
-  <h4>ユーザー名[<%= @content %>]の検索結果</h4>
-  <% @records.each do |user| %>
-    <%= link_to user.name, admin_user_path(user) %>
+<div class="container mt-5">
+  <h1 class="mb-4 text-center">検索結果</h1>
+
+  <% if @model == "user" %>
+    <% if @records.any? %>
+      <h4>会員名：【<%= @content %>】さんの検索結果</h4>
+      <div class="row">
+        <% @records.each do |user| %>
+          <div class="col-md-4">
+            <div class="card user-card border-rounded shadowed mb-3">
+              <div class="card-body">
+                <h5 class="card-title"><%= link_to user.name, admin_user_path(user) %></h5>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%= render partial: 'no_results' %>
+    <% end %>
+
+  <% elsif @model == "post" || @model == "address" %>
+    <% if @records.any? %>
+      <h4>寺社名：【<%= @content %>】の検索結果</h4>
+      <div class="row">
+        <% @records.each do |post| %>
+          <div class="col-md-6">
+            <div class="card post-card border-rounded shadowed mb-3">
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text">所在地：<%= post.address %></p>
+                <p class="card-text">投稿者：<%= link_to post.user.name, user_path(post.user.id) %></p>
+                <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y年%m月%d日") %></small></p>
+                <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%= render partial: 'no_results' %>
+    <% end %>
   <% end %>
-  
-<% elsif @model == "post" %>
-  <h4>神社仏閣の名前[<%= @content %>]の検索結果</h4>
-  <% @records.each do |post| %>
-    <%= post.title %>
-    <%= post.address %>
-    <%= link_to post.user.name, admin_user_path(post.user) %>
-  <% end %>
-  
-<% elsif @model == "comment" %>
-  <h4>[<%= @content %>]の検索結果</h4>
-  <% @records.each do |comment| %>
-    <%= comment.comment %>
-    <%= link_to comment.user.name, admin_user_path(comment.user) %>
-  <% end %>
-  
-<% else %>
-    <h4>[<%= @content %>]は見つかりませんでした</h4>
-<% end %>
+</div>
+
+<script>
+  document.addEventListener('turbolinks:load', function() {
+    // カードのフェードインを適用
+    var cards = document.querySelectorAll('.post-card, .user-card');
+    cards.forEach(function(card, index) {
+      setTimeout(function() {
+        card.style.opacity = '1';
+      }, index * 100); // 0.1秒ごとにずらして表示
+    });
+  });
+</script>
