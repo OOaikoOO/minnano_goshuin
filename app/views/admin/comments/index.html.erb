@@ -1,4 +1,5 @@
-<h1>会員<%= @user.name %>さんのコメント一覧</h1>
+<%= render 'layouts/admin_search' %>
+<h1>会員名：【<%= @user.name %>】さんのコメント一覧</h1>
 
 <% if @comments.present? %>
   <div class="container mt-4">
@@ -8,8 +9,8 @@
           <div class="card">
             <div class="card-body">
               <p class="card-text"><%= comment.comment %></p>
-              <p class="card-text">コメント投稿日時: <%= comment.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
-              <p class="card-text">関連する投稿: <%= link_to comment.post.title, post_path(comment.post) %></p>
+              <p class="card-text">コメント投稿日時： <%= comment.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+              <p class="card-text">関連する投稿： <%= comment.post.title %></p>
               <%= link_to "削除", admin_user_comment_path(@user, comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
             </div>
           </div>
