@@ -30,6 +30,8 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :comments, dependent: :destroy
+  # タグ付け機能
+  acts_as_taggable_on :tags
 
   validates :title, presence: true
   validates :address, presence: true

@@ -66,3 +66,5 @@ group :production do
   gem "net-pop"
   gem "net-imap"
 end
+
+gem 'acts-as-taggable-on', '~> 7.0'

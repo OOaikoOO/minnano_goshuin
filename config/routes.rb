@@ -1,11 +1,24 @@
 Rails.application.routes.draw do
-
+  # 管理者用
   namespace :admin do
     get 'comments/index'
-  end
-  namespace :admin do
     get 'posts/index'
+    get "search" => "searches#search"
+    root 'dashboards#index'
+    get 'dashboard', to: 'dashboards#index', as: :dashboard
+
+    # ユーザー退会処理関連
+    resources :users, only: [:show] do
+      # 特定（個々）のユーザーに対して退会処理を行うためmemberを使用
+      member do
+        get "withdraw", to: "users#withdraw"
+        patch "withdraw", to: "users#withdraw"
+      end
+      resources :posts, only: [:index, :destroy]
+      resources :comments, only: [:index, :destroy]
+    end
   end
+
   # ユーザー用
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
@@ -15,7 +28,7 @@ Rails.application.routes.draw do
   patch '/users/withdraw' => 'public/users#withdraw', as: :withdraw_user
 
   # 管理者用ログイン関連
-    devise_for :admin, skip: [:registrations, :passwords], controllers: {
+  devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
 
@@ -30,25 +43,11 @@ Rails.application.routes.draw do
     get "search" => "searches#search"
     resources :posts do
       resources :comments, only: [:create, :destroy]
+      collection do
+        get 'tagged/:tag', to: 'posts#tagged', as: :tagged
+      end
     end
     resources :users
-  end
-
-  # 管理者
-  namespace :admin do
-    get "search" => "searches#search"
-    root 'dashboards#index'
-    get 'dashboard', to: 'dashboards#index', as: :dashboard
-    # ユーザー退会処理関連
-    resources :users, only: [:show] do
-      # 特定（個々）のユーザーに対して退会処理を行うためmemberを使用
-      member do
-        get "withdraw", to: "users#withdraw"
-        patch "withdraw", to: "users#withdraw"
-      end
-      resources :posts, only: [:index, :destroy]
-      resources :comments, only: [:index, :destroy]
-    end
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

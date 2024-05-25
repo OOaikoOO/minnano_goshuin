@@ -1,8 +1,16 @@
 <%= stylesheet_link_tag 'post_index' %>
 <%= render 'layouts/search' %>
+
 <div class="container mt-5">
   <h1 class="mb-4 text-center">投稿一覧</h1>
-  
+  <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-secondary mt-3" %>
+  <% if params[:tag].present? %>
+    <div class="mb-3">
+      <p>タグ: <%= params[:tag] %> による絞り込み結果</p>
+      <%= link_to '絞り込み解除', posts_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+
   <div class="row" id="postContainer">
     <% @posts.each do |post| %>
       <div class="col-md-4">
@@ -13,6 +21,11 @@
             <p class="card-text">投稿者：<%= link_to post.user.name, user_path(post.user) %></p>
             <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y年%m月%d日") %></small></p>
             <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
+            <p>タグ：
+            <% post.tag_list.each do |tag| %>
+              <%= link_to tag, tagged_posts_path(tag: tag), class: "btn btn-primary" %>
+            <% end %>
+            </p>
           </div>
         </div>
       </div>
@@ -21,13 +34,13 @@
 </div>
 
 <script>
-  document.addEventListener('turbolinks:load', function() {
-    // カードのフェードインを適用
-    var cards = document.querySelectorAll('.post-card');
-    cards.forEach(function(card, index) {
-      setTimeout(function() {
-        card.style.opacity = '1';
-      }, index * 100); // 0.1秒ごとにずらして表示
-    });
+document.addEventListener('turbolinks:load', function() {
+  // カードのフェードインを適用
+  var cards = document.querySelectorAll('.post-card');
+  cards.forEach(function(card, index) {
+    setTimeout(function() {
+      card.style.opacity = '1';
+    }, index * 100); // 0.1秒ごとにずらして表示
   });
+});
 </script>

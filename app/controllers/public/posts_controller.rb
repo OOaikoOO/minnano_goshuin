@@ -1,5 +1,5 @@
 class Public::PostsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show]
 
   def new
     @post = Post.new
@@ -16,7 +16,11 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
+    if params[:tag].present?
+      @posts = Post.tagged_with(params[:tag])
+    else
+      @posts = Post.all
+    end
   end
 
   def show
@@ -43,15 +47,19 @@ class Public::PostsController < ApplicationController
     end
   end
 
-  def destroy
-    @post = Post.find(params[:id])
-    @post.destroy
-    redirect_to '/posts'
+  # タグで投稿を絞り込む
+  def tagged
+    if params[:tag].present?
+      @posts = Post.tagged_with(params[:tag])
+    else
+      @posts = Post.all
+    end
+    render :index
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :address)
+    params.require(:post).permit(:title, :address, :tag_list)
   end
 end
