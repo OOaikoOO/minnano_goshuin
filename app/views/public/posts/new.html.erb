@@ -1,15 +1,17 @@
-<%= stylesheet_link_tag 'post_new' %>
 <%= render 'layouts/search' %>
+
 <div class="container">
   <div class="row center-form">
     <div class="col-lg-6">
       <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
         <%= render 'public/shared/error_messages', resource: f.object %>
         <div class="border p-4 shadow border-rounded fade-in-from-bottom">
+          <!-- 評価のフォーム -->
           <div class="text-center">
             <h1 class="mb-4">新規投稿</h1>
           </div>
           
+          <!-- 寺社名フォーム -->
           <div class="form-group">
             <h4>寺社名</h4>
             <%= f.text_field :title, class: "form-control", placeholder: "例）○○神社", required: true %>
@@ -18,6 +20,7 @@
             </div>
           </div>
 
+          <!-- 所在地フォーム -->
           <div class="form-group">
             <h4>所在地</h4>
             <%= f.text_area :address, class: "form-control", placeholder: "例）○○県 ○○市 ○○-○", required: true %>
@@ -26,23 +29,27 @@
             </div>
           </div>
 
+          <!-- タグ入力フォーム -->
           <div class="form-group">
             <%= f.label :"タグ入力欄（半角コンマ（,）で区切ると複数タグ付けできます）" %>
             <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: 'form-control', placeholder: "例）景色がきれい,駐車場あり" %>
           </div>
 
+          <!-- 画像アップロードフォーム -->
           <div class="form-group">
             <%= f.label :image, "画像アップロード" %>
-            <%= f.file_field :image, class: "form-control-file", required: true, onchange: "previewImage(this);" %>
+            <%= f.file_field :image, class: "form-control-file", onchange: "previewImage(this);" %>
             <div id="image-preview"></div>
           </div>
           
+          <!-- 投稿ボタン -->
           <div class="form-group">
             <%= f.submit '投稿する', class: "btn btn-primary" %>
           </div>
         </div>
       <% end %>
 
+      <!-- マイページに戻るリンク -->
       <div class="mt-4">
         <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-secondary" %>
       </div>

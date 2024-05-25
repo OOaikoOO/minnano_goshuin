@@ -7,6 +7,15 @@
       <% @posts.each do |post| %>
         <div class="col-md-4 mb-4">
           <div class="card">
+            <% if post.image.attached? %>
+              <%= link_to post_path(post) do %>
+                <%= image_tag post.image.variant(resize_to_fill: [300, 200]), class: "card-img-top img-thumbnail" %>
+              <% end %>
+            <% else %>
+              <%= link_to post_path(post) do %>
+                <%= image_tag 'no_image.png', class: "card-img-top img-thumbnail" %>
+              <% end %>
+            <% end %>
             <div class="card-body">
               <h5 class="card-title"><%= post.title %></h5>
               <p class="card-text">所在地: <%= post.address %></p>

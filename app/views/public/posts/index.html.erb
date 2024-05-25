@@ -10,6 +10,14 @@
       <%= link_to '絞り込み解除', posts_path, class: 'btn btn-secondary' %>
     </div>
   <% end %>
+  
+  <div class="sort-options">
+    <%= form_with url: posts_path, method: :get, local: true do |f| %>
+      <%= f.label :sort, "ソート順" %>
+      <%= f.select :sort, options_for_select([["新しい順", 'created_at_desc'], ["古い順", 'created_at_asc'], ["コメントが多い順", 'comments_count_desc'], ["コメントが少ない順", 'comments_count_asc']], selected: @sort) %>
+      <%= f.submit '適用', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 
   <div class="row" id="postContainer">
     <% @posts.each do |post| %>
@@ -17,7 +25,7 @@
         <div class="card post-card border-rounded shadowed">
           <%= link_to post_path(post) do %>
             <% if post.image.attached? %>
-              <%= image_tag post.image.variant(resize_to_fill: [300, 200]), class: "card-img-top img-thumbnail" %>
+              <%= image_tag post.image.variant(resize_to_fit: [200, 200]), class: "card-img-top img-thumbnail" %>
             <% else %>
               <%= image_tag 'no_image.png', class: "card-img-top img-thumbnail" %>
             <% end %>

@@ -16,10 +16,23 @@ class Public::PostsController < ApplicationController
   end
 
   def index
+    @posts = Post.all
+    # タグでフィルタリング
     if params[:tag].present?
-      @posts = Post.tagged_with(params[:tag])
-    else
-      @posts = Post.all
+      @posts = @posts.tagged_with(params[:tag])
+    end
+    
+    # 投稿のソート機能
+    @sort = params[:sort] || 'created_at_desc'
+    case @sort
+    when 'created_at_asc'
+      @posts = @posts.order(created_at: :asc)
+    when 'created_at_desc'
+      @posts = @posts.order(created_at: :desc)
+    when 'comments_count_asc'
+      @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) ASC')
+    when 'comments_count_desc'
+      @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
     end
   end
 
@@ -47,19 +60,9 @@ class Public::PostsController < ApplicationController
     end
   end
 
-  # タグで投稿を絞り込む
-  def tagged
-    if params[:tag].present?
-      @posts = Post.tagged_with(params[:tag])
-    else
-      @posts = Post.all
-    end
-    render :index
-  end
-
   private
 
   def post_params
-    params.require(:post).permit(:title, :address, :tag_list, :image)
+    params.require(:post).permit(:title, :address, :tag_list, :image, :star)
   end
 end
