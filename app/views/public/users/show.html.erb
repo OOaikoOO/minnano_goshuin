@@ -22,6 +22,15 @@
     <% @posts.each do |post| %>
       <div class="col-md-4 post-card">
         <div class="card h-100">
+          <% if post.image.attached? %>
+            <%= link_to post_path(post) do %>
+              <%= image_tag post.image.variant(resize_to_fill: [150, 150]), class: "card-img-top img-thumbnail" %>
+            <% end %>
+          <% else %>
+            <%= link_to post_path(post) do %>
+              <%= image_tag 'no_image.png', class: "card-img-top img-thumbnail" %>
+            <% end %>
+          <% end %>
           <div class="card-body">
             <p><%= link_to "#{post.comments.count} コメント", post_path(post.id), class: "text-decoration-none" %></p>
             <div><span class="fw-bold">寺社名</span>：<span><%= link_to post.title, post_path(post.id), class: "text-decoration-none" %></span></div>

@@ -30,6 +30,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_one_attached :image
   # タグ付け機能
   acts_as_taggable_on :tags
 

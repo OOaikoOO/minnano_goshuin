@@ -28,6 +28,12 @@
           </div>
 
           <div class="form-group">
+            <h4>画像アップロード</h4>
+            <%= f.file_field :image, class: "form-control-file", onchange: "previewImage(this);" %>
+            <div id="image-preview"></div>
+          </div>
+
+          <div class="form-group">
             <%= f.submit '更新', class: "btn btn-primary" %>
             <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", style: "margin-left: 10px;" %>
           </div>
@@ -42,16 +48,43 @@
 </div>
 
 <script>
-  // JavaScriptでバリデーションを設定
-  (function () {
-    'use strict';
-    var form = document.getElementById('post-form');
-    form.addEventListener('submit', function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      form.classList.add('was-validated');
-    }, false);
-  })();
+// JavaScriptでバリデーションと画像プレビューを設定
+(function () {
+  'use strict';
+  var form = document.getElementById('post-form');
+  form.addEventListener('submit', function (event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  }, false);
+
+  // 画像のプレビュー表示を設定
+  function previewImage(input) {
+    var preview = document.getElementById('image-preview');
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
+    }
+
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var image = document.createElement('img');
+        image.src = e.target.result;
+        image.style.maxWidth = '200px'; // プレビュー画像の最大幅を設定
+        image.style.maxHeight = '200px'; // プレビュー画像の最大高さを設定
+        preview.appendChild(image);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  // ファイルが選択されたときにプレビューを表示する
+  var fileInput = document.querySelector('.form-control-file');
+  fileInput.addEventListener('change', function() {
+    previewImage(this);
+  });
+})();
+
 </script>
