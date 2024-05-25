@@ -26,6 +26,11 @@
             <p><%= link_to "#{post.comments.count} コメント", post_path(post.id), class: "text-decoration-none" %></p>
             <div><span class="fw-bold">寺社名</span>：<span><%= link_to post.title, post_path(post.id), class: "text-decoration-none" %></span></div>
             <div><span class="fw-bold">所在地</span>：<span><%= post.address %></span></div>
+            <div><span class="fw-bold">タグ</span>：
+              <% post.tag_list.each do |tag| %>
+                <span class="badge bg-primary text-white me-1"><%= link_to tag, tagged_posts_path(tag: tag) %></span>
+              <% end %>
+            </div>
           </div>
           <% if user_signed_in? && post.user == current_user %>
             <div class="card-footer">

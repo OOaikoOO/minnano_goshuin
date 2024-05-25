@@ -1,14 +1,20 @@
 <%= stylesheet_link_tag 'post_show' %>
 <%= render 'layouts/search' %>
+
 <div class="container mt-5">
   <h1>投稿詳細</h1>
   <div class="row">
-
     <div class="col-md-6">
       <div class="card card-custom p-3 mb-3">
         <div><strong>寺社名</strong>：<span><%= @post.title %></span></div>
         <div><strong>所在地</strong>：<span><%= @post.address %></span></div>
         <div><strong>投稿者</strong>：<span><%= link_to @post.user.name, user_path(@post.user) %></span></div>
+
+        <div><strong>タグ</strong>：<span>
+          <% @post.tag_list.each do |tag| %>
+            <%= link_to tag, tagged_posts_path(tag), class: "badge bg-primary text-white" %>
+          <% end %>
+        </span></div>
 
         <% if @post.user == current_user %>
           <div class="mt-3">
