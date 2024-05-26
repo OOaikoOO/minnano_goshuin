@@ -6,11 +6,11 @@
       <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
         <%= render 'public/shared/error_messages', resource: f.object %>
         <div class="border p-4 shadow border-rounded fade-in-from-bottom">
-          <!-- 評価のフォーム -->
           <div class="text-center">
             <h1 class="mb-4">新規投稿</h1>
           </div>
           
+                    <!-- 評価のフォーム -->
           <div class="form-group" id="post_raty"></div>
           
           <!-- 寺社名フォーム -->
@@ -89,7 +89,8 @@ function previewImage(input) {
     starOn: "<%= asset_path('star-on.png') %>",
     starOff: "<%= asset_path('star-off.png') %>",
     starHalf: "<%= asset_path('star-half.png') %>",
-    half: true
+    half: true,
+    scoreName: 'post[star]'
    };
   raty(elem,opt);
 </script>  

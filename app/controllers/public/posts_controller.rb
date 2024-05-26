@@ -41,6 +41,7 @@ class Public::PostsController < ApplicationController
     @user = @post.user
     @comments = @post.comments
     @comment = Comment.new
+    @star_rating = @post.star.to_f
   end
 
   def edit
@@ -51,7 +52,7 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.user == current_user
       if @post.update(post_params)
-        redirect_to post_path(@post)
+        redirect_to post_path(@post), notice: "投稿が更新されました"
       else
         render :edit
       end
@@ -60,10 +61,20 @@ class Public::PostsController < ApplicationController
     end
   end
   
+  def destroy
+    @post = Post.find(params[:id])
+    if @post.user == current_user
+      @post.destroy
+      redirect_to posts_path, notice: '投稿が削除されました'
+    else
+      redirect_to posts_path, notice: "他のユーザーの投稿を削除することはできません"
+    end
+  end
+  
   # タグで投稿を絞り込む
   def tagged
     if params[:tag].present?
-      @posts = Post.tagged_with(params[:tag])
+      @posts = Post.tagged_with(params[:tag]).page(params[:page])
     else
       @posts = Post.all
     end
@@ -73,6 +84,6 @@ class Public::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :address, :tag_list, :image)
+    params.require(:post).permit(:title, :address, :tag_list, :image, :star)
   end
 end

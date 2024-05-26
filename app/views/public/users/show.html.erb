@@ -33,6 +33,7 @@
           <% end %>
           <div class="card-body">
             <p><%= link_to "#{post.comments.count} コメント", post_path(post.id), class: "text-decoration-none" %></p>
+            <div id="post_raty_<%= post.id %>" data-star="<%= post.star.to_f %>"></div>
             <div><span class="fw-bold">寺社名</span>：<span><%= link_to post.title, post_path(post.id), class: "text-decoration-none" %></span></div>
             <div><span class="fw-bold">所在地</span>：<span><%= post.address %></span></div>
             <div><span class="fw-bold">タグ</span>：
@@ -50,6 +51,7 @@
         </div>
       </div>
     <% end %>
+    <%= paginate @posts %>
   </div>
 </div>
 
@@ -72,3 +74,6 @@
 
   document.addEventListener("turbolinks:load", fadeInCards);
 </script>
+
+<!-- 評価javascript -->
+<%= render 'layouts/star' %>

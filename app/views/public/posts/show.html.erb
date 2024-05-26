@@ -13,6 +13,7 @@
         <% else %>
           <%= image_tag 'no_image.png', size: "200x200", class: "card-img-top img-fluid" %>
         <% end %>
+        <div id="post_raty_<%= @post.id %>" data-star="<%= @star_rating %>"></div>
         <div class="card-body">
           <h5 class="card-title">寺社名：<%= @post.title %></h5>
           <p class="card-text">所在地：<%= @post.address %></p>
@@ -88,3 +89,6 @@
     });
   });
 </script>
+
+<!-- 評価javascript -->
+<%= render 'layouts/star' %>

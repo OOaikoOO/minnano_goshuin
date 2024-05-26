@@ -10,7 +10,12 @@
           <div class="text-center">
             <h1 class="mb-4">編集画面</h1>
           </div>
-
+          
+          <div class="form-group">
+            <%= f.label :star, "評価の数" %>
+            <div id="post_raty" data-score="<%= @post.star %>"></div>
+          </div>
+          
           <div class="form-group">
             <h4>神社仏閣の名前</h4>
             <%= f.text_field :title, class: "form-control", placeholder: "例）○○神社", required: true %>
@@ -88,3 +93,17 @@
 })();
 
 </script>
+
+<!-- 評価javascript -->
+<script>
+  // scriptファイルをどのidの部分に配置するかを指定
+  let elem = document.querySelector('#post_raty');
+  let opt = {  
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    half: true,
+    scoreName: 'post[star]'
+   };
+  raty(elem,opt);
+</script>  
