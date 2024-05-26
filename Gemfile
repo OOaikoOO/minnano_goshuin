@@ -70,3 +70,5 @@ end
 gem 'acts-as-taggable-on', '~> 7.0'
 
 gem 'jquery-rails'
+
+gem 'kaminari','~> 1.2.1'

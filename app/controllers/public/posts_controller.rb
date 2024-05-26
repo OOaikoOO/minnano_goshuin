@@ -16,7 +16,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page])
     # タグでフィルタリング
     if params[:tag].present?
       @posts = @posts.tagged_with(params[:tag])
@@ -59,10 +59,20 @@ class Public::PostsController < ApplicationController
       redirect_to posts_path, notice: "他のユーザーの投稿を編集することはできません"
     end
   end
+  
+  # タグで投稿を絞り込む
+  def tagged
+    if params[:tag].present?
+      @posts = Post.tagged_with(params[:tag])
+    else
+      @posts = Post.all
+    end
+    render :index
+  end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :address, :tag_list, :image, :star)
+    params.require(:post).permit(:title, :address, :tag_list, :image)
   end
 end

@@ -11,6 +11,8 @@
             <h1 class="mb-4">新規投稿</h1>
           </div>
           
+          <div class="form-group" id="post_raty"></div>
+          
           <!-- 寺社名フォーム -->
           <div class="form-group">
             <h4>寺社名</h4>
@@ -78,3 +80,16 @@ function previewImage(input) {
   }
 }
 </script>
+
+<!-- 評価javascript -->
+<script>
+  // scriptファイルをどのidの部分に配置するかを指定
+  let elem = document.querySelector('#post_raty');
+  let opt = {  
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    half: true
+   };
+  raty(elem,opt);
+</script>  
