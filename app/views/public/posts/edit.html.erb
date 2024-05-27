@@ -10,7 +10,12 @@
           <div class="text-center">
             <h1 class="mb-4">編集画面</h1>
           </div>
-
+          
+          <div class="form-group">
+            <%= f.label :star, "評価の数" %>
+            <div id="post_raty" data-score="<%= @post.star %>"></div>
+          </div>
+          
           <div class="form-group">
             <h4>神社仏閣の名前</h4>
             <%= f.text_field :title, class: "form-control", placeholder: "例）○○神社", required: true %>
@@ -28,6 +33,12 @@
           </div>
 
           <div class="form-group">
+            <h4>画像アップロード</h4>
+            <%= f.file_field :image, class: "form-control-file", onchange: "previewImage(this);" %>
+            <div id="image-preview"></div>
+          </div>
+
+          <div class="form-group">
             <%= f.submit '更新', class: "btn btn-primary" %>
             <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", style: "margin-left: 10px;" %>
           </div>
@@ -41,17 +52,34 @@
   </div>
 </div>
 
+<!-- 画像プレビュー -->
+<%= render 'layouts/preview' %>
+
 <script>
-  // JavaScriptでバリデーションを設定
-  (function () {
-    'use strict';
-    var form = document.getElementById('post-form');
-    form.addEventListener('submit', function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      form.classList.add('was-validated');
-    }, false);
-  })();
+// バリデーション
+(function () {
+  'use strict';
+  var form = document.getElementById('post-form');
+  form.addEventListener('submit', function (event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  }, false);
+})();
 </script>
+
+<!-- 評価javascript -->
+<script>
+  // scriptファイルをどのidの部分に配置するかを指定
+  let elem = document.querySelector('#post_raty');
+  let opt = {  
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    half: true,
+    scoreName: 'post[star]'
+   };
+  raty(elem,opt);
+</script>  

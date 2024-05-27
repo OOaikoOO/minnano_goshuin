@@ -30,9 +30,14 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :comments, dependent: :destroy
+  has_one_attached :image
   # タグ付け機能
   acts_as_taggable_on :tags
 
   validates :title, presence: true
   validates :address, presence: true
+  
+  def average_comment_rating
+    comments.average(:star).to_f.round(2)
+  end
 end

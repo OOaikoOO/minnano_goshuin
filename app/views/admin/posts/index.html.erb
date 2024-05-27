@@ -1,26 +1,38 @@
 <%= render 'layouts/admin_search' %>
 <h1>会員名：【<%= @user.name %>】さんの投稿一覧</h1>
-
+<%= link_to "会員情報詳細に戻る", admin_user_path(@user), class: "btn btn-primary mt-3 me-2" %>
+<%= link_to "会員一覧に戻る", admin_dashboard_path, class: "btn btn-secondary mt-3" %>
 <% if @posts.present? %>
   <div class="container mt-4">
     <div class="row">
       <% @posts.each do |post| %>
         <div class="col-md-4 mb-4">
           <div class="card">
+            <% if post.image.attached? %>
+              <%= link_to post_path(post) do %>
+                <%= image_tag post.image.variant(resize_to_fill: [300, 200]), class: "card-img-top img-thumbnail" %>
+              <% end %>
+            <% else %>
+              <%= link_to post_path(post) do %>
+                <%= image_tag 'no_image.png', class: "card-img-top img-thumbnail" %>
+              <% end %>
+            <% end %>
             <div class="card-body">
+              <p>コメントの平均点: <%= @average_ratings[post.id] %>点</p>
               <h5 class="card-title"><%= post.title %></h5>
               <p class="card-text">所在地: <%= post.address %></p>
               <p class="card-text">投稿日: <%= post.created_at.strftime("%Y年%m月%d日") %></p>
+              <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
               <%= link_to "削除", admin_user_post_path(@user, post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
             </div>
           </div>
         </div>
       <% end %>
     </div>
+    <div class="d-flex justify-content-center">
+      <%= paginate @posts %>
+    </div>
   </div>
 <% else %>
   <p>投稿がありません</p>
 <% end %>
-
-<%= link_to "会員情報詳細に戻る", admin_user_path(@user), class: "btn btn-primary mt-3 me-2" %>
-<%= link_to "会員一覧に戻る", admin_dashboard_path, class: "btn btn-secondary mt-3" %>

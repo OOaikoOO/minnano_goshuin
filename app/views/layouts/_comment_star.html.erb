@@ -1,0 +1,19 @@
+<script>
+  document.addEventListener('turbolinks:load', function() {
+    document.querySelectorAll('[id^="comment_raty_"]').forEach(function(elem) {
+      if (!elem.classList.contains('raty-applied')) {
+        let rating = elem.dataset.star;
+        let opt = {
+          starOn: "<%= asset_path('star-on.png') %>",
+          starOff: "<%= asset_path('star-off.png') %>",
+          starHalf: "<%= asset_path('star-half.png') %>",
+          half: true,
+          readOnly: true,
+          score: rating
+        };
+        raty(elem, opt);
+        elem.classList.add('raty-applied');
+      }
+    });
+  });
+</script>
