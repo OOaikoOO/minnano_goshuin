@@ -28,7 +28,6 @@
 body {
   padding-bottom: 60px;
   margin: 0;
-  font-family: "Futura", Helvetica, sans-serif;
 }
 
 /* navbar背景色 */
@@ -181,4 +180,8 @@ body {
   color: #ddd;
   letter-spacing: 4px;
   font-size: 20px;
+}
+
+body {
+  font-family: "Noto Serif JP", serif !important;
 }
