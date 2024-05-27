@@ -1,11 +1,29 @@
-.post-card {
-  margin-bottom: 20px;
+.post-card .card-body {
+  line-height: 1.2; /* 行間を調整 */
 }
 
-.border-rounded {
-  border-radius: 10px;
+.post-card .card-text {
+  margin-bottom: 0.5rem; /* 下部の余白を調整 */
 }
 
-.shadowed {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.filter-sort-options .form-select, .filter-sort-options .btn {
+  margin-top: 0.5rem; /* フォーム内の要素に少し余白を追加 */
+}
+
+.filter-sort-options .row > div {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.text-center .btn {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.filter-sort-options .btn {
+  min-width: 100px; /* ボタンの最小幅を設定 */
+  white-space: nowrap; /* テキストが折り返されないようにする */
+  padding-left: 1rem; /* 左右の余白を追加 */
+  padding-right: 1rem;
+  overflow: visible; /* テキストが切れないようにする */
 }

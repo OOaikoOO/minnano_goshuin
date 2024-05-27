@@ -11,7 +11,9 @@
           </div>
           
           <!-- 評価のフォーム -->
-          <div class="form-group" id="post_raty"></div>
+          <div class="form-group" id="post_raty">
+            <h6>あなたのおすすめ度を教えてください！</h6>
+          </div>
           
           <!-- 寺社名フォーム -->
           <div class="form-group">
@@ -35,6 +37,25 @@
           <div class="form-group">
             <%= f.label :"タグ入力欄（半角コンマ（,）で区切ると複数タグ付けできます）" %>
             <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: 'form-control', placeholder: "例）景色がきれい,駐車場あり" %>
+          </div>
+
+          <!-- 紹介文フォーム -->
+          <div class="form-group">
+            <h4>紹介文</h4>
+            <%= f.text_area :introduction, class: "form-control", placeholder: "ここに紹介文を入力してください" %>
+          </div>
+
+          <!-- ご朱印選択フォーム -->
+          <div class="form-group">
+            <h4>ご朱印はいただけますか？</h4>
+            <div class="form-check">
+              <%= f.radio_button :receive_shuin, true, class: "form-check-input" %>
+              <%= f.label :receive_shuin, "はい", class: "form-check-label" %>
+            </div>
+            <div class="form-check">
+              <%= f.radio_button :receive_shuin, false, class: "form-check-input" %>
+              <%= f.label :receive_shuin, "いいえ", class: "form-check-label" %>
+            </div>
           </div>
 
           <!-- 画像アップロードフォーム -->
@@ -73,4 +94,4 @@
     scoreName: 'post[star]'
    };
   raty(elem,opt);
-</script>  
+</script>

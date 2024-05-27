@@ -1,6 +1,10 @@
 <%= stylesheet_link_tag 'my_page' %>
 <%= render 'layouts/search' %>
-
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
 <div class="page-header">
   <div class="text-center mb-4">
     <h1>マイページ</h1>
@@ -16,6 +20,8 @@
     <% end %>
   </div>
 </div>
+
+<%= render 'layouts/sort' %>
 
 <div class="container">
   <h4 class="mb-3"><%= @user.name %>さんの投稿一覧</h4>
@@ -38,6 +44,8 @@
             <p>コメントの平均点: <%= post.average_comment_rating %>点</p>
             <div><span class="fw-bold">寺社名</span>：<span><%= link_to post.title, post_path(post.id), class: "text-decoration-none" %></span></div>
             <div><span class="fw-bold">所在地</span>：<span><%= post.address %></span></div>
+            <p><strong>ご朱印はいただける？：</strong><%= post.receive_shuin ? 'はい' : 'いいえ' %></p>
+            <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y/%m/%d") %></small></p>
             <div><span class="fw-bold">タグ</span>：
               <% post.tag_list.each do |tag| %>
                 <span class="badge bg-primary text-white me-1"><%= link_to tag, tagged_posts_path(tag: tag) %></span>
