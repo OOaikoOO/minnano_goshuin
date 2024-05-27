@@ -33,8 +33,6 @@ class Public::PostsController < ApplicationController
     case @sort
     when 'created_at_asc'
       @posts = @posts.order(created_at: :asc)
-    when 'created_at_desc'
-      @posts = @posts.order(created_at: :desc)
     when 'comments_count_asc'
       @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) ASC')
     when 'comments_count_desc'

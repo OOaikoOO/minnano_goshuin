@@ -33,12 +33,6 @@
             </div>
           </div>
 
-          <!-- タグ入力フォーム -->
-          <div class="form-group">
-            <%= f.label :"タグ入力欄（半角コンマ（,）で区切ると複数タグ付けできます）" %>
-            <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: 'form-control', placeholder: "例）景色がきれい,駐車場あり" %>
-          </div>
-
           <!-- 紹介文フォーム -->
           <div class="form-group">
             <h4>紹介文</h4>
@@ -56,6 +50,12 @@
               <%= f.radio_button :receive_shuin, false, class: "form-check-input" %>
               <%= f.label :receive_shuin, "いいえ", class: "form-check-label" %>
             </div>
+          </div>
+
+          <!-- タグ入力フォーム -->
+          <div class="form-group">
+            <%= f.label :"タグ入力欄（半角コンマ（,）で区切ると複数タグ付けできます）" %>
+            <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: 'form-control', placeholder: "例）景色がきれい,駐車場あり" %>
           </div>
 
           <!-- 画像アップロードフォーム -->
