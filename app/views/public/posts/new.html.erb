@@ -10,7 +10,7 @@
             <h1 class="mb-4">新規投稿</h1>
           </div>
           
-                    <!-- 評価のフォーム -->
+          <!-- 評価のフォーム -->
           <div class="form-group" id="post_raty"></div>
           
           <!-- 寺社名フォーム -->
@@ -59,31 +59,11 @@
   </div>
 </div>
 
-<script>
-// JavaScriptで画像のプレビュー表示を設定
-function previewImage(input) {
-  var preview = document.getElementById('image-preview');
-  while (preview.firstChild) {
-    preview.removeChild(preview.firstChild);
-  }
+<!-- 画像プレビュー -->
+<%= render 'layouts/preview' %>
 
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var image = document.createElement('img');
-      image.src = e.target.result;
-      image.style.maxWidth = '200px'; // プレビュー画像の最大幅を設定
-      image.style.maxHeight = '200px'; // プレビュー画像の最大高さを設定
-      preview.appendChild(image);
-    };
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-</script>
-
-<!-- 評価javascript -->
+<!-- 評価（新規投稿用） -->
 <script>
-  // scriptファイルをどのidの部分に配置するかを指定
   let elem = document.querySelector('#post_raty');
   let opt = {  
     starOn: "<%= asset_path('star-on.png') %>",

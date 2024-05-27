@@ -42,6 +42,7 @@ class Public::PostsController < ApplicationController
     @comments = @post.comments
     @comment = Comment.new
     @star_rating = @post.star.to_f
+    @average_rating = @post.average_comment_rating
   end
 
   def edit

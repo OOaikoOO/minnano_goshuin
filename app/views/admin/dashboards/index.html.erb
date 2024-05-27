@@ -7,11 +7,11 @@
       <div class="sort-options">
         <%= f.label :sort, "ソート順" %>
         <%= f.select :sort, options_for_select([
-          ["会員登録が新しい順", 'created_at_desc'], 
-          ["会員登録が古い順", 'created_at_asc'], 
-          ["投稿が多い順", 'posts_count_desc'], 
-          ["投稿が少ない順", 'posts_count_asc'], 
-          ["コメントが多い順", 'comments_count_desc'], 
+          ["会員登録が新しい順", 'created_at_desc'],
+          ["会員登録が古い順", 'created_at_asc'],
+          ["投稿が多い順", 'posts_count_desc'],
+          ["投稿が少ない順", 'posts_count_asc'],
+          ["コメントが多い順", 'comments_count_desc'],
           ["コメントが少ない順", 'comments_count_asc']
         ], selected: @sort) %>
       </div>
@@ -19,7 +19,7 @@
         <%= f.label :status, "ステータス" %>
         <%= f.select :status, options_for_select([
           ["すべて", ''],
-          ["有効", '有効'], 
+          ["有効", '有効'],
           ["退会済み", '退会済み']
         ], selected: params[:status]) %>
       </div>
@@ -34,13 +34,14 @@
             <h5 class="card-title"><%= link_to user.name, admin_user_path(user) %></h5>
             <p class="card-text">登録日時：<%= user.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
             <p class="card-text">ステータス：<%= user.is_deleted ? "退会済み" : "有効" %></p>
-            <p class="card-text">総投稿数：<%= user.posts_count %></p>
-            <p class="card-text">総コメント数：<%= user.comments_count %></p>
+            <p class="card-text">総投稿数：<%= user.posts.count %></p>
+            <p class="card-text">総コメント数：<%= user.comments.count %></p>
           </div>
         </div>
       </div>
     <% end %>
   </div>
+  <%= paginate @users %>
 </div>
 
 <style>

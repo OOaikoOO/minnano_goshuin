@@ -2,7 +2,7 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
-    def self.search_for(content, method)
+  def self.search_for(content, method)
     if method == 'perfect'
       Comment.where(comment: content)
     elsif method == 'forward'

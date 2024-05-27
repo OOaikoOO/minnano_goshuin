@@ -3,9 +3,7 @@ class Admin::DashboardsController < ApplicationController
 
   def index
     # ユーザーの総投稿数と総コメント数をカウント
-    @users = User.left_joins(:posts, :comments)
-                 .select('users.*, COUNT(DISTINCT posts.id) AS posts_count, COUNT(DISTINCT comments.id) AS comments_count')
-                 .group('users.id')
+    @users = User.page(params[:page]).per(9)
 
     # 会員ステータスによる絞り込み
     @users = @users.where(is_deleted: params[:status] == '退会済み') if params[:status].present?

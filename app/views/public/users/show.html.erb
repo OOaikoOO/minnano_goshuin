@@ -34,6 +34,7 @@
           <div class="card-body">
             <p><%= link_to "#{post.comments.count} コメント", post_path(post.id), class: "text-decoration-none" %></p>
             <div id="post_raty_<%= post.id %>" data-star="<%= post.star.to_f %>"></div>
+            <p>コメントの平均点: <%= post.average_comment_rating %>点</p>
             <div><span class="fw-bold">寺社名</span>：<span><%= link_to post.title, post_path(post.id), class: "text-decoration-none" %></span></div>
             <div><span class="fw-bold">所在地</span>：<span><%= post.address %></span></div>
             <div><span class="fw-bold">タグ</span>：
@@ -58,7 +59,6 @@
 <script>
   function fadeInCards() {
     const cards = document.querySelectorAll('.post-card');
-
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -71,9 +71,9 @@
       observer.observe(card);
     });
   }
-
   document.addEventListener("turbolinks:load", fadeInCards);
 </script>
 
 <!-- 評価javascript -->
 <%= render 'layouts/star' %>
+<%= render 'layouts/comment_star' %>

@@ -36,4 +36,8 @@ class Post < ApplicationRecord
 
   validates :title, presence: true
   validates :address, presence: true
+  
+  def average_comment_rating
+    comments.average(:star).to_f.round(2)
+  end
 end
