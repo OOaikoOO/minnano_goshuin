@@ -6,43 +6,42 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# Admin データを作成
 Admin.create!(
   email: "admin@admin",
-  password: "adminadmin",
+  password: "adminadmin"
+)
+
+# User データを作成
+users = [
+  { name: "Rick", email: "rick@example.com", password: "password" },
+  { name: "Carl", email: "carl@example.com", password: "password" },
+  { name: "Daryl", email: "daryl@example.com", password: "password" },
+  { name: "Carol", email: "carol@example.com", password: "password" },
+  { name: "Maggie", email: "maggie@example.com", password: "password" },
+  { name: "Michonne", email: "michonne@example.com", password: "password" }
+]
+
+# users 配列をループして User データを作成
+users.each do |user_data|
+  User.create!(user_data)
+end
+
+# Rick ユーザーに関連付けられた投稿データを作成
+rick_user = User.find_by(name: "Rick")
+10.times do |n|
+  post = Post.create!(
+    title: "ジンジャー神社",
+    address: "京都府京都市",
+    user_id: rick_user.id
   )
 
-User.create!(
-  name: "Rick",
-  email: "rick@example.com",
-  password: "password",
-  )
-
-User.create!(
-  name: "Carl",
-  email: "carl@example.com",
-  password: "password",
-  )
-
-User.create!(
-  name: "Daryl",
-  email: "daryl@example.com",
-  password: "password",
-  )
-
-User.create!(
-  name: "Carol",
-  email: "carol@example.com",
-  password: "password",
-  )
-
-User.create!(
-  name: "Maggie",
-  email: "maggie@example.com",
-  password: "password",
-  )
-
-User.create!(
-  name: "Michonne",
-  email: "michonne@example.com",
-  password: "password",
-  )
+  # Rick以外のユーザーがRickの投稿に1回ずつコメントする
+  users.reject { |user| user == rick_user }.each do |other_user_data|
+    other_user = User.find_by(name: other_user_data[:name]) # 正しいユーザーオブジェクトを取得
+    post.comments.create!(
+      comment: "いいね！",
+      user_id: other_user.id
+    )
+  end
+end
