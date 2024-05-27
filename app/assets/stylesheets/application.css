@@ -24,7 +24,7 @@
   bottom: 0;
   left: 0;
 }
- 
+
 body {
   padding-bottom: 60px;
   margin: 0;
@@ -180,6 +180,29 @@ body {
   color: #ddd;
   letter-spacing: 4px;
   font-size: 20px;
+}
+
+/*ページネーション自体のデザイン*/
+.pagination-links {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.pagination-button {
+  border: 2px solid #ccc;
+  border-radius: 50%; /* 丸いボタンにする */
+  background-color: #fff;
+  color: #333;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #f0f0f0;
 }
 
 body {
