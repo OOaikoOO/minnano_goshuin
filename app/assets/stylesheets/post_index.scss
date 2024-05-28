@@ -27,3 +27,25 @@
   padding-right: 1rem;
   overflow: visible; /* テキストが切れないようにする */
 }
+
+.btn-sakura {
+  color: #fff;
+  background-color: #ff7e9b;
+  border-color: #ff7e9b;
+}
+
+.btn-sakura:hover {
+  background-color: #ff4f7b;
+  border-color: #ff4f7b;
+}
+
+.btn-yamabuki {
+  color: #fff;
+  background-color: #f8b500;
+  border-color: #f8b500;
+}
+
+.btn-yamabuki:hover {
+  background-color: #d09100;
+  border-color: #d09100;
+}

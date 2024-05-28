@@ -3,16 +3,16 @@
     <% if wish_list = current_user.wish_lists.find_by(post_id: post.id) %>
       <span>「行きたいリスト」に追加しました！</span>
       <%= link_to post_wish_list_path(post, wish_list), method: :delete, remote: true, data: { turbolinks: false } do %>
-        <i class="fa-solid fa-heart ms-2"></i>
+         <i class="fa-solid fa-heart ms-2" style="font-size: 24px; color: pink;"></i>
       <% end %>
     <% else %>
       <span>「行きたいリスト」に追加しますか？</span>
       <%= link_to post_wish_lists_path(post), method: :post, remote: true, data: { turbolinks: false } do %>
-        <i class="fa-regular fa-heart ms-2"></i>
+        <i class="fa-regular fa-heart ms-2" style="font-size: 24px; color: pink;"></i>
       <% end %>
     <% end %>
     <div class="mt-1">
-      <span>みんなの総「行きたい！」数: </span>
+      <span class="text-muted">みんなの総「行きたい！」数: </span>
       <span><%= post.wish_lists.count %></span>
     </div>
   </div>
