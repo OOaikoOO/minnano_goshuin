@@ -16,5 +16,9 @@
         『みんなのご朱印』は、そんな方のためのサイトです。
       </span>
     </div>
+    <% unless user_signed_in? %>
+      <h3 class="animated-text">まずは<%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post %>からお試しください。</h3>
+      <p class="animated-text small-text">※ゲストとしてログインします。</br>　ゲストのためプロフィールの編集はできません。</p>
+    <% end %>
   </div>
 </body>

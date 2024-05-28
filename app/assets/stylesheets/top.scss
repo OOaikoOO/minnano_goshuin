@@ -33,6 +33,21 @@ body.top-page {
   opacity: 0;
   animation: blurToClear 1s forwards;
   animation-delay: 0.5s;
+  margin-bottom: 50px;
+}
+
+.animated-text {
+  color: white;
+  font-size: 20px;
+  letter-spacing: 10px;
+  opacity: 0;
+  animation: blurToClear 1s forwards;
+  animation-delay: 1s;
+  margin-bottom: 20px;
+}
+
+.small-text {
+  font-size: 12px; /* <p>要素のフォントサイズを小さく設定 */
 }
 
 @keyframes blurToClear {
@@ -56,5 +71,13 @@ body.top-page {
   .text-container {
     font-size: 11px; /* テキストサイズを小さく調整 */
     letter-spacing: 2px; /* 文字間隔も調整 */
+  }
+
+  .animated-text {
+    font-size: 15px; /* フォントサイズをさらに小さく調整 */
+  }
+
+  .small-text {
+    font-size: 10px; /* <p>要素のフォントサイズをさらに小さく設定 */
   }
 }

@@ -19,6 +19,11 @@ Rails.application.routes.draw do
     end
   end
 
+  # ゲスト
+  devise_scope :user do
+    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+  end
+  
   # ユーザー用
   root to: 'public/homes#top'
   get '/about' => 'public/homes#about'
