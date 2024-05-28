@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
   # 管理者用
   namespace :admin do
+    resources :posts, only: [:destroy] 
+  
     get 'comments/index'
     get 'posts/index'
     get "search" => "searches#search"
     root 'dashboards#index'
     get 'dashboard', to: 'dashboards#index', as: :dashboard
+    resources :users, only: [:show] do
+      resources :posts, only: [:index, :destroy] # 投稿の削除アクションを追加
+      resources :comments, only: [:index, :destroy]
+    end
   end
 
   # ゲスト
@@ -19,7 +25,7 @@ Rails.application.routes.draw do
 
   # ユーザー退会関連
   get '/users/check' => 'public/users#check', as: :check_user
-  patch '/users/withdraw' => 'public/users#withdraw', as: :withdraw_user
+  patch '/admin/users/:id/withdraw' => 'admin/users#withdraw', as: :withdraw_user
 
   # 管理者用ログイン関連
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
