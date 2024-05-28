@@ -23,7 +23,7 @@
               <p class="card-text">所在地: <%= post.address %></p>
               <p class="card-text">投稿日: <%= post.created_at.strftime("%Y年%m月%d日") %></p>
               <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
-              <%= link_to "削除", admin_user_posts_path(@user, post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+              <%= link_to "削除", admin_user_post_path(@user, post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
             </div>
           </div>
         </div>

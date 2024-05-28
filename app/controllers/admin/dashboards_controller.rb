@@ -2,8 +2,7 @@ class Admin::DashboardsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    # ユーザーの総投稿数と総コメント数をカウント
-    @users = User.page(params[:page]).per(9)
+    @users = User.all
 
     # 会員ステータスによる絞り込み
     @users = @users.where(is_deleted: params[:status] == '退会済み') if params[:status].present?
@@ -15,14 +14,16 @@ class Admin::DashboardsController < ApplicationController
     when 'created_at_asc'
       @users = @users.order(created_at: :asc)
     when 'posts_count_desc'
-      @users = @users.order('posts_count DESC')
+      @users = @users.sort_by { |user| -user.posts.count }
     when 'posts_count_asc'
-      @users = @users.order('posts_count ASC')
+      @users = @users.sort_by { |user| user.posts.count }
     when 'comments_count_desc'
-      @users = @users.order('comments_count DESC')
+      @users = @users.joins(:comments).group('users.id').order('COUNT(comments.id) DESC')
     when 'comments_count_asc'
-      @users = @users.order('comments_count ASC')
+      @users = @users.joins(:comments).group('users.id').order('COUNT(comments.id) ASC')
     end
+
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(9) # ページネーションを適用する
 
     @sort = params[:sort] # 現在のソート順をビューに渡す
   end

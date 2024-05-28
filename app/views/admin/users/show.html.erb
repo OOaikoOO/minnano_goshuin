@@ -24,9 +24,9 @@
       </div>
       <div class="mt-3">
         <% if @user.is_deleted %>
-          <%= link_to "会員ステータスを有効にする", withdraw_user_path(@user), method: :patch, data: { confirm: "本当に有効にしますか？" }, class: "btn btn-success" %>
+          <%= link_to "会員ステータスを有効にする", withdraw_admin_user_path(@user), method: :patch, data: { confirm: "本当に有効にしますか？" }, class: "btn btn-success" %>
         <% else %>
-          <%= link_to "退会させる", withdraw_user_path(@user), method: :patch, data: { confirm: "本当に退会させますか？" }, class: "btn btn-danger" %>
+          <%= link_to "退会させる", withdraw_admin_user_path(@user), method: :patch, data: { confirm: "本当に退会させますか？" }, class: "btn btn-danger" %>
         <% end %>
       </div>
     </div>
