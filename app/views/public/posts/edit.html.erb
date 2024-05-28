@@ -10,12 +10,14 @@
           <div class="text-center">
             <h1 class="mb-4">編集画面</h1>
           </div>
-          
+
+          <!-- 現在の評価の数 -->
           <div class="form-group">
             <%= f.label :star, "評価の数" %>
             <div id="post_raty" data-score="<%= @post.star %>"></div>
           </div>
-          
+
+          <!-- 神社仏閣の名前 -->
           <div class="form-group">
             <h4>神社仏閣の名前</h4>
             <%= f.text_field :title, class: "form-control", placeholder: "例）○○神社", required: true %>
@@ -24,6 +26,7 @@
             </div>
           </div>
 
+          <!-- 所在地 -->
           <div class="form-group">
             <h4>所在地</h4>
             <%= f.text_area :address, class: "form-control", placeholder: "例）○○県 ○○市 ○○-○", required: true %>
@@ -32,12 +35,42 @@
             </div>
           </div>
 
+          <!-- 画像アップロード -->
           <div class="form-group">
             <h4>画像アップロード</h4>
             <%= f.file_field :image, class: "form-control-file", onchange: "previewImage(this);" %>
             <div id="image-preview"></div>
           </div>
 
+          <!-- ご朱印の選択肢 -->
+          <div class="form-group">
+            <h4>ご朱印はいただける？</h4>
+            <div class="form-check">
+              <%= f.radio_button :receive_shuin, true, class: "form-check-input", id: "post_receive_shuin_true" %>
+              <%= f.label :receive_shuin_true, "はい", class: "form-check-label" %>
+            </div>
+            <div class="form-check">
+              <%= f.radio_button :receive_shuin, false, class: "form-check-input", id: "post_receive_shuin_false" %>
+              <%= f.label :receive_shuin_false, "いいえ", class: "form-check-label" %>
+            </div>
+            <div class="invalid-feedback">
+              ご朱印はいただけるかどうかを選択してください。
+            </div>
+          </div>
+
+          <!-- 紹介文 -->
+          <div class="form-group">
+            <%= f.label :introduction, "紹介文" %>
+            <%= f.text_area :introduction, class: "form-control", placeholder: "紹介文を入力してください" %>
+          </div>
+          
+          <!-- タグ -->
+          <div class="form-group">
+            <%= f.label :tag_list, "タグ（半角コンマ（,）で区切ると複数タグ付けできます）" %>
+            <%= f.text_field :tag_list, class: "form-control", placeholder: "タグを入力してください" %>
+          </div>
+
+          <!-- 更新ボタンと削除リンク -->
           <div class="form-group">
             <%= f.submit '更新', class: "btn btn-primary" %>
             <%= link_to "削除", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", style: "margin-left: 10px;" %>
@@ -47,6 +80,7 @@
 
       <div class="mt-4">
         <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-secondary" %>
+        <%= link_to "投稿詳細に戻る", post_path(@post), class: "btn btn-secondary" %>
       </div>
     </div>
   </div>
@@ -74,7 +108,7 @@
 <script>
   // scriptファイルをどのidの部分に配置するかを指定
   let elem = document.querySelector('#post_raty');
-  let opt = {  
+  let opt = {
     starOn: "<%= asset_path('star-on.png') %>",
     starOff: "<%= asset_path('star-off.png') %>",
     starHalf: "<%= asset_path('star-half.png') %>",
@@ -82,4 +116,4 @@
     scoreName: 'post[star]'
    };
   raty(elem,opt);
-</script>  
+</script>

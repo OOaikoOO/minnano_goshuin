@@ -1,0 +1,1 @@
+$('#wish_list-<%= @post.id %>').html("<%= j(render partial: 'layouts/wish_list', locals: { post: @post }) %>");

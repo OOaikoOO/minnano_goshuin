@@ -3,6 +3,12 @@
   <div class="login-form">
     <h2 class="text-center">ログイン</h2>
 
+    <% if flash[:error] %>
+      <div class="alert alert-danger" role="alert">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { id: "login-form", novalidate: true }) do |f| %>
 
       <div class="mb-3">

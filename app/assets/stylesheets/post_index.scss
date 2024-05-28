@@ -1,11 +1,51 @@
-.post-card {
-  margin-bottom: 20px;
+.post-card .card-body {
+  line-height: 1.2; /* 行間を調整 */
 }
 
-.border-rounded {
-  border-radius: 10px;
+.post-card .card-text {
+  margin-bottom: 0.5rem; /* 下部の余白を調整 */
 }
 
-.shadowed {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.filter-sort-options .form-select, .filter-sort-options .btn {
+  margin-top: 0.5rem; /* フォーム内の要素に少し余白を追加 */
+}
+
+.filter-sort-options .row > div {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.text-center .btn {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+.filter-sort-options .btn {
+  min-width: 100px; /* ボタンの最小幅を設定 */
+  white-space: nowrap; /* テキストが折り返されないようにする */
+  padding-left: 1rem; /* 左右の余白を追加 */
+  padding-right: 1rem;
+  overflow: visible; /* テキストが切れないようにする */
+}
+
+.btn-sakura {
+  color: #fff;
+  background-color: #ff7e9b;
+  border-color: #ff7e9b;
+}
+
+.btn-sakura:hover {
+  background-color: #ff4f7b;
+  border-color: #ff4f7b;
+}
+
+.btn-yamabuki {
+  color: #fff;
+  background-color: #f8b500;
+  border-color: #f8b500;
+}
+
+.btn-yamabuki:hover {
+  background-color: #d09100;
+  border-color: #d09100;
 }

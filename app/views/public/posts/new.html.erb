@@ -11,7 +11,9 @@
           </div>
           
           <!-- 評価のフォーム -->
-          <div class="form-group" id="post_raty"></div>
+          <div class="form-group" id="post_raty">
+            <h6>あなたのおすすめ度を教えてください！</h6>
+          </div>
           
           <!-- 寺社名フォーム -->
           <div class="form-group">
@@ -28,6 +30,25 @@
             <%= f.text_area :address, class: "form-control", placeholder: "例）○○県 ○○市 ○○-○", required: true %>
             <div class="invalid-feedback">
               所在地を入力してください。
+            </div>
+          </div>
+
+          <!-- 紹介文フォーム -->
+          <div class="form-group">
+            <h4>紹介文</h4>
+            <%= f.text_area :introduction, class: "form-control", placeholder: "ここに紹介文を入力してください" %>
+          </div>
+
+          <!-- ご朱印選択フォーム -->
+          <div class="form-group">
+            <h4>ご朱印はいただけますか？</h4>
+            <div class="form-check">
+              <%= f.radio_button :receive_shuin, true, class: "form-check-input" %>
+              <%= f.label :receive_shuin, "はい", class: "form-check-label" %>
+            </div>
+            <div class="form-check">
+              <%= f.radio_button :receive_shuin, false, class: "form-check-input" %>
+              <%= f.label :receive_shuin, "いいえ", class: "form-check-label" %>
             </div>
           </div>
 
@@ -73,4 +94,4 @@
     scoreName: 'post[star]'
    };
   raty(elem,opt);
-</script>  
+</script>

@@ -42,12 +42,23 @@
     <i class="fas fa-chevron-down"></i>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const fadeInItems = document.querySelectorAll('.fade-in-item');
-      fadeInItems.forEach((item, index) => {
-        item.style.animationDelay = `${index * 0.6}s`;
-      });
+    $(document).ready(function() {
+      setAnimationDelays();
     });
+  
+    $(window).on('pageshow', function(event) {
+      if (event.originalEvent.persisted) {
+        setAnimationDelays();
+      }
+    });
+  
+    function setAnimationDelays() {
+      const fadeInItems = $('.fade-in-item');
+      fadeInItems.each(function(index) {
+        $(this).css('animation-delay', `${index * 0.6}s`);
+      });
+    }
   </script>
 </body>

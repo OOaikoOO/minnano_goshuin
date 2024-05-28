@@ -2,57 +2,30 @@
 <%= render 'layouts/search' %>
 
 <div class="container mt-5">
-  <h1 class="mb-4 text-center">投稿一覧</h1>
-  <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-secondary mt-3" %>
+  <h1 class="mb-4 text-center">みんなの投稿一覧</h1>
+
+  <div class="text-center mb-3">
+    <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-yamabuki me-2" %>
+    <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
+  </div>
+
   <% if params[:tag].present? %>
-    <div class="mb-3">
+    <div class="mb-3 text-center">
       <p>タグ: <%= params[:tag] %> による絞り込み結果</p>
       <%= link_to '絞り込み解除', posts_path, class: 'btn btn-secondary' %>
     </div>
   <% end %>
-  
-  <div class="sort-options">
-    <%= form_with url: posts_path, method: :get, local: true do |f| %>
-      <%= f.label :sort, "ソート順" %>
-      <%= f.select :sort, options_for_select([["新しい順", 'created_at_desc'], ["古い順", 'created_at_asc'], ["コメントが多い順", 'comments_count_desc'], ["コメントが少ない順", 'comments_count_asc']], selected: @sort) %>
-      <%= f.submit '適用', class: 'btn btn-primary' %>
-    <% end %>
-  </div>
+
+  <%= render 'layouts/sort' %>
 
   <div class="row" id="postContainer">
-    <% @posts.each do |post| %>
-      <div class="col-md-4">
-        <div class="card post-card border-rounded shadowed">
-          <%= link_to post_path(post) do %>
-            <% if post.image.attached? %>
-              <%= image_tag post.image.variant(resize_to_fit: [200, 200]), class: "card-img-top img-thumbnail" %>
-            <% else %>
-              <%= image_tag 'no_image.png', class: "card-img-top img-thumbnail" %>
-            <% end %>
-          <% end %>
-          <div class="card-body">
-            <div id="post_raty_<%= post.id %>" data-star="<%= post.star.to_f %>"></div>
-            <h5 class="card-title"><%= link_to post.title, post_path(post.id) %></h5>
-            <p class="card-text">所在地：<%= post.address %></p>
-            <p class="card-text">投稿者：<%= link_to post.user.name, user_path(post.user) %></p>
-            <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y年%m月%d日") %></small></p>
-            <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
-            <p>タグ：
-            <% post.tag_list.each do |tag| %>
-              <%= link_to tag, tagged_posts_path(tag: tag), class: "btn btn-primary" %>
-            <% end %>
-            </p>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <%= render 'layouts/post' %>
     <%= paginate @posts %>
   </div>
 </div>
 
 <script>
 document.addEventListener('turbolinks:load', function() {
-  // カードのフェードインを適用
   var cards = document.querySelectorAll('.post-card');
   cards.forEach(function(card, index) {
     setTimeout(function() {

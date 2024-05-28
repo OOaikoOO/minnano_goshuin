@@ -6,17 +6,11 @@ Rails.application.routes.draw do
     get "search" => "searches#search"
     root 'dashboards#index'
     get 'dashboard', to: 'dashboards#index', as: :dashboard
+  end
 
-    # ユーザー退会処理関連
-    resources :users, only: [:show] do
-      # 特定（個々）のユーザーに対して退会処理を行うためmemberを使用
-      member do
-        get "withdraw", to: "users#withdraw"
-        patch "withdraw", to: "users#withdraw"
-      end
-      resources :posts, only: [:index, :destroy]
-      resources :comments, only: [:index, :destroy]
-    end
+  # ゲスト
+  devise_scope :user do
+    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
 
   # ユーザー用
@@ -37,6 +31,11 @@ Rails.application.routes.draw do
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
+
+  # 「行きたいリスト」用
+  resources :posts, controller: 'public/posts' do
+    resources :wish_lists, only: [:create, :destroy], controller: 'public/wish_lists'
+  end
 
   # resourcesを使用する際、URLにnamespaceを含めずにルーティングを設定する
   scope module: :public do
