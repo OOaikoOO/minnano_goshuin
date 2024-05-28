@@ -39,14 +39,13 @@
         <p class="card-text">ご朱印はいただける？：<%= @post.receive_shuin ? 'はい' : 'いいえ' %></p>
         <p class="card-text">タグ：
           <% @post.tag_list.each do |tag| %>
-            <%= link_to tag, tagged_posts_path(tag), class: "badge bg-primary text-white" %>
+            <%= link_to tag, tagged_posts_path(tag), class: "badge badge-custom" %>
           <% end %>
         </p>
         <div class="d-flex justify-content-end">
           <div class="wish_list" id="wish_list-<%= @post.id %>">
             <%= render partial: 'layouts/wish_list', locals: { post: @post } %>
           </div>
-
         </div>
         <p class="card-text">投稿者：<%= link_to @post.user.name, user_path(@post.user) %></p>
         <% if @post.user == current_user %>

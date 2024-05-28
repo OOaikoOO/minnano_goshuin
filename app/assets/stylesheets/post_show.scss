@@ -46,3 +46,20 @@
   background-color: #6ca6cd;
   border-color: #6ca6cd;
 }
+
+/* バッジのデザイン */
+.badge-custom {
+  background-color: #dda0dd;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  font-size: 0.9em;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.badge-custom:hover {
+  background-color: #c48cc4;
+  text-decoration: none;
+}

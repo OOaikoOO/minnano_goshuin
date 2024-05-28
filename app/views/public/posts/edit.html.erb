@@ -1,7 +1,7 @@
 <!-- 新規投稿のCSSを流用 -->
 <%= stylesheet_link_tag 'post_new' %>
 <%= render 'layouts/search' %>
-<div class="new-container">
+<div class="form-container">
   <div class="row center-form">
     <div class="col-lg-6">
       <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>

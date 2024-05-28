@@ -24,7 +24,7 @@
         <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
         <p>タグ：
         <% post.tag_list.each do |tag| %>
-          <%= link_to tag, tagged_posts_path(tag: tag), class: "badge bg-primary text-white" %>
+          <%= link_to tag, tagged_posts_path(tag: tag), class: "badge badge-custom" %>
         <% end %>
         </p>
       </div>

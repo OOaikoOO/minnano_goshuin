@@ -207,7 +207,24 @@ body {
   margin-bottom: 100px;
   flex: 1;
   font-family: "Zen Maru Gothic", serif !important;
-  background-image: url("background.jpg");
+  background: url("background.jpg") no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
+}
+
+/* フォームのスタイル */
+.center-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  position: relative; /* 親要素に相対位置を設定 */
+  z-index: 1; /* 背景よりも前に配置 */
+}
+
+.form-container {
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9); /* フォームの背景色 */
+  padding: 20px; /* 内側の余白を追加 */
+  border-radius: 10px; /* 角丸にする */
+
 }
