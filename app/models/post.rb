@@ -29,6 +29,12 @@ class Post < ApplicationRecord
   end
 
   belongs_to :user
+  has_many :wish_lists, dependent: :destroy
+  
+  def wish_listed_by?(user)
+    wish_lists.exists?(user_id: user.id)
+  end
+  
   has_many :comments, dependent: :destroy
   has_one_attached :image
   # タグ付け機能

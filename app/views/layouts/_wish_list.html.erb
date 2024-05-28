@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <% if current_user.wish_lists.find_by(post_id: @post.id) %>
+    <%= link_to post_wish_list_path(@post), method: :delete, remote: true do %>
+        <div class = "iine__button">❤️<%= @post.wish_lists.count %></div>
+    <% end %>
+  <% else %>
+    <%= link_to post_wish_lists_path(@post), method: :post, remote: true do %>
+        <div class = "iine__button">♡️<%= @post.wish_lists.count %></div>
+    <% end %>
+  <% end %>
+<% end %>

@@ -17,8 +17,17 @@
       </span>
     </div>
     <% unless user_signed_in? %>
-      <h3 class="animated-text">まずは<%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post %>からお試しください。</h3>
-      <p class="animated-text small-text">※ゲストとしてログインします。</br>　ゲストのためプロフィールの編集はできません。</p>
+      <h3 class="animated-text">まずは　<%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post, class: "btn-guest-login" %>　からお試しください。</h3>
+      <p class="animated-text small-text">
+        ※ゲストとしてログインします。</br>　
+        ゲストのためプロフィールの編集はできません。</br></br>
+        <span class="badge-link">
+          新規会員登録は
+          <%= link_to "こちら", new_user_registration_path, class: "badge-guest-login"%>
+          ログインは
+          <%= link_to "こちら", new_user_session_path, class: "badge-guest-login" %>
+        </span>
+      </p>
     <% end %>
   </div>
 </body>

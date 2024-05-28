@@ -17,17 +17,17 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = Post.page(params[:page])
-    
+
     # タグでフィルタリング
     if params[:tag].present?
       @posts = @posts.tagged_with(params[:tag])
     end
-    
+
     # ご朱印の有無でフィルタリング
     if params[:receive_shuin].present?
       @posts = @posts.where(receive_shuin: params[:receive_shuin] == 'true')
     end
-  
+
     # 投稿のソート機能
     @sort = params[:sort] || 'created_at_desc'
     case @sort
@@ -47,6 +47,7 @@ class Public::PostsController < ApplicationController
     @comment = Comment.new
     @star_rating = @post.star.to_f
     @average_rating = @post.average_comment_rating
+    @wish_listed = current_user.wish_lists.exists?(post_id: @post.id)
   end
 
   def edit
@@ -65,7 +66,7 @@ class Public::PostsController < ApplicationController
       redirect_to posts_path, notice: "他のユーザーの投稿を編集することはできません"
     end
   end
-  
+
   def destroy
     @post = Post.find(params[:id])
     if @post.user == current_user
@@ -75,7 +76,7 @@ class Public::PostsController < ApplicationController
       redirect_to posts_path, notice: "他のユーザーの投稿を削除することはできません"
     end
   end
-  
+
   # タグで投稿を絞り込む
   def tagged
     if params[:tag].present?

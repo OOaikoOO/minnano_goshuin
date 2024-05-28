@@ -35,6 +35,7 @@ class User < ApplicationRecord
   end
 
   has_many :posts, dependent: :destroy
+  has_many :wish_lists, dependent: :destroy
   has_many :comments, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true

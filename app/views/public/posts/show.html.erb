@@ -22,11 +22,11 @@
       <!-- 投稿内容 -->
       <div class="card card-custom p-3 mb-3">
         <% if @post.image.attached? %>
-          <div class="text-center"> <!-- 中央寄せ -->
-            <%= image_tag @post.image, size: "300x300", class: "img-fluid" %> <!-- 画像を中央寄せ -->
+          <div class="text-center">
+            <%= image_tag @post.image, size: "300x300", class: "img-fluid" %>
           </div>
         <% else %>
-          <%= image_tag 'no_image.png', size: "300x300", class: "img-fluid" %> <!-- 画像を中央寄せ -->
+          <%= image_tag 'no_image.png', size: "300x300", class: "img-fluid" %>
         <% end %>
         <div class="card-body">
           <p><%= link_to @post.user.name, user_path(@post.user) %>さんのおすすめ度：</p>
@@ -38,6 +38,10 @@
           <p class="card-text">紹介文：<%= @post.introduction %></p>
           <p><strong>ご朱印はいただける？：</strong><%= @post.receive_shuin ? 'はい' : 'いいえ' %></p>
           <p class="card-text text-muted"><small>投稿日：<%= @post.created_at.strftime("%Y/%m/%d") %></small></p>
+          <!-- ブックマークアイコン -->
+          <div class="wish_list" id="wish_list-<%= @post.id %>">
+            <%= render partial: 'layouts/wish_list', locals: { post: @post } %>
+          </div>
           <p class="card-text">タグ：
             <% @post.tag_list.each do |tag| %>
               <%= link_to tag, tagged_posts_path(tag), class: "badge bg-primary text-white" %>
@@ -117,6 +121,31 @@
       }
     });
   });
+</script>
+
+<script>
+  $(document).ready(function() {
+  $('.bookmark-icon').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var url = $this.attr('href');
+    $.ajax({
+      type: 'POST',
+      url: url,
+      dataType: 'json',
+      success: function(data) {
+        if (data.success) {
+          $this.find('i').removeClass('far').addClass('fas'); // アイコンを黒いハートに変更
+        } else {
+          console.log('エラーが発生しました。');
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('AJAXエラー:', status, error);
+      }
+    });
+  });
+});
 </script>
 
 <!-- 評価javascript -->
