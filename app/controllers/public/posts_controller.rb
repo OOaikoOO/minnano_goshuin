@@ -38,6 +38,14 @@ class Public::PostsController < ApplicationController
     when 'comments_count_desc'
       @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
     end
+    
+    # wish_list の状態でフィルタリング
+    case params[:wish_list]
+    when 'true'
+      @posts = @posts.joins(:wish_lists).where(wish_lists: { user_id: current_user.id })
+    when 'false'
+      @posts = @posts.where.not(id: current_user.wish_lists.pluck(:post_id))
+    end
   end
 
   def show

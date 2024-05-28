@@ -14,6 +14,11 @@
         <h5 class="card-title"><%= link_to post.title, post_path(post.id) %></h5>
         <p class="card-text">所在地：<%= post.address %></p>
         <p class="card-text">ご朱印はいただける？：</strong><%= post.receive_shuin ? 'はい' : 'いいえ' %></p>
+
+        <div class="wish_list text-muted" id="wish_list-<%= post.id %>">
+          <%= render partial: 'layouts/wish_list', locals: { post: post } %>
+        </div>
+          
         <p class="card-text">投稿者：<%= link_to post.user.name, user_path(post.user) %></p>
         <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y/%m/%d") %></small></p>
         <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>

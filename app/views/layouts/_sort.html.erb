@@ -9,6 +9,10 @@
         <%= f.label :receive_shuin, "ご朱印の有無" %><br>
         <%= f.select :receive_shuin, options_for_select([["すべて", ''], ["ある", 'true'], ["ない", 'false']], selected: params[:receive_shuin]), class: 'form-select' %>
       </div>
+      <div class="col-md-2 text-center">
+        <%= f.label :wish_list, "「行きたいリスト」" %><br>
+        <%= f.select :wish_list, options_for_select([["すべて", ''], ["追加した", 'true'], ["まだ", 'false']], selected: params[:wish_list]), class: 'form-select' %>
+      </div>
       <div class="col-md-1 d-flex align-items-end">
         <%= f.submit '絞り込み', class: 'btn btn-primary' %>
       </div>
