@@ -207,4 +207,7 @@ body {
   margin-bottom: 100px;
   flex: 1;
   font-family: "Zen Maru Gothic", serif !important;
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-position: center;
 }

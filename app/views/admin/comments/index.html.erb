@@ -24,5 +24,8 @@
 <% else %>
   <p>コメントがありません</p>
 <% end %>
+<div class="d-flex justify-content-center">
+  <%= paginate @comments %>
+</div>
 
 <%= render 'layouts/comment_star' %>

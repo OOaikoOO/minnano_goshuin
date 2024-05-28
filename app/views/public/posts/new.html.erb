@@ -1,20 +1,23 @@
+<%= stylesheet_link_tag 'post_new' %>
 <%= render 'layouts/search' %>
 
-<div class="container">
-  <div class="row center-form">
-    <div class="col-lg-6">
+<div class="background"></div>
+
+<div class="new-container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
       <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
         <%= render 'public/shared/error_messages', resource: f.object %>
         <div class="border p-4 shadow border-rounded fade-in-from-bottom">
           <div class="text-center">
             <h1 class="mb-4">新規投稿</h1>
           </div>
-          
+
           <!-- 評価のフォーム -->
           <div class="form-group" id="post_raty">
             <h6>あなたのおすすめ度を教えてください！</h6>
           </div>
-          
+
           <!-- 寺社名フォーム -->
           <div class="form-group">
             <h4>寺社名</h4>
@@ -64,17 +67,18 @@
             <%= f.file_field :image, class: "form-control-file", onchange: "previewImage(this);" %>
             <div id="image-preview"></div>
           </div>
-          
+
           <!-- 投稿ボタン -->
           <div class="form-group">
-            <%= f.submit '投稿する', class: "btn btn-primary" %>
+            <%= f.submit '投稿する', class: "btn btn-sakura me-2" %>
           </div>
         </div>
       <% end %>
 
       <!-- マイページに戻るリンク -->
       <div class="mt-4">
-        <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-secondary" %>
+        <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-yamabuki me-2" %>
+        <%= link_to "みんなの投稿をみる", posts_path, class: "btn btn-sky" %>
       </div>
     </div>
   </div>
@@ -86,7 +90,7 @@
 <!-- 評価（新規投稿用） -->
 <script>
   let elem = document.querySelector('#post_raty');
-  let opt = {  
+  let opt = {
     starOn: "<%= asset_path('star-on.png') %>",
     starOff: "<%= asset_path('star-off.png') %>",
     starHalf: "<%= asset_path('star-half.png') %>",

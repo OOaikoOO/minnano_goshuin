@@ -1,7 +1,7 @@
 <!-- 新規投稿画面のCSSを流用 -->
 <%= stylesheet_link_tag 'post_new' %>
 <%= render 'layouts/search' %>
-<div class="container">
+<div class="new-container">
   <div class="row center-form">
     <div class="col-lg-6">
       <%= form_with model: @user, id: 'profile-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
@@ -22,13 +22,13 @@
           </div>
 
           <div class="form-group">
-            <%= f.submit '更新', class: "btn btn-primary" %>
+            <%= f.submit '更新', class: "btn btn-sky" %>
           </div>
         </div>
       <% end %>
 
       <div class="mt-4">
-        <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-secondary" %>
+        <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-yamabuki me-2" %>
         <%= link_to "退会する", check_user_path, class: "btn btn-danger" %>
       </div>
     </div>
