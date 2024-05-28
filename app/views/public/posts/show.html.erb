@@ -39,9 +39,11 @@
           <p><strong>ご朱印はいただける？：</strong><%= @post.receive_shuin ? 'はい' : 'いいえ' %></p>
           <p class="card-text text-muted"><small>投稿日：<%= @post.created_at.strftime("%Y/%m/%d") %></small></p>
           <!-- ブックマークアイコン -->
+
           <div class="wish_list" id="wish_list-<%= @post.id %>">
             <%= render partial: 'layouts/wish_list', locals: { post: @post } %>
           </div>
+
           <p class="card-text">タグ：
             <% @post.tag_list.each do |tag| %>
               <%= link_to tag, tagged_posts_path(tag), class: "badge bg-primary text-white" %>

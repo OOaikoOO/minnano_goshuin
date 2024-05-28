@@ -1,10 +1,10 @@
 <% if user_signed_in? %>
-  <% if current_user.wish_lists.find_by(post_id: @post.id) %>
-    <%= link_to post_wish_list_path(@post), method: :delete, remote: true do %>
+  <% if wish_list = current_user.wish_lists.find_by(post_id: @post.id) %>
+    <%= link_to post_wish_list_path(@post, wish_list), method: :delete, remote: true, data: { turbolinks: false } do %>
         <div class = "iine__button">❤️<%= @post.wish_lists.count %></div>
     <% end %>
   <% else %>
-    <%= link_to post_wish_lists_path(@post), method: :post, remote: true do %>
+    <%= link_to post_wish_lists_path(@post), method: :post, remote: true, data: { turbolinks: false } do %>
         <div class = "iine__button">♡️<%= @post.wish_lists.count %></div>
     <% end %>
   <% end %>
