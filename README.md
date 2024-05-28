@@ -1,4 +1,9 @@
 # みんなのご朱印
+![スクリーンショット 2024-05-29 043121](https://github.com/OOaikoOO/minnano_goshuin/assets/158584440/8f8d1176-3ffd-4ebe-ba63-43cf8084260e)
+
+![スクリーンショット 2024-05-29 043038](https://github.com/OOaikoOO/minnano_goshuin/assets/158584440/d79704a2-057d-4c56-a757-ff33a3cf5426)
+
+![スクリーンショット 2024-05-29 043140](https://github.com/OOaikoOO/minnano_goshuin/assets/158584440/4b06087b-a4c6-40ed-8c00-1bddbdff68f3)
 
 
 
@@ -49,5 +54,5 @@
 
 
 ## 使用素材
-- ロゴ制作、画像素材として以下を使用予定</br>
+- ロゴ制作、画像素材として以下を使用</br>
 MiriCanvas (https://www.miricanvas.com)
