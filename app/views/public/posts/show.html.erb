@@ -13,9 +13,9 @@
     <% end %>
     <% if user_signed_in? %>
       <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-yamabuki me-2" %>
+      <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
+      <%= link_to "みんなの投稿をみる", posts_path, class: "btn btn-sky" %>
     <% end %>
-    <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
-    <%= link_to "みんなの投稿をみる", posts_path, class: "btn btn-sky" %>
   </div>
 </div>
 

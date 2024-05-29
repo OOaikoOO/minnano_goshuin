@@ -55,7 +55,7 @@ class Public::PostsController < ApplicationController
     @comment = Comment.new
     @star_rating = @post.star.to_f
     @average_rating = @post.average_comment_rating
-    @wish_listed = current_user.wish_lists.exists?(post_id: @post.id)
+    @wish_listed = current_user&.wish_lists&.exists?(post_id: @post.id)
   end
 
   def edit
