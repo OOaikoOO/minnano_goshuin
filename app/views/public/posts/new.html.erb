@@ -31,17 +31,20 @@
 
           <!-- 所在地フォーム -->
           <div class="input-group mb-3 mt-4">
-            <div class="input-group-prepend">
-              <span class="input-group-text" aria-hidden="true"><i class="fa-solid fa-tenge-sign"></i></span>
+            <h4>所在地</h4>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" aria-hidden="true"><i class="fa-solid fa-tenge-sign"></i></span>
+              </div>
+              <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "郵便番号" %>
             </div>
-            <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "郵便番号" %>
-          </div>
-          <div class="input-group mb-3 mt-4">
-            <div class="input-group-prepend">
-              <span class="input-group-text" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+            <div class="input-group mb-3 mt-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+              </div>
+              <%= f.text_field :address, class: "form-control", placeholder: "住所" %>
             </div>
-            <%= f.text_field :address, class: "form-control", placeholder: "住所" %>
-          </div>
+        </div>
 
           <!-- 紹介文フォーム -->
           <div class="form-group">
