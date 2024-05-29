@@ -38,7 +38,7 @@ class Public::PostsController < ApplicationController
     when 'comments_count_desc'
       @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
     end
-    
+
     # wish_list の状態でフィルタリング
     case params[:wish_list]
     when 'true'
@@ -56,6 +56,16 @@ class Public::PostsController < ApplicationController
     @star_rating = @post.star.to_f
     @average_rating = @post.average_comment_rating
     @wish_listed = current_user&.wish_lists&.exists?(post_id: @post.id)
+
+    # 投稿データをjsonで返却
+    respond_to do |format|
+      format.html do
+        @post = Post.find(params[:id])
+      end
+      format.json do
+        @post = Post.all
+      end
+    end
   end
 
   def edit
