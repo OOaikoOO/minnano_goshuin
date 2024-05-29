@@ -43,13 +43,35 @@
     <% else %>
       <%= render partial: 'no_results' %>
     <% end %>
+
+  <% elsif @model == "comment" %>
+    <% if @records.any? %>
+      <h4>コメント：【<%= @content %>】の検索結果</h4>
+      <div class="row">
+        <% @records.each do |comment| %>
+          <div class="col-md-6">
+            <div class="card comment-card border-rounded shadowed mb-3">
+              <div class="card-body">
+                <div id="comment_raty_<%= comment.id %>" data-star="<%= comment.star %>"></div>
+                <p class="card-text"><%= comment.comment %></p>
+                <p class="card-text text-muted"><small>投稿者：<%= link_to comment.user.name, user_path(comment.user.id) %></small></p>
+                <p class="card-text text-muted"><small>投稿先：<%= link_to comment.post.title, post_path(comment.post.id) %></small></p>
+                <p class="card-text text-muted"><small>投稿日：<%= comment.created_at.strftime("%Y年%m月%d日") %></small></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <%= render partial: 'no_results' %>
+    <% end %>
   <% end %>
 </div>
 
 <script>
   document.addEventListener('turbolinks:load', function() {
     // カードのフェードインを適用
-    var cards = document.querySelectorAll('.post-card, .user-card');
+    var cards = document.querySelectorAll('.post-card, .user-card, .comment-card');
     cards.forEach(function(card, index) {
       setTimeout(function() {
         card.style.opacity = '1';
@@ -57,3 +79,5 @@
     });
   });
 </script>
+
+<%= render 'layouts/comment_star' %>
