@@ -28,20 +28,20 @@ users.each do |user_data|
 end
 
 # Rick ユーザーに関連付けられた投稿データを作成
-rick_user = User.find_by(name: "Rick")
-10.times do |n|
-  post = Post.create!(
-    title: "ジンジャー神社",
-    address: "京都府京都市",
-    user_id: rick_user.id
-  )
+# rick_user = User.find_by(name: "Rick")
+# 10.times do |n|
+  # post = Post.create!(
+    # title: "ジンジャー神社",
+    # address: "京都府京都市",
+    # user_id: rick_user.id
+  # )
 
   # Rick以外のユーザーがRickの投稿に1回ずつコメントする
-  users.reject { |user| user == rick_user }.each do |other_user_data|
-    other_user = User.find_by(name: other_user_data[:name]) # 正しいユーザーオブジェクトを取得
-    post.comments.create!(
-      comment: "いいね！",
-      user_id: other_user.id
-    )
-  end
-end
+  # users.reject { |user| user == rick_user }.each do |other_user_data|
+    # other_user = User.find_by(name: other_user_data[:name]) # 正しいユーザーオブジェクトを取得
+    # post.comments.create!(
+      # comment: "いいね！",
+      # user_id: other_user.id
+    # )
+  # end
+# end
