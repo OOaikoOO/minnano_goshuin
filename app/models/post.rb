@@ -42,11 +42,10 @@ class Post < ApplicationRecord
 
   validates :title, presence: true
   validates :address, presence: true
-  validates :introduction, presence: true
-  validates :receive_shuin, inclusion: { in: [true, false] }
-  
   geocoded_by :address
   after_validation :geocode
+  validates :introduction, presence: true
+  validates :receive_shuin, inclusion: { in: [true, false] }
   
   def average_comment_rating
     comments.average(:star).to_f.round(2)
