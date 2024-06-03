@@ -19,8 +19,6 @@ Rails.application.routes.draw do
     end
   end
   
-  resource :map, only: [:show]
-  
   # ゲスト
   devise_scope :user do
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
@@ -52,6 +50,7 @@ Rails.application.routes.draw do
 
   # resourcesを使用する際、URLにnamespaceを含めずにルーティングを設定する
   scope module: :public do
+    resource :map, only: [:show, :index]
     get "search" => "searches#search"
     resources :posts do
       resources :comments, only: [:create, :destroy]
