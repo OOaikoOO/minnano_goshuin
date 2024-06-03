@@ -71,6 +71,8 @@ class Public::PostsController < ApplicationController
         @post = Post.find(params[:id])
       end
       format.json do
+        # 投稿に画像がなかった場合にデフォルト画像のパスを生成する
+        default_image_url = view_context.asset_path('no_image.png')
         @post = Post.all
       end
     end

@@ -5,7 +5,7 @@ json.data do
       json.user do
         json.name post.user.name
       end
-      json.image url_for(post.image)
+
       json.title post.title
       json.introduction post.introduction
       json.address post.address

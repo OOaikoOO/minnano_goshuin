@@ -35,6 +35,10 @@ class Post < ApplicationRecord
     wish_lists.exists?(user_id: user.id)
   end
   
+  def image_url
+    image.present? ? image.url : nil
+  end
+  
   has_many :comments, dependent: :destroy
   has_one_attached :image
   # タグ付け機能
