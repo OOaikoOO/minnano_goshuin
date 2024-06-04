@@ -35,6 +35,10 @@ class Post < ApplicationRecord
     wish_lists.exists?(user_id: user.id)
   end
   
+  def image_url
+    image.present? ? image.url : nil
+  end
+  
   has_many :comments, dependent: :destroy
   has_one_attached :image
   # タグ付け機能
@@ -42,11 +46,10 @@ class Post < ApplicationRecord
 
   validates :title, presence: true
   validates :address, presence: true
-  validates :introduction, presence: true
-  validates :receive_shuin, inclusion: { in: [true, false] }
-  
   geocoded_by :address
   after_validation :geocode
+  validates :introduction, presence: true
+  validates :receive_shuin, inclusion: { in: [true, false] }
   
   def average_comment_rating
     comments.average(:star).to_f.round(2)

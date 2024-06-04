@@ -16,18 +16,26 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page])
-
+    @posts = Post.page(params[:page]).per(9)
+    respond_to do |format|
+      format.html do
+        @posts = Post.page(params[:page])
+      end
+      format.json do
+        @posts = Post.all
+      end
+    end
+  
     # タグでフィルタリング
     if params[:tag].present?
       @posts = @posts.tagged_with(params[:tag])
     end
-
+  
     # ご朱印の有無でフィルタリング
     if params[:receive_shuin].present?
       @posts = @posts.where(receive_shuin: params[:receive_shuin] == 'true')
     end
-
+  
     # 投稿のソート機能
     @sort = params[:sort] || 'created_at_desc'
     case @sort
@@ -38,7 +46,7 @@ class Public::PostsController < ApplicationController
     when 'comments_count_desc'
       @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
     end
-
+  
     # wish_list の状態でフィルタリング
     case params[:wish_list]
     when 'true'
@@ -46,6 +54,8 @@ class Public::PostsController < ApplicationController
     when 'false'
       @posts = @posts.where.not(id: current_user.wish_lists.pluck(:post_id))
     end
+  
+
   end
 
   def show
@@ -56,16 +66,6 @@ class Public::PostsController < ApplicationController
     @star_rating = @post.star.to_f
     @average_rating = @post.average_comment_rating
     @wish_listed = current_user&.wish_lists&.exists?(post_id: @post.id)
-
-    # 投稿データをjsonで返却
-    respond_to do |format|
-      format.html do
-        @post = Post.find(params[:id])
-      end
-      format.json do
-        @post = Post.all
-      end
-    end
   end
 
   def edit

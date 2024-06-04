@@ -1,5 +1,3 @@
-<script type="text/javascript" src="//jpostal-1006.appspot.com/jquery.jpostal.js"></script>
-
 <%= stylesheet_link_tag 'post_new' %>
 <%= render 'layouts/search' %>
 
@@ -33,16 +31,10 @@
           <div class="input-group mb-3 mt-4">
             <h4>所在地</h4>
             <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" aria-hidden="true"><i class="fa-solid fa-tenge-sign"></i></span>
-              </div>
-              <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "郵便番号" %>
+              <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "郵便番号（ハイフンなし）" %>
             </div>
             <div class="input-group mb-3 mt-4">
-              <div class="input-group-prepend">
-                <span class="input-group-text" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
-              </div>
-              <%= f.text_field :address, class: "form-control", placeholder: "住所" %>
+              <%= f.text_field :address, class: "form-control", placeholder: "例）○○県○○市○○-○○" %>
             </div>
         </div>
 
@@ -110,4 +102,16 @@
   raty(elem,opt);
 </script>
 
-<%= javascript_pack_tag "jpostal",  'data-turbolinks-track': 'reload' %>
+<!--所在地自動入力-->
+<script>
+  $(document).ready(function(){
+    $('#zipcode').jpostal({
+      postcode: [
+        '#zipcode'
+      ],
+      address: {
+        '#post_address': '%3%4%5'
+      }
+    });
+  });
+</script>

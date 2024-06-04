@@ -13,35 +13,34 @@ Admin.create!(
 )
 
 # User データを作成
-users = [
-  { name: "Rick", email: "rick@example.com", password: "password" },
-  { name: "Carl", email: "carl@example.com", password: "password" },
-  { name: "Daryl", email: "daryl@example.com", password: "password" },
-  { name: "Carol", email: "carol@example.com", password: "password" },
-  { name: "Maggie", email: "maggie@example.com", password: "password" },
-  { name: "Michonne", email: "michonne@example.com", password: "password" }
-]
+rick = User.create(name: 'Rick', email: 'rick@example.com', password: 'password')
+carl = User.create(name: 'Carl', email: 'carl@example.com', password: 'password')
+daryl = User.create(name: 'Daryl', email: 'daryl@example.com', password: 'password')
+carol = User.create(name: 'Carol', email: 'carol@example.com', password: 'password')
+maggie = User.create(name: 'Maggie', email: 'maggie@example.com', password: 'password')
+michonne = User.create(name: 'Michonne', email: 'michonne@example.com', password: 'password')
 
-# users 配列をループして User データを作成
-users.each do |user_data|
-  User.create!(user_data)
+# 投稿データを作成
+Post.find_or_create_by!(title: "石山寺") do |post|
+  post.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/sample-post1.jpg"), filename:"sample-post1.jpg")
+  post.introduction = "紫式部ゆかりのお寺"
+  post.address = "滋賀県大津市石山寺1-1-1"
+  post.receive_shuin = true
+  post.user = rick
 end
 
-# Rick ユーザーに関連付けられた投稿データを作成
-# rick_user = User.find_by(name: "Rick")
-# 10.times do |n|
-  # post = Post.create!(
-    # title: "ジンジャー神社",
-    # address: "京都府京都市",
-    # user_id: rick_user.id
-  # )
+Post.find_or_create_by!(title: "三室戸寺") do |post|
+  post.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/sample-post2.jpg"), filename:"sample-post2.jpg")
+  post.introduction = "紫陽花で有名なお寺"
+  post.address = "京都府宇治市莵道滋賀谷21"
+  post.receive_shuin = true
+  post.user = carl
+end
 
-  # Rick以外のユーザーがRickの投稿に1回ずつコメントする
-  # users.reject { |user| user == rick_user }.each do |other_user_data|
-    # other_user = User.find_by(name: other_user_data[:name]) # 正しいユーザーオブジェクトを取得
-    # post.comments.create!(
-      # comment: "いいね！",
-      # user_id: other_user.id
-    # )
-  # end
-# end
+Post.find_or_create_by!(title: "油日神社") do |post|
+  post.image = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/sample-post3.jpg"), filename:"sample-post3.jpg")
+  post.introduction = "映画の撮影で使われた神社"
+  post.address = "滋賀県甲賀市甲賀町油日1042"
+  post.receive_shuin = true
+  post.user = daryl
+end

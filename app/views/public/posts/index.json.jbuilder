@@ -1,6 +1,6 @@
 json.data do
-  json.item do
-    json.array!(@post) do |post|
+  json.items do
+    json.array!(@posts) do |post|
       json.id post.id
       json.user do
         json.name post.user.name

@@ -228,3 +228,8 @@ body {
   border-radius: 10px; /* 角丸にする */
 
 }
+
+#map {
+  width: 100%;
+  height: calc(100vh - 88px - 179px);
+}
