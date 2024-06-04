@@ -7,10 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Admin データを作成
-Admin.create!(
-  email: "admin@admin",
-  password: "adminadmin"
-)
+Admin.find_or_create_by!(email: ENV['ADMIN_EMAIL']) do |admin|
+  admin.password = ENV['ADMIN_PASSWORD']
+end
 
 # User データを作成
 rick = User.create(name: 'Rick', email: 'rick@example.com', password: 'password')
