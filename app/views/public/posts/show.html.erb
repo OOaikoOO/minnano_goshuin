@@ -38,22 +38,22 @@
         <div id="post_raty_<%= @post.id %>" data-star="<%= @star_rating %>"></div>
 
         <!--コメントの平均難易度-->
-        <p>コメントの平均点: <%= @average_rating %>点</p>
+        <p>みんなの平均難易度: <%= @average_rating %>点</p>
 
         <!--寺社名-->
         <h5 class="card-title">寺社名：<%= @post.title %></h5>
       </div>
       <div class="card-body">
-        
+
         <!--ご朱印の有無-->
         <p class="card-text">ご朱印はいただける？：<%= @post.receive_shuin ? 'はい' : 'いいえ' %></p>
-        
+
         <!--紹介文-->
         <p class="card-text">紹介文：<%= @post.introduction %></p>
-        
+
         <!--所在地-->
-        <p class="card-text"><span><i class="fa-solid fa-location-dot"></i><%= @post.address %></p></span>
-        <div id="map"></div>
+        <p class="card-text "><span><i class="fa-solid fa-location-dot"></i><%= @post.address %></p></span>
+          <div id="map" style="width: 280px; height: 200px;" class="mx-auto" data-turbolinks="false"></div>
 
         <!--タグ-->
         <p class="card-text">タグ：
@@ -180,4 +180,35 @@ document.addEventListener('turbolinks:load', function() {
 });
 </script>
 
-<%= javascript_pack_tag 'map', 'data-turbolinks-track': 'reload' %>
+
+<script>
+  function initMap() {
+    const post = { lat: <%= @post.latitude %>, lng: <%= @post.longitude %> };
+    const map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: post,
+      mapTypeControl: false
+    });
+
+    const contentString = '所在地：<%= @post.address %>';
+    const infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    const marker = new google.maps.Marker({
+      position: post,
+      map: map,
+      title: contentString
+    });
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+
+  window.onload = function() {
+    initMap();
+  };
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['Maps_API_Key'] %>&callback=initMap&v=weekly&libraries=marker"></script>

@@ -66,16 +66,6 @@ class Public::PostsController < ApplicationController
     @star_rating = @post.star.to_f
     @average_rating = @post.average_comment_rating
     @wish_listed = current_user&.wish_lists&.exists?(post_id: @post.id)
-    respond_to do |format|
-      format.html do
-        @post = Post.find(params[:id])
-      end
-      format.json do
-        # 投稿に画像がなかった場合にデフォルト画像のパスを生成する
-        default_image_url = view_context.asset_path('no_image.png')
-        @post = Post.all
-      end
-    end
   end
 
   def edit
