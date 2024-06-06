@@ -32,8 +32,18 @@ module Vision
       request = Net::HTTP::Post.new(uri.request_uri)
       request['Content-Type'] = 'application/json'
       response = https.request(request, params)
+      
+    # レスポンスの解析とエラーハンドリング
       result = JSON.parse(response.body)
+      Rails.logger.info("Vision API response: #{result.inspect}")
+
+      if result["responses"].nil? || result["responses"].empty?
+        Rails.logger.error("Vision API response is empty or nil")
+        return false
+      end
+
       if (error = result["responses"][0]["error"]).present?
+        Rails.logger.error("Vision API error: #{error['message']}")
         raise error["message"]
       else
         result_arr = result["responses"].flatten.map do |parsed_image|
@@ -45,6 +55,12 @@ module Vision
           true
         end
       end
+    rescue JSON::ParserError => e
+      Rails.logger.error("JSON parsing error: #{e.message}")
+      raise "JSON parsing error"
+    rescue StandardError => e
+      Rails.logger.error("Standard error: #{e.message}")
+      raise e.message
     end
   end
 end
