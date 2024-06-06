@@ -33,19 +33,19 @@ module Vision
       request['Content-Type'] = 'application/json'
       response = https.request(request, params)
       
-    # レスポンスの解析とエラーハンドリング
+      # レスポンスの解析とエラーハンドリング
       result = JSON.parse(response.body)
-      Rails.logger.info("Vision API response: #{result.inspect}")
-
+      # レスポンスが空かnilかをチェック
       if result["responses"].nil? || result["responses"].empty?
         Rails.logger.error("Vision API response is empty or nil")
         return false
       end
-
+      # エラーハンドリング
       if (error = result["responses"][0]["error"]).present?
         Rails.logger.error("Vision API error: #{error['message']}")
         raise error["message"]
       else
+        # レスポンスを解析して不適切な要素が含まれているかチェック
         result_arr = result["responses"].flatten.map do |parsed_image|
           parsed_image["safeSearchAnnotation"].values
         end.flatten
@@ -55,6 +55,7 @@ module Vision
           true
         end
       end
+    # JSONの解析中にエラーが発生した場合のエラーハンドリング
     rescue JSON::ParserError => e
       Rails.logger.error("JSON parsing error: #{e.message}")
       raise "JSON parsing error"
