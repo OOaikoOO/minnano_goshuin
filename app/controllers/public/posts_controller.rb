@@ -8,11 +8,28 @@ class Public::PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
+    if post_params[:image].present?
+      # 画像の解析を行う
+      result = Vision.image_analysis(post_params[:image])
+      if result
+        if @post.save
+          redirect_to post_path(@post), notice: "投稿が完了しました"
+          return
+        end
+      else
+        # 不適切な画像の場合、エラーメッセージを表示してフォームを再表示
+        flash.now['danger'] = "不適切な画像の投稿はできません（アダルトコンテンツ、暴力的な表現など）"
+        render :new, status: :unprocessable_entity
+        return
+      end
+    end
+    # 画像が送信されなかった場合でも投稿を保存する
     if @post.save
       redirect_to post_path(@post), notice: "投稿が完了しました"
-    else
-      render :new
+      return
     end
+    flash.now['danger'] = "投稿に失敗しました"
+    render :new, status: :unprocessable_entity
   end
 
   def index
@@ -25,17 +42,17 @@ class Public::PostsController < ApplicationController
         @posts = Post.all
       end
     end
-  
+
     # タグでフィルタリング
     if params[:tag].present?
       @posts = @posts.tagged_with(params[:tag])
     end
-  
+
     # ご朱印の有無でフィルタリング
     if params[:receive_shuin].present?
       @posts = @posts.where(receive_shuin: params[:receive_shuin] == 'true')
     end
-  
+
     # 投稿のソート機能
     @sort = params[:sort] || 'created_at_desc'
     case @sort
@@ -46,7 +63,7 @@ class Public::PostsController < ApplicationController
     when 'comments_count_desc'
       @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
     end
-  
+
     # wish_list の状態でフィルタリング
     case params[:wish_list]
     when 'true'
@@ -54,7 +71,7 @@ class Public::PostsController < ApplicationController
     when 'false'
       @posts = @posts.where.not(id: current_user.wish_lists.pluck(:post_id))
     end
-  
+
 
   end
 
@@ -66,6 +83,7 @@ class Public::PostsController < ApplicationController
     @star_rating = @post.star.to_f
     @average_rating = @post.average_comment_rating
     @wish_listed = current_user&.wish_lists&.exists?(post_id: @post.id)
+    gon.post = @post
   end
 
   def edit
@@ -73,18 +91,31 @@ class Public::PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
-    if @post.user == current_user
-      if @post.update(post_params)
-        redirect_to post_path(@post), notice: "投稿が更新されました"
+    @post = current_user.posts.find(params[:id])
+    if post_params[:image].present?
+      # 画像の解析を行う
+      result = Vision.image_analysis(post_params[:image])
+      if result
+        if @post.update(post_params)
+          redirect_to post_path(@post), notice: "投稿が更新されました"
+          return
+        end
       else
-        render :edit
+        # 不適切な画像の場合、エラーメッセージを表示してフォームを再表示
+        flash.now['danger'] = "不適切な画像の投稿はできません（アダルト、暴力的など）"
+        render :edit, status: :unprocessable_entity
+        return
       end
-    else
-      redirect_to posts_path, notice: "他のユーザーの投稿を編集することはできません"
     end
+    # 画像が送信されなかった場合でも投稿を更新する
+    if @post.update(post_params)
+      redirect_to post_path(@post), notice: "投稿が更新されました"
+      return
+    end
+    flash.now['danger'] = "投稿の更新に失敗しました"
+    render :edit, status: :unprocessable_entity
   end
-
+  
   def destroy
     @post = Post.find(params[:id])
     if @post.user == current_user

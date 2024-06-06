@@ -183,19 +183,21 @@ document.addEventListener('turbolinks:load', function() {
 
 <script>
   function initMap() {
-    const post = { lat: <%= @post.latitude %>, lng: <%= @post.longitude %> };
-    const map = new google.maps.Map(document.getElementById('map'), {
+    var post ={lat: <%= @post.latitude %>, lng: <%= @post.longitude %>};
+    var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
       center: post,
       mapTypeControl: false
     });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
 
-    const contentString = '所在地：<%= @post.address %>';
-    const infowindow = new google.maps.InfoWindow({
+    var contentString = '所在地：<%= @post.address %>';
+    var infowindow = new google.maps.InfoWindow({
       content: contentString
     });
 
-    const marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       position: post,
       map: map,
       title: contentString
