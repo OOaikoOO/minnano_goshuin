@@ -38,9 +38,11 @@ Rails.application.routes.draw do
   }
 
   # ユーザー用ログイン関連
-  devise_for :users, skip: [:passwords], controllers: {
+  devise_for :users, controllers: {
     registrations: "public/registrations",
-    sessions: 'public/sessions'
+    sessions: 'public/sessions',
+    # パスワード再設定用
+    passwords: 'public/passwords'
   }
 
   # 「行きたいリスト」用

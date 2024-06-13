@@ -13,8 +13,8 @@
       <div class="d-flex justify-content-center align-items-center mt-3">
         <% unless @user.guest_user? %>
           <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-yamabuki me-2" %>
+          <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
         <% end %>
-        <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
         <%= link_to "みんなの投稿を見る", posts_path, class: "btn btn-sky" %>
       </div>
     <% else %>
@@ -26,7 +26,20 @@
 <%= render 'layouts/sort' %>
 
 <div class="container">
-  <h4 class="mb-3"><%= @user.name %>さんの投稿一覧</h4>
+  <% if current_user.guest_user? %>
+    <h4 class="mb-3 text-center">
+      ゲストユーザーは以下の機能が制限されています。</br></br>
+      【プロフィール編集機能】</br></br>
+      【投稿機能】</br></br>
+      【コメント機能】</br></br>
+      【「行きたいリスト」機能】</br></br>
+    </h4>
+    <div class="text-center mb-3">
+      <%= link_to "新規会員登録はこちら", "javascript:void(0);", id: "signup_button", class: "btn btn-sakura btn-lg" %>
+    </div>
+  <% else %>
+    <h4 class="mb-3 text-center"><%= @user.name %>さんの投稿一覧</h4>
+  <% end %>
   <div class="row">
     <%= render 'layouts/post' %>
     <%= paginate @posts %>
@@ -54,3 +67,33 @@
 <!-- 評価javascript -->
 <%= render 'layouts/star' %>
 <%= render 'layouts/comment_star' %>
+
+<!--ログアウトしてから新規会員登録画面へリダイレクトする-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const signupButton = document.getElementById('signup_button');
+
+    signupButton.addEventListener('click', function(event) {
+      event.preventDefault();
+
+      // ログアウト処理をAjaxで実行
+      fetch('/users/sign_out', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        }
+      }).then(response => {
+        if (response.ok) {
+          // ログアウト成功後に新規会員登録ページにリダイレクト
+          window.location.href = '<%= new_user_registration_path %>';
+        } else {
+          // エラー処理
+          console.error('ログアウトに失敗しました。');
+        }
+      }).catch(error => {
+        console.error('通信エラー:', error);
+      });
+    });
+  });
+</script>

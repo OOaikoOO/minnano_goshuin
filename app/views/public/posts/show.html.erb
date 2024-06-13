@@ -13,7 +13,9 @@
     <% end %>
     <% if user_signed_in? %>
       <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-yamabuki me-2" %>
-      <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
+      <% unless current_user.guest_user? %>
+        <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
+      <% end %>
       <%= link_to "みんなの投稿をみる", posts_path, class: "btn btn-sky" %>
     <% end %>
   </div>
@@ -64,9 +66,11 @@
         <div class="d-flex justify-content-end">
 
           <!--行きたいリスト-->
+        <% unless current_user.guest_user? %>
           <div class="wish_list" id="wish_list-<%= @post.id %>">
             <%= render partial: 'layouts/wish_list', locals: { post: @post } %>
           </div>
+        <% end %>
         </div>
 
         <!--投稿者名-->
@@ -88,20 +92,22 @@
     <div class="row">
       <div class="col-md-12">
         <!-- コメント入力フォーム -->
-        <div class="card card-custom p-3 mb-3">
-          <%= form_with(model: [@post, @comment], method: :post, local: true, html: { id: 'commentForm' }) do |f| %>
-            <div class="mb-3">
-              <p>ご朱印をいただけるまでの難易度はどれぐらいでしたか？</p>
-              <div class="form-group" id="comment_raty"></div>
-              <%= f.text_area :comment, placeholder: "コメントを入力してください", class: "form-control", id: "commentField" %>
-              <%= f.hidden_field :post_id, value: @post.id %>
-              <div class="invalid-feedback">コメントを入力してください。</div>
-            </div>
-            <div>
-              <%= f.submit "コメントする", class: "btn btn-success" %>
-            </div>
-          <% end %>
-        </div>
+        <% unless current_user.guest_user? %>
+          <div class="card card-custom p-3 mb-3">
+            <%= form_with(model: [@post, @comment], method: :post, local: true, html: { id: 'commentForm' }) do |f| %>
+              <div class="mb-3">
+                <p>ご朱印をいただけるまでの難易度はどれぐらいでしたか？</p>
+                <div class="form-group" id="comment_raty"></div>
+                <%= f.text_area :comment, placeholder: "コメントを入力してください", class: "form-control", id: "commentField" %>
+                <%= f.hidden_field :post_id, value: @post.id %>
+                <div class="invalid-feedback">コメントを入力してください。</div>
+              </div>
+              <div>
+                <%= f.submit "コメントする", class: "btn btn-success" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
 
