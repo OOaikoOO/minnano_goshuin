@@ -6,7 +6,9 @@
 
   <div class="text-center mb-3">
     <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-yamabuki me-2" %>
-    <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
+    <% unless current_user.guest_user? %>
+      <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
+    <% end %>
   </div>
 
   <% if params[:tag].present? %>
