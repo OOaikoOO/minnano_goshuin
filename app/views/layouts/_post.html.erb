@@ -3,14 +3,14 @@
     <div class="card post-card border-rounded shadowed">
       <%= link_to post_path(post) do %>
         <% if post.image.attached? %>
-          <%= image_tag post.image.variant(resize_to_fit: [200, 200]), class: "card-img-top img-thumbnail" %>
+          <%= image_tag post.image.variant(resize_to_fill: [200, 200]), class: "card-img-top img-thumbnail" %>
         <% else %>
           <%= image_tag 'no_image.png', class: "card-img-top img-thumbnail" %>
         <% end %>
       <% end %>
       <div class="card-body">
         <div id="post_raty_<%= post.id %>" data-star="<%= post.star.to_f %>"></div>
-        <p>コメントの平均点: <%= post.average_comment_rating %>点</p>
+        <p>コメントの平均難易度: <%= post.average_comment_rating %>点</p>
         <h5 class="card-title"><%= link_to post.title, post_path(post.id) %></h5>
         <p class="card-text">所在地：<%= post.address %></p>
         <p class="card-text">ご朱印はいただける？：<%= post.receive_shuin ? 'はい' : 'いいえ' %></p>
