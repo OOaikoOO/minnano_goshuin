@@ -10,6 +10,22 @@ describe Post, type: :model do
     end
   end
   
+  context "関連の確認" do
+    it "特定のユーザーに紐づいていること" do
+      user = create(:user)
+      post = create(:post, user: user)
+      expect(post.user).to eq user
+    end
+  end
+  
+  context "スコープの確認" do
+    it "最新の投稿が先頭になること" do
+      post1 = create(:post)
+      post2 = create(:post)
+      expect(Post.recent).to eq [post2, post1]
+    end
+  end
+  
   context "バリデーションの確認" do
     it "寺社名が空の場合は無効であること" do
       post = build(:post, title: "")

@@ -51,6 +51,9 @@ class Post < ApplicationRecord
   validates :introduction, presence: true, length: { maximum: 250 }
   validates :receive_shuin, inclusion: { in: [true, false] }
   
+  # 最新の投稿を先頭にする
+  scope :recent, -> { order(created_at: :desc) }
+  
   def average_comment_rating
     comments.average(:star).to_f.round(2)
   end
