@@ -10,24 +10,6 @@ describe Post, type: :model do
     end
   end
 
-  describe "画像の不適切な内容の検証" do
-    context "不適切な画像が投稿されないこと" do
-      it "inappropriate_image.jpg を使って検証" do
-        post = build(:post)
-        post.image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'inappropriate_image.jpg')), filename: 'inappropriate_image.jpg', content_type: 'image/jpeg')
-        expect(post).not_to be_valid
-      end
-    end
-
-    context "適切な画像が投稿されること" do
-      it "appropriate_image.jpg を使って検証" do
-        post = build(:post)
-        post.image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'appropriate_image.jpg')), filename: 'appropriate_image.jpg', content_type: 'image/jpeg')
-        expect(post).to be_valid
-      end
-    end
-  end
-
   context "関連の確認" do
     it "特定のユーザーに紐づいていること" do
       user = create(:user)

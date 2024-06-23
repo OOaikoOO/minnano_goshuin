@@ -11,22 +11,12 @@ class Post < ApplicationRecord
   validates :address, presence: true
   validates :introduction, presence: true, length: { maximum: 250 }
   validates :receive_shuin, inclusion: { in: [true, false] }
-  validate :validate_image_content
 
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
   # 最新の投稿を先頭にする
   scope :recent, -> { order(created_at: :desc) }
-
-  def validate_image_content
-    if image.attached?
-      tempfile = image.blob.open
-      unless Vision.image_analysis(tempfile)
-        errors.add(:image, "は不適切な内容を含んでいます")
-      end
-    end
-  end
 
   def self.search_for(content, method, field = 'title')
     # 神社仏閣の名前で検索
