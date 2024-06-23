@@ -1,6 +1,8 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
+  
+  validates :comment, presence: true, length: { maximum: 250 }
 
   def self.search_for(content, method)
     if method == 'perfect'
