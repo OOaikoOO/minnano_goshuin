@@ -9,4 +9,18 @@ describe Comment, type: :model do
       expect(comment).to be_valid
     end
   end
+  
+  context "バリデーションの確認" do
+    it "コメントが空の場合は無効であること" do
+      comment = build(:comment, comment: "")
+      expect(comment).not_to be_valid
+      expect(comment.errors[:comment]).to include("を入力してください")
+    end
+
+    it "コメントが250文字を超える場合は無効であること" do
+      comment = build(:comment, comment: Faker::Lorem.characters(number: 251))
+      expect(comment).not_to be_valid
+      expect(comment.errors[:comment]).to include("は250文字以内で入力してください")
+    end
+  end
 end

@@ -44,11 +44,11 @@ class Post < ApplicationRecord
   # タグ付け機能
   acts_as_taggable_on :tags
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: 50 }
   validates :address, presence: true
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
-  validates :introduction, presence: true
+  validates :introduction, presence: true, length: { maximum: 250 }
   validates :receive_shuin, inclusion: { in: [true, false] }
   
   def average_comment_rating

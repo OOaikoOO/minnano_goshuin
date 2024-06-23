@@ -22,5 +22,17 @@ describe Post, type: :model do
       expect(post).not_to be_valid
       expect(post.errors[:introduction]).to include("を入力してください")
     end
+    
+    it "寺社名が50文字を超える場合は無効であること" do
+      post = build(:post, title: Faker::Lorem.characters(number: 51))
+      expect(post).not_to be_valid
+      expect(post.errors[:title]).to include("は50文字以内で入力してください")
+    end
+    
+    it "紹介文が250文字を超える場合は無効であること" do
+      post = build(:post, introduction: Faker::Lorem.characters(number: 251))
+      expect(post).not_to be_valid
+      expect(post.errors[:introduction]).to include("は250文字以内で入力してください")
+    end
   end
 end
