@@ -1,5 +1,33 @@
 class Post < ApplicationRecord
 
+  belongs_to :user
+  has_many :wish_lists, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_one_attached :image
+  # タグ付け機能
+  acts_as_taggable_on :tags
+
+  validates :title, presence: true, length: { maximum: 50 }
+  validates :address, presence: true
+  validates :introduction, presence: true, length: { maximum: 250 }
+  validates :receive_shuin, inclusion: { in: [true, false] }
+  validate :validate_image_content
+
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
+
+  # 最新の投稿を先頭にする
+  scope :recent, -> { order(created_at: :desc) }
+
+  def validate_image_content
+    if image.attached?
+      tempfile = image.blob.open
+      unless Vision.image_analysis(tempfile)
+        errors.add(:image, "は不適切な内容を含んでいます")
+      end
+    end
+  end
+
   def self.search_for(content, method, field = 'title')
     # 神社仏閣の名前で検索
     if field == 'title'
@@ -28,9 +56,6 @@ class Post < ApplicationRecord
     end
   end
 
-  belongs_to :user
-  has_many :wish_lists, dependent: :destroy
-  
   def wish_listed_by?(user)
     wish_lists.exists?(user_id: user.id)
   end
@@ -38,22 +63,7 @@ class Post < ApplicationRecord
   def image_url
     image.present? ? image.url : nil
   end
-  
-  has_many :comments, dependent: :destroy
-  has_one_attached :image
-  # タグ付け機能
-  acts_as_taggable_on :tags
 
-  validates :title, presence: true, length: { maximum: 50 }
-  validates :address, presence: true
-  geocoded_by :address
-  after_validation :geocode, if: :address_changed?
-  validates :introduction, presence: true, length: { maximum: 250 }
-  validates :receive_shuin, inclusion: { in: [true, false] }
-  
-  # 最新の投稿を先頭にする
-  scope :recent, -> { order(created_at: :desc) }
-  
   def average_comment_rating
     comments.average(:star).to_f.round(2)
   end

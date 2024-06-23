@@ -9,15 +9,38 @@ describe Post, type: :model do
       expect(post).to be_valid
     end
   end
-  
+
+  describe "画像の不適切な内容の検証" do
+    context "不適切な画像が投稿されないこと" do
+      it "inappropriate_image.jpg を使って検証" do
+        post = build(:post)
+        post.image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'inappropriate_image.jpg')), filename: 'inappropriate_image.jpg', content_type: 'image/jpeg')
+        expect(post).not_to be_valid
+      end
+    end
+
+    context "適切な画像が投稿されること" do
+      it "appropriate_image.jpg を使って検証" do
+        post = build(:post)
+        post.image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'files', 'appropriate_image.jpg')), filename: 'appropriate_image.jpg', content_type: 'image/jpeg')
+        expect(post).to be_valid
+      end
+    end
+  end
+
   context "関連の確認" do
     it "特定のユーザーに紐づいていること" do
       user = create(:user)
       post = create(:post, user: user)
       expect(post.user).to eq user
     end
+    it "関連するwish_listが削除されること" do
+      post = create(:post)
+      wish_list = create(:wish_list, post: post)
+      expect { post.destroy }.to change { WishList.count }.by(-1)
+    end
   end
-  
+
   context "スコープの確認" do
     it "最新の投稿が先頭になること" do
       post1 = create(:post)
@@ -25,26 +48,26 @@ describe Post, type: :model do
       expect(Post.recent).to eq [post2, post1]
     end
   end
-  
+
   context "バリデーションの確認" do
     it "寺社名が空の場合は無効であること" do
       post = build(:post, title: "")
       expect(post).not_to be_valid
       expect(post.errors[:title]).to include("を入力してください")
     end
-    
+
     it "紹介文が空の場合は無効であること" do
       post = build(:post, introduction: "")
       expect(post).not_to be_valid
       expect(post.errors[:introduction]).to include("を入力してください")
     end
-    
+
     it "寺社名が50文字を超える場合は無効であること" do
       post = build(:post, title: Faker::Lorem.characters(number: 51))
       expect(post).not_to be_valid
       expect(post.errors[:title]).to include("は50文字以内で入力してください")
     end
-    
+
     it "紹介文が250文字を超える場合は無効であること" do
       post = build(:post, introduction: Faker::Lorem.characters(number: 251))
       expect(post).not_to be_valid
