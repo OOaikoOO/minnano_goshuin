@@ -10,76 +10,9 @@
 <div class="form-container">
   <div class="row justify-content-center">
     <div class="col-lg-8">
-      <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
-        <%= render 'public/shared/error_messages', resource: f.object %>
-        <div class="border p-4 shadow border-rounded fade-in-from-bottom">
-          <div class="text-center">
-            <h1 class="mb-4">新規投稿</h1>
-          </div>
 
-          <!-- 評価のフォーム -->
-          <div class="form-group" id="post_raty">
-            <h6>ご朱印をいただけるまでの難易度はどれぐらいでしたか？</h6>
-          </div>
-
-          <!-- 寺社名フォーム -->
-          <div class="form-group">
-            <h4>寺社名</h4>
-            <%= f.text_field :title, class: "form-control", placeholder: "例）○○神社", required: true %>
-            <div class="invalid-feedback">
-              寺社名を入力してください。
-            </div>
-          </div>
-
-          <!-- 所在地フォーム -->
-          <div class="input-group mb-3 mt-4">
-            <h4>所在地</h4>
-            <div class="input-group">
-              <%= text_field_tag :zipcode, nil, class: "form-control", placeholder: "郵便番号（ハイフンなし）" %>
-            </div>
-            <div class="input-group mb-3 mt-4">
-              <%= f.text_field :address, class: "form-control", placeholder: "例）○○県○○市○○-○○" %>
-            </div>
-        </div>
-
-          <!-- 紹介文フォーム -->
-          <div class="form-group">
-            <h4>紹介文</h4>
-            <%= f.text_area :introduction, class: "form-control", placeholder: "ここに紹介文を入力してください" %>
-          </div>
-
-          <!-- ご朱印選択フォーム -->
-          <div class="form-group">
-            <h4>ご朱印はいただけますか？</h4>
-            <div class="form-check">
-              <%= f.radio_button :receive_shuin, true, class: "form-check-input" %>
-              <%= f.label :receive_shuin, "はい", class: "form-check-label" %>
-            </div>
-            <div class="form-check">
-              <%= f.radio_button :receive_shuin, false, class: "form-check-input" %>
-              <%= f.label :receive_shuin, "いいえ", class: "form-check-label" %>
-            </div>
-          </div>
-
-          <!-- タグ入力フォーム -->
-          <div class="form-group">
-            <%= f.label :"タグ入力欄（半角コンマ（,）で区切ると複数タグ付けできます）" %>
-            <%= f.text_field :tag_list, value: @post.tag_list.join(','), class: 'form-control', placeholder: "例）景色がきれい,駐車場あり" %>
-          </div>
-
-          <!-- 画像アップロードフォーム -->
-          <div class="form-group">
-            <%= f.label :image, "画像アップロード" %>
-            <%= f.file_field :image, class: "form-control-file", onchange: "previewImage(this);" %>
-            <div id="image-preview"></div>
-          </div>
-
-          <!-- 投稿ボタン -->
-          <div class="form-group">
-            <%= f.submit '投稿する', class: "btn btn-sakura me-2" %>
-          </div>
-        </div>
-      <% end %>
+      <!--入力フォーム-->
+      <%= render 'layouts/post_new' %>
 
       <!-- マイページに戻るリンク -->
       <div class="mt-4">

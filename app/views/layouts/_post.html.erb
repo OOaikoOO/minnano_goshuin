@@ -1,7 +1,11 @@
-<% @posts.reverse.each do |post| %> <!-- 逆順で表示 -->
+<!--投稿（表示用）-->
+
+<% @posts.each do |post| %>
   <div class="col-md-4">
     <div class="card post-card border-rounded shadowed">
       <%= link_to post_path(post) do %>
+
+        <!--画像-->
         <% if post.image.attached? %>
           <%= image_tag post.image.variant(resize_to_fill: [200, 200]), class: "card-img-top img-thumbnail" %>
         <% else %>
@@ -9,21 +13,32 @@
         <% end %>
       <% end %>
       <div class="card-body">
+        <!--ご朱印難易度-->
         <div id="post_raty_<%= post.id %>" data-star="<%= post.star.to_f %>"></div>
-        <p>コメントの平均難易度: <%= post.average_comment_rating %>点</p>
+        <p>みんなの平均難易度: <%= post.average_comment_rating %>点</p>
+
+        <!--寺社名-->
         <h5 class="card-title"><%= link_to post.title, post_path(post.id) %></h5>
+        
+        <!--所在地-->
         <p class="card-text">所在地：<%= post.address %></p>
+        
+        <!--ご朱印の有無-->
         <p class="card-text">ご朱印はいただける？：<%= post.receive_shuin ? 'はい' : 'いいえ' %></p>
-      
+
+        <!--行きたいリスト-->
         <% unless current_user.guest_user? %>
           <div class="wish_list text-muted" id="wish_list-<%= post.id %>">
             <%= render partial: 'layouts/wish_list', locals: { post: post } %>
           </div>
         <% end %>
-      
+
+        <!--投稿者・投稿日・コメント数-->
         <p class="card-text">投稿者：<%= link_to post.user.name, user_path(post.user) %></p>
         <p class="card-text text-muted"><small>投稿日：<%= post.created_at.strftime("%Y/%m/%d") %></small></p>
         <p class="card-text text-muted text-end"><small>コメント数：<%= post.comments.count %></small></p>
+
+        <!--タグ-->
         <p>タグ：
         <% post.tag_list.each do |tag| %>
           <%= link_to tag, tagged_posts_path(tag: tag), class: "badge badge-custom" %>
