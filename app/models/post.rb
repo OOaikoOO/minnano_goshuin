@@ -4,7 +4,6 @@ class Post < ApplicationRecord
   has_many :wish_lists, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one_attached :image
-  # タグ付け機能
   acts_as_taggable_on :tags
 
   validates :title, presence: true, length: { maximum: 50 }
