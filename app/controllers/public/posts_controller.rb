@@ -42,37 +42,6 @@ class Public::PostsController < ApplicationController
         @posts = Post.all
       end
     end
-
-    # タグでフィルタリング
-    if params[:tag].present?
-      @posts = @posts.tagged_with(params[:tag])
-    end
-
-    # ご朱印の有無でフィルタリング
-    if params[:receive_shuin].present?
-      @posts = @posts.where(receive_shuin: params[:receive_shuin] == 'true')
-    end
-
-    # 投稿のソート機能
-    @sort = params[:sort] || 'created_at_desc'
-    case @sort
-    when 'created_at_asc'
-      @posts = @posts.order(created_at: :asc)
-    when 'comments_count_asc'
-      @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) ASC')
-    when 'comments_count_desc'
-      @posts = @posts.left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
-    end
-
-    # wish_list の状態でフィルタリング
-    case params[:wish_list]
-    when 'true'
-      @posts = @posts.joins(:wish_lists).where(wish_lists: { user_id: current_user.id })
-    when 'false'
-      @posts = @posts.where.not(id: current_user.wish_lists.pluck(:post_id))
-    end
-
-
   end
 
   def show
@@ -115,7 +84,7 @@ class Public::PostsController < ApplicationController
     flash.now['danger'] = "投稿の更新に失敗しました"
     render :edit, status: :unprocessable_entity
   end
-  
+
   def destroy
     @post = Post.find(params[:id])
     if @post.user == current_user
@@ -124,16 +93,6 @@ class Public::PostsController < ApplicationController
     else
       redirect_to posts_path, notice: "他のユーザーの投稿を削除することはできません"
     end
-  end
-
-  # タグで投稿を絞り込む
-  def tagged
-    if params[:tag].present?
-      @posts = Post.tagged_with(params[:tag]).page(params[:page])
-    else
-      @posts = Post.all
-    end
-    render :index
   end
 
   private

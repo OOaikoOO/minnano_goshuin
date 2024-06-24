@@ -46,6 +46,38 @@ class Post < ApplicationRecord
     end
   end
 
+  # 投稿のソート機能
+  def self.sorted_posts(sort_by)
+    case sort_by
+    when 'created_at_asc'
+      order(created_at: :asc)
+    when 'comments_count_asc'
+      left_joins(:comments).group(:id).order('COUNT(comments.id) ASC')
+    when 'comments_count_desc'
+      left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
+    else
+      order(created_at: :desc)
+    end
+  end
+
+  # タグで投稿を絞り込む
+  def self.tagged_posts(tag_name, page)
+    if tag_name.present?
+      tagged_with(tag_name).page(page)
+    else
+      all
+    end
+  end
+
+    # ご朱印の有無でフィルタリング
+  def self.filter_by_receive_shuin(receive_shuin)
+    if receive_shuin.present?
+      where(receive_shuin: receive_shuin)
+    else
+      all
+    end
+  end
+
   def wish_listed_by?(user)
     wish_lists.exists?(user_id: user.id)
   end
