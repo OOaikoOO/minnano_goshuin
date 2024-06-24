@@ -1,0 +1,33 @@
+<!--（投稿詳細画面）マップ用-->
+
+<script>
+  function initMap() {
+    var post ={lat: <%= @post.latitude %>, lng: <%= @post.longitude %>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: post,
+      mapTypeControl: false
+    });
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
+
+    var contentString = '所在地：<%= @post.address %>';
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+
+    var marker = new google.maps.Marker({
+      position: post,
+      map: map,
+      title: contentString
+    });
+
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+
+  window.onload = function() {
+    initMap();
+  };
+</script>

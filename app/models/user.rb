@@ -4,11 +4,18 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :posts, dependent: :destroy
+  has_many :wish_lists, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
+  validates :name, presence: true, uniqueness: true
+
   # アカウントが削除されていないかを確認し、削除されていなければログインを許可する
   def active_for_authentication?
     super && (is_deleted == false)
   end
 
+  # 名前でのユーザー検索
   def self.search_for(content, method)
     if method == 'perfect'
       User.where(name: content)
@@ -21,11 +28,12 @@ class User < ApplicationRecord
     end
   end
 
-  # 投稿数をソートするために正しく
+  # 投稿数をソート
   def post_count
     self.posts.count
   end
 
+  # ゲストユーザー
   GUEST_USER_EMAIL = "guest@example.com"
   def self.guest
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
@@ -37,10 +45,4 @@ class User < ApplicationRecord
   def guest_user?
     email == GUEST_USER_EMAIL
   end
-
-  has_many :posts, dependent: :destroy
-  has_many :wish_lists, dependent: :destroy
-  has_many :comments, dependent: :destroy
-
-  validates :name, presence: true, uniqueness: true
 end
