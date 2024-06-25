@@ -1,6 +1,8 @@
 <!-- 新規投稿画面のCSSを流用 -->
 <%= stylesheet_link_tag 'post_new' %>
+
 <%= render 'layouts/search' %>
+
 <div class="form-container">
   <div class="row justify-content-center">
     <div class="col-lg-6">
@@ -15,12 +17,10 @@
             <h4>名前</h4>
             <%= f.text_field :name, class: "form-control", required: true %>
           </div>
-
           <div class="form-group">
             <h4>メールアドレス</h4>
             <%= f.email_field :email, class: "form-control", required: true %>
           </div>
-
           <div class="form-group">
             <%= f.submit '更新', class: "btn btn-sky" %>
           </div>

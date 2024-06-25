@@ -1,20 +1,31 @@
 <%= stylesheet_link_tag 'post_new' %>
+
 <%= render 'layouts/search' %>
+
 <% if flash.now[:danger] %>
   <div class="alert alert-danger">
     <%= flash.now[:danger] %>
   </div>
 <% end %>
+
 <div class="background"></div>
 
 <div class="form-container">
   <div class="row justify-content-center">
     <div class="col-lg-8">
-
-      <!--入力フォーム-->
-      <%= render 'layouts/post_new' %>
-
-      <!-- マイページに戻るリンク -->
+      <%= form_with model: @post, id: 'post-form', html: {class: 'needs-validation fade-in-from-bottom'}, validate: true do |f| %>
+        <%= render 'public/shared/error_messages', resource: f.object %>
+        <div class="border p-4 shadow border-rounded fade-in-from-bottom">
+          <div class="text-center">
+            <h1 class="mb-4">新規投稿</h1>
+          </div>
+          <!--入力フォーム-->
+          <%= render 'layouts/post_form', f: f %>
+          <div class="form-group">
+            <%= f.submit '投稿する', class: "btn btn-sakura me-2" %>
+          </div>
+        </div>
+      <% end %>
       <div class="mt-4">
         <%= link_to "マイページに戻る", user_path(current_user.id), class: "btn btn-yamabuki me-2" %>
         <%= link_to "みんなの投稿をみる", posts_path, class: "btn btn-sky" %>
@@ -26,18 +37,8 @@
 <!-- 画像プレビュー -->
 <%= render 'layouts/preview' %>
 
-<!-- 評価（新規投稿用） -->
-<script>
-  let elem = document.querySelector('#post_raty');
-  let opt = {
-    starOn: "<%= asset_path('star-on.png') %>",
-    starOff: "<%= asset_path('star-off.png') %>",
-    starHalf: "<%= asset_path('star-half.png') %>",
-    half: true,
-    scoreName: 'post[star]'
-   };
-  raty(elem,opt);
-</script>
+<!-- 評価 -->
+<%= render 'layouts/star_form' %>
 
 <!--所在地自動入力-->
 <script>

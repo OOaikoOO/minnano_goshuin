@@ -1,4 +1,5 @@
 <%= render 'layouts/admin_search' %>
+
 <h1>会員名：【<%= @user.name %>】さんの投稿一覧</h1>
 <%= link_to "会員情報詳細に戻る", admin_user_path(@user), class: "btn btn-primary mt-3 me-2" %>
 <%= link_to "会員一覧に戻る", admin_dashboard_path, class: "btn btn-secondary mt-3" %>
@@ -18,7 +19,7 @@
               <% end %>
             <% end %>
             <div class="card-body">
-              <p>コメントの平均点: <%= @average_ratings[post.id] %>点</p>
+              <p>みんなの平均点: <%= @average_ratings[post.id] %>点</p>
               <h5 class="card-title"><%= post.title %></h5>
               <p class="card-text">所在地: <%= post.address %></p>
               <p class="card-text">投稿日: <%= post.created_at.strftime("%Y年%m月%d日") %></p>

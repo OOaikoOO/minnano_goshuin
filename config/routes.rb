@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
   
-  # ゲスト
+  # ゲストログイン
   devise_scope :user do
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy]
       collection do
         get 'tagged/:tag', to: 'posts#tagged', as: :tagged
+        get 'wish_listed', to: 'posts#wish_listed', as: :wish_listed
       end
     end
     resources :users

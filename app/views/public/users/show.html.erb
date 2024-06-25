@@ -1,15 +1,19 @@
 <%= stylesheet_link_tag 'my_page' %>
+
 <%= render 'layouts/search' %>
+
 <% if flash[:notice] %>
   <div class="alert alert-success">
     <%= flash[:notice] %>
   </div>
 <% end %>
+
 <div class="page-header">
   <div class="text-center mb-4">
     <h1>マイページ</h1>
     <% if @user == current_user %>
       <h4>ようこそ！　<strong><%= current_user.name %></strong>　さん</h4>
+      
       <div class="d-flex justify-content-center align-items-center mt-3">
         <% unless @user.guest_user? %>
           <%= link_to "プロフィール編集", edit_user_path(current_user), class: "btn btn-yamabuki me-2" %>
@@ -64,7 +68,6 @@
   document.addEventListener("turbolinks:load", fadeInCards);
 </script>
 
-<!-- 評価javascript -->
 <%= render 'layouts/star' %>
 <%= render 'layouts/comment_star' %>
 

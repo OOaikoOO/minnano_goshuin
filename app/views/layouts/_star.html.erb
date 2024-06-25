@@ -1,4 +1,4 @@
-<!--（新規投稿画面）星付きレビュー用-->
+<!--（投稿詳細画面）星付きレビュー-->
 
 <script>
 document.addEventListener('turbolinks:load', function() {
@@ -11,7 +11,7 @@ document.addEventListener('turbolinks:load', function() {
         starHalf: "<%= asset_path('star-half.png') %>",
         half: true,
         readOnly: true,
-        score: rating // ここで評価データを設定
+        score: rating // 評価データを設定
       };
       raty(elem, opt);
       elem.classList.add('raty-applied'); // 適用済みフラグを追加

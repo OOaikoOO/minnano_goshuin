@@ -1,16 +1,16 @@
 <%= stylesheet_link_tag 'post_index' %>
+
 <%= render 'layouts/search' %>
 
 <div class="container mt-5">
   <h1 class="mb-4 text-center">みんなの投稿一覧</h1>
-
   <div class="text-center mb-3">
     <%= link_to "マイページに戻る", user_path(current_user), class: "btn btn-yamabuki me-2" %>
     <% unless current_user.guest_user? %>
       <%= link_to "投稿する", new_post_path, class: "btn btn-sakura me-2" %>
     <% end %>
   </div>
-
+  
   <% if params[:tag].present? %>
     <div class="mb-3 text-center">
       <p>タグ: <%= params[:tag] %> による絞り込み結果</p>

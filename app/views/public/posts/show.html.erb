@@ -1,11 +1,14 @@
 <%= stylesheet_link_tag 'post_show' %>
+
 <%= render 'layouts/search' %>
+
 <div class="container mt-5 text-center">
   <% if flash[:notice] %>
     <div class="alert alert-success">
       <%= flash[:notice] %>
     </div>
   <% end %>
+  
   <h1 class="mb-3">投稿詳細</h1>
   <div class="mb-3">
     <% if admin_signed_in? %>
@@ -23,24 +26,17 @@
 
 <div class="row">
   <div class="col-md-6">
-    <!-- 投稿内容 -->
     <%= render 'layouts/post_show' %>
   </div>
 
   <div class="col-md-6">
-    <!-- コメント入力フォーム -->
     <%= render 'layouts/comment_form' %>
-
-    <!-- コメント一覧 -->
     <%= render 'layouts/comment_index' %>
   </div>
 </div>
 
-<!-- 評価javascript -->
 <%= render 'layouts/star' %>
 <%= render 'layouts/comment_star' %>
-
-<!--マップ用JavaScript-->
 <%= render 'layouts/map_show' %>
 
 <script>

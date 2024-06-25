@@ -1,0 +1,26 @@
+<!--（投稿入力フォーム用）星付きレビュー-->
+
+<script>
+  document.addEventListener('turbolinks:before-cache', function() {
+    let elem = document.querySelector('#post_raty');
+    if (elem && elem.ratyInstance) {
+      elem.ratyInstance.destroy(); // ratyのインスタンスを破棄する
+      delete elem.ratyInstance; // インスタンスを削除する
+    }
+  });
+
+  document.addEventListener('turbolinks:load', function() {
+    let elem = document.querySelector('#post_raty');
+    if (elem && !elem.ratyInstance) {
+      let opt = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        half: true,
+        scoreName: 'post[star]',
+        score: parseFloat(elem.getAttribute('data-score')) || 0  // 評価の初期値を設定
+      };
+      elem.ratyInstance = raty(elem, opt); // ratyのインスタンスを保存する
+    }
+  });
+</script>

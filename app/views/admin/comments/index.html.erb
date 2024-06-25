@@ -1,4 +1,5 @@
 <%= render 'layouts/admin_search' %>
+
 <h1>会員名：【<%= @user.name %>】さんのコメント一覧</h1>
 <%= link_to "会員情報詳細に戻る", admin_user_path(@user), class: "btn btn-primary mt-3" %>
 <%= link_to "会員一覧に戻る", admin_dashboard_path, class: "btn btn-secondary mt-3" %>
