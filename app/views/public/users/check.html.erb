@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag 'check' %>
+
 <div class="container">
   <div class="row center-form">
     <div class="col-lg-6">
@@ -11,6 +12,7 @@
           <%= link_to "退会しない", user_path(@user), class: "btn btn-danger mx-2" %>
           <%= link_to "退会する", withdraw_user_path(@user.id), method: :patch, class: "btn btn-secondary mx-2", data: { confirm: "本当に退会しますか？" } %>
         </div>
+        
       </div>
     </div>
   </div>

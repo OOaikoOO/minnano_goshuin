@@ -34,9 +34,24 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = Post.page(params[:page]).per(9)
+
+    if params[:sort].present?
+      @posts = @posts.sorted_posts(params[:sort])
+    end
+
+    if params[:receive_shuin].present?
+      @posts = @posts.filter_by_receive_shuin(params[:receive_shuin])
+    end
+
+    if params[:wish_list].present? && current_user
+      if params[:wish_list] == 'true'
+        @posts = @posts.wish_listed_by_user(current_user)
+      end
+    end
+
     respond_to do |format|
       format.html do
-        @posts = Post.page(params[:page])
+        @posts = @posts.page(params[:page])
       end
       format.json do
         @posts = Post.all
@@ -53,6 +68,10 @@ class Public::PostsController < ApplicationController
     @average_rating = @post.average_comment_rating
     @wish_listed = current_user&.wish_lists&.exists?(post_id: @post.id)
     gon.post = @post
+  end
+
+  def wish_listed
+    @wish_listed_posts = Post.wish_listed_by_user(current_user).page(params[:page]).per(9)
   end
 
   def edit

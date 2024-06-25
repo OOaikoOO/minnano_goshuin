@@ -77,6 +77,10 @@ class Post < ApplicationRecord
     end
   end
 
+  scope :wish_listed_by_user, ->(user) {
+    joins(:wish_lists).where(wish_lists: { user_id: user.id })
+  }
+
   def wish_listed_by?(user)
     wish_lists.exists?(user_id: user.id)
   end

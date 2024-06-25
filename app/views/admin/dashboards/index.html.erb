@@ -1,9 +1,11 @@
 <%= render 'layouts/admin_search' %>
+
 <% if flash[:notice].present? %>
   <div class="alert alert-success" role="alert">
     <%= flash[:notice] %>
   </div>
 <% end %>
+
 <div class="container mt-5">
   <h4 class="mb-4 text-center">会員一覧</h4>
   <div class="filter-options row justify-content-center mb-3">
