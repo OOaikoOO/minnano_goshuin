@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Admin::PostsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
     @user = User.find(params[:user_id])
     @posts = @user.posts.page(params[:page]).per(9)
-    
+
     # 各投稿の平均評価を計算
     @average_ratings = {}
     @posts.each do |post|

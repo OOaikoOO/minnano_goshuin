@@ -1,5 +1,6 @@
-class Post < ApplicationRecord
+# frozen_string_literal: true
 
+class Post < ApplicationRecord
   belongs_to :user
   has_many :wish_lists, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -17,28 +18,28 @@ class Post < ApplicationRecord
   # 最新の投稿を先頭にする
   scope :recent, -> { order(created_at: :desc) }
 
-  def self.search_for(content, method, field = 'title')
+  def self.search_for(content, method, field = "title")
     # 神社仏閣の名前で検索
-    if field == 'title'
-      if method == 'perfect'
+    if field == "title"
+      if method == "perfect"
         Post.where(title: content)
-      elsif method == 'forward'
-        Post.where('title LIKE ?', content+'%')
-      elsif method == 'backward'
-        Post.where('title LIKE ?', '%'+content)
+      elsif method == "forward"
+        Post.where("title LIKE ?", content + "%")
+      elsif method == "backward"
+        Post.where("title LIKE ?", "%" + content)
       else
-        Post.where('title LIKE ?', '%'+content+'%')
+        Post.where("title LIKE ?", "%" + content + "%")
       end
     # 所在地で検索
-    elsif field == 'address'
-      if method == 'perfect'
+    elsif field == "address"
+      if method == "perfect"
         Post.where(address: content)
-      elsif method == 'forward'
-        Post.where('address LIKE ?', content+'%')
-      elsif method == 'backward'
-        Post.where('address LIKE ?', '%'+content)
+      elsif method == "forward"
+        Post.where("address LIKE ?", content + "%")
+      elsif method == "backward"
+        Post.where("address LIKE ?", "%" + content)
       else
-        Post.where('address LIKE ?', '%'+content+'%')
+        Post.where("address LIKE ?", "%" + content + "%")
       end
     else
       Post.none # 入力が無効な場合、空の結果を返す
@@ -48,12 +49,12 @@ class Post < ApplicationRecord
   # 投稿のソート機能
   def self.sorted_posts(sort_by)
     case sort_by
-    when 'created_at_asc'
+    when "created_at_asc"
       order(created_at: :asc)
-    when 'comments_count_asc'
-      left_joins(:comments).group(:id).order('COUNT(comments.id) ASC')
-    when 'comments_count_desc'
-      left_joins(:comments).group(:id).order('COUNT(comments.id) DESC')
+    when "comments_count_asc"
+      left_joins(:comments).group(:id).order("COUNT(comments.id) ASC")
+    when "comments_count_desc"
+      left_joins(:comments).group(:id).order("COUNT(comments.id) DESC")
     else
       order(created_at: :desc)
     end
@@ -68,7 +69,7 @@ class Post < ApplicationRecord
     end
   end
 
-    # ご朱印の有無でフィルタリング
+  # ご朱印の有無でフィルタリング
   def self.filter_by_receive_shuin(receive_shuin)
     if receive_shuin.present?
       where(receive_shuin: receive_shuin)
@@ -84,7 +85,7 @@ class Post < ApplicationRecord
   def wish_listed_by?(user)
     wish_lists.exists?(user_id: user.id)
   end
-  
+
   def image_url
     image.present? ? image.url : nil
   end

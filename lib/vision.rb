@@ -1,6 +1,8 @@
-require 'base64'
-require 'json'
-require 'net/https'
+# frozen_string_literal: true
+
+require "base64"
+require "json"
+require "net/https"
 
 module Vision
   class << self
@@ -10,7 +12,7 @@ module Vision
 
       # 画像をbase64にエンコード
       base64_image = Base64.encode64(image_file.tempfile.read)
-      
+
       # APIリクエスト用のJSONパラメータ
       params = {
         requests: [{
@@ -24,15 +26,15 @@ module Vision
           ]
         }]
       }.to_json
-      
+
       # Google Cloud Vision APIにリクエスト
       uri = URI.parse(api_url)
       https = Net::HTTP.new(uri.host, uri.port)
       https.use_ssl = true
       request = Net::HTTP::Post.new(uri.request_uri)
-      request['Content-Type'] = 'application/json'
+      request["Content-Type"] = "application/json"
       response = https.request(request, params)
-      
+
       # レスポンスの解析とエラーハンドリング
       result = JSON.parse(response.body)
       # レスポンスが空かnilかをチェック

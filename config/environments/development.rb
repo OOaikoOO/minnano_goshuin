@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -16,13 +18,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join("tmp", "caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.to_i}"
     }
   else
     config.action_controller.perform_caching = false
@@ -34,15 +36,15 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.default_url_options = {  host: 'localhost', port: 3000 }# メール内で生成されるURLに関するデフォルトの設定
+  config.action_mailer.default_url_options = {  host: "localhost", port: 3000 } # メール内で生成されるURLに関するデフォルトの設定
   config.action_mailer.raise_delivery_errors = true # メール送信時にエラーが発生した場合、エラーを表示
   config.action_mailer.delivery_method = :smtp # メール送信の方法をSMTP経由に設定
   config.action_mailer.smtp_settings = { # SMTPの設定
     port: 587,
-    address: 'smtp.gmail.com',
-    user_name: ENV['GOOGLE_MAIL_ADDRESS'],
-    password: ENV['GOOGLE_APP_PASSWORD'],
-    authentication: 'plain', # 認証方式としてPLAINを使用
+    address: "smtp.gmail.com",
+    user_name: ENV["GOOGLE_MAIL_ADDRESS"],
+    password: ENV["GOOGLE_APP_PASSWORD"],
+    authentication: "plain", # 認証方式としてPLAINを使用
     enable_starttls_auto: true # STARTTLS（Transport Layer Security）を自動的に有効にする設定(セキュアな通信)
   }
 

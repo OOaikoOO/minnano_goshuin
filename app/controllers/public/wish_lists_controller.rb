@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Public::WishListsController < ApplicationController
   before_action :set_post, only: [:create, :destroy]
 
@@ -8,10 +10,9 @@ class Public::WishListsController < ApplicationController
   def destroy
     WishList.find_by(user_id: current_user.id, post_id: @post.id).destroy
   end
-  
+
   private
-  
-  def set_post
-    @post = Post.find(params[:post_id])
-  end
+    def set_post
+      @post = Post.find(params[:post_id])
+    end
 end

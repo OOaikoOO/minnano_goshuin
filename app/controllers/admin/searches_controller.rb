@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::SearchesController < ApplicationController
   before_action :authenticate_admin!
 
@@ -5,9 +7,9 @@ class Admin::SearchesController < ApplicationController
     @model = params[:model]
     @content = params[:content]
     @method = params[:method]
-    if @model == 'user'
+    if @model == "user"
       @records = User.search_for(@content, @method)
-    elsif @model == 'comment'
+    elsif @model == "comment"
       @records = Comment.search_for(@content, @method)
     else
       @records = Post.search_for(@content, @method)

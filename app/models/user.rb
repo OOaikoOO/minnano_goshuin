@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -17,14 +19,14 @@ class User < ApplicationRecord
 
   # 名前でのユーザー検索
   def self.search_for(content, method)
-    if method == 'perfect'
+    if method == "perfect"
       User.where(name: content)
-    elsif method == 'forward'
-      User.where('name LIKE ?', content + '%')
-    elsif method == 'backward'
-      User.where('name LIKE ?', '%' + content)
+    elsif method == "forward"
+      User.where("name LIKE ?", content + "%")
+    elsif method == "backward"
+      User.where("name LIKE ?", "%" + content)
     else
-      User.where('name LIKE ?', '%' + content + '%')
+      User.where("name LIKE ?", "%" + content + "%")
     end
   end
 

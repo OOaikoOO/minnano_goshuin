@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddGeocodingColumnToPost < ActiveRecord::Migration[6.1]
   def change
     change_column :posts, :address, :string, null: false, default: ""
