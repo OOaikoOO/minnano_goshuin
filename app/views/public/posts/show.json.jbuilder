@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.data do
   json.item do
     json.array!(@post) do |post|
@@ -11,6 +13,6 @@ json.data do
       json.address post.address
       json.latitude post.latitude
       json.longitude post.longitude
-    end  
+    end
   end
 end

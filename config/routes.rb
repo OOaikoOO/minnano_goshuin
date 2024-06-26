@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # 管理者用
   namespace :admin do
-    get 'comments/index'
-    get 'posts/index'
+    get "comments/index"
+    get "posts/index"
     get "search" => "searches#search"
-    root 'dashboards#index'
-    get 'dashboard', to: 'dashboards#index', as: :dashboard
+    root "dashboards#index"
+    get "dashboard", to: "dashboards#index", as: :dashboard
 
     # ユーザー退会処理関連
     resources :users, only: [:show] do
@@ -18,19 +20,19 @@ Rails.application.routes.draw do
       resources :comments, only: [:index, :destroy]
     end
   end
-  
+
   # ゲストログイン
   devise_scope :user do
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
 
   # ユーザー用
-  root to: 'public/homes#top'
-  get '/about' => 'public/homes#about'
+  root to: "public/homes#top"
+  get "/about" => "public/homes#about"
 
   # ユーザー退会関連
-  get '/users/check' => 'public/users#check', as: :check_user
-  patch '/users/withdraw' => 'public/users#withdraw', as: :withdraw_user
+  get "/users/check" => "public/users#check", as: :check_user
+  patch "/users/withdraw" => "public/users#withdraw", as: :withdraw_user
 
   # 管理者用ログイン関連
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
@@ -40,14 +42,14 @@ Rails.application.routes.draw do
   # ユーザー用ログイン関連
   devise_for :users, controllers: {
     registrations: "public/registrations",
-    sessions: 'public/sessions',
+    sessions: "public/sessions",
     # パスワード再設定用
-    passwords: 'public/passwords'
+    passwords: "public/passwords"
   }
 
   # 「行きたいリスト」用
-  resources :posts, controller: 'public/posts' do
-    resources :wish_lists, only: [:create, :destroy], controller: 'public/wish_lists'
+  resources :posts, controller: "public/posts" do
+    resources :wish_lists, only: [:create, :destroy], controller: "public/wish_lists"
   end
 
   # resourcesを使用する際、URLにnamespaceを含めずにルーティングを設定する
@@ -57,8 +59,8 @@ Rails.application.routes.draw do
     resources :posts do
       resources :comments, only: [:create, :destroy]
       collection do
-        get 'tagged/:tag', to: 'posts#tagged', as: :tagged
-        get 'wish_listed', to: 'posts#wish_listed', as: :wish_listed
+        get "tagged/:tag", to: "posts#tagged", as: :tagged
+        get "wish_listed", to: "posts#wish_listed", as: :wish_listed
       end
     end
     resources :users

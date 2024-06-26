@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 describe Post, type: :model do
   context "寺社名と紹介文が入力されている場合" do
@@ -18,6 +18,7 @@ describe Post, type: :model do
     end
     it "関連するwish_listが削除されること" do
       post = create(:post)
+      # rubocop:disable Lint/UselessAssignment
       wish_list = create(:wish_list, post: post)
       expect { post.destroy }.to change { WishList.count }.by(-1)
     end

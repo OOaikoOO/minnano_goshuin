@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Public::PostsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
@@ -18,7 +20,7 @@ class Public::PostsController < ApplicationController
         end
       else
         # 不適切な画像の場合、エラーメッセージを表示してフォームを再表示
-        flash.now['danger'] = "不適切な画像の投稿はできません（アダルトコンテンツ、暴力的な表現など）"
+        flash.now["danger"] = "不適切な画像の投稿はできません（アダルトコンテンツ、暴力的な表現など）"
         render :new, status: :unprocessable_entity
         return
       end
@@ -28,7 +30,7 @@ class Public::PostsController < ApplicationController
       redirect_to post_path(@post), notice: "投稿が完了しました"
       return
     end
-    flash.now['danger'] = "投稿に失敗しました"
+    flash.now["danger"] = "投稿に失敗しました"
     render :new, status: :unprocessable_entity
   end
 
@@ -44,7 +46,7 @@ class Public::PostsController < ApplicationController
     end
 
     if params[:wish_list].present? && current_user
-      if params[:wish_list] == 'true'
+      if params[:wish_list] == "true"
         @posts = @posts.wish_listed_by_user(current_user)
       end
     end
@@ -90,7 +92,7 @@ class Public::PostsController < ApplicationController
         end
       else
         # 不適切な画像の場合、エラーメッセージを表示してフォームを再表示
-        flash.now['danger'] = "不適切な画像の投稿はできません（アダルト、暴力的など）"
+        flash.now["danger"] = "不適切な画像の投稿はできません（アダルト、暴力的など）"
         render :edit, status: :unprocessable_entity
         return
       end
@@ -100,7 +102,7 @@ class Public::PostsController < ApplicationController
       redirect_to post_path(@post), notice: "投稿が更新されました"
       return
     end
-    flash.now['danger'] = "投稿の更新に失敗しました"
+    flash.now["danger"] = "投稿の更新に失敗しました"
     render :edit, status: :unprocessable_entity
   end
 
@@ -108,15 +110,14 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.user == current_user
       @post.destroy
-      redirect_to user_path(current_user.id), notice: '投稿が削除されました'
+      redirect_to user_path(current_user.id), notice: "投稿が削除されました"
     else
       redirect_to posts_path, notice: "他のユーザーの投稿を削除することはできません"
     end
   end
 
   private
-
-  def post_params
-    params.require(:post).permit(:title, :address, :tag_list, :image, :star, :introduction, :receive_shuin)
-  end
+    def post_params
+      params.require(:post).permit(:title, :address, :tag_list, :image, :star, :introduction, :receive_shuin)
+    end
 end
