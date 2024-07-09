@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>地域検索マップ</title>
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+  <script>
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {lat: 35.6895, lng: 139.6917} // 東京をデフォルトの中心に設定
+      });
+
+      document.getElementById('searchForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var region = document.getElementById('region').value;
+        searchRegion(region, map);
+      });
+    }
+
+    function searchRegion(region, map) {
+      fetch(`/public/posts/search.json?region=${region}`, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(post => {
+          var marker = new google.maps.Marker({
+            position: {lat: post.latitude, lng: post.longitude},
+            map: map,
+            title: post.title
+          });
+
+          var infowindow = new google.maps.InfoWindow({
+            content: `<div>
+                        <h3>${post.title}</h3>
+                        <p>所在地: ${post.address}</p>
+                        <a href="/public/posts/${post.id}" target="_blank">詳細ページ</a>
+                      </div>`
+          });
+
+          marker.addListener('click', function() {
+            infowindow.open(map, marker);
+          });
+        });
+      })
+      .catch(error => console.error('Error:', error));
+    }
+
+    window.onload = function() {
+      initMap();
+    };
+  </script>
+</head>
+<body>
+  <h1>地域検索マップ</h1>
+  <%= form_with url: search_public_posts_path, method: :get, local: true, id: "searchForm" do %>
+    <label for="region">地域を入力：</label>
+    <%= text_field_tag :region, params[:region], id: "region", required: true %>
+    <%= submit_tag "検索" %>
+  <% end %>
+  <div id="map"></div>
+</body>
+</html>
