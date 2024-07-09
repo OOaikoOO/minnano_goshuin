@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     resources :posts do
       resources :comments, only: [:create, :destroy]
       collection do
+        get 'search'
         get "tagged/:tag", to: "posts#tagged", as: :tagged
         get "wish_listed", to: "posts#wish_listed", as: :wish_listed
       end

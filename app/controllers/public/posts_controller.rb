@@ -116,6 +116,15 @@ class Public::PostsController < ApplicationController
     end
   end
 
+  def search
+    region = params[:region]
+    @posts = Post.search_by_region(region)
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts.map { |post| { id: post.id, title: post.title, address: post.address, latitude: post.latitude, longitude: post.longitude } } }
+    end
+  end
+
   private
     def post_params
       params.require(:post).permit(:title, :address, :tag_list, :image, :star, :introduction, :receive_shuin)

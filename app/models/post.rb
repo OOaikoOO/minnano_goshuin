@@ -18,6 +18,9 @@ class Post < ApplicationRecord
   # 最新の投稿を先頭にする
   scope :recent, -> { order(created_at: :desc) }
 
+  # 地域から探す用
+  scope :search_by_region, ->(region) { where("address LIKE ?", "%#{region}%") }
+
   def self.search_for(content, method, field = "title")
     # 神社仏閣の名前で検索
     if field == "title"
